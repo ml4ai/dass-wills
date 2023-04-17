@@ -22,7 +22,11 @@ The code shown below sketches the logic of a possible implementation.  Python is
 ``` Python
 ##################################################################################
 #                                                                                #
-# A Will object contains information about the will, organized into two parts:   #
+# A Will object contains information about the will, organized into three parts: #
+# its data, a WillData object consisting of the testator, the directives of the  #
+# will, and the original text of the will; and its metadata, consisting of       #
+# information about its creation and edit history; and a cryptographic hash of   #
+# the data and metadata, to check against tampering.                             #
 #                                                                                #
 #    -- _data : a WillData object, containing information about the testator     #
 #               and the directives of the will; and                              #
