@@ -78,7 +78,7 @@ class Will:
 
         timestamp = curr_time()
 
-	edit_info = Edit('create', None, w_data, testator, timestamp)
+	edit_info = EditInfo('create', None, w_data, testator, timestamp)
 	self._edit_history: [edit_info]
 
 	creat_info = self.creation_info(witnesses, timestamp)
@@ -136,7 +136,7 @@ class CreationInfo:
 
 ##################################################################################
 #                                                                                #
-# An Edit object contains information about an edit to the will.  It contains    #
+# An EditInfo object records information about an edit to the will and contains  #
 # following information:                                                         #
 # -- _type: the nature of the edit ('create', 'modify', 'delete', ...)           #
 # -- _old: some representation of the will prior to this edit                    #
@@ -146,7 +146,7 @@ class CreationInfo:
 #                                                                                #
 ##################################################################################
 
-class Edit:
+class EditInfo:
     def __init__(self, edit_type, old_will, change, who, timestamp):
         self._type = edit_type
 	self._old = old_will
