@@ -47,9 +47,10 @@ The code shown below sketches the logic of a possible implementation.  Python is
 
 class WillData:
     """ Data about the testator and directives of the will. """
-    def __init__(self, testator, directives):
+    def __init__(self, testator, directives, text):
         self._testator = testator
 	self._directives = directives
+	self._text = text
 
     def __str__(self):
         return('WillData: __str__() Not yet implemented')
@@ -66,9 +67,9 @@ class WillMetadata:
 
 
 class Will:
-    def __init__(self, testator, witnesses, directives):
+    def __init__(self, testator, witnesses, directives, text):
         """ Create a will object with the fields specified."""
-        w_data = WillData(testator, directives)
+        w_data = WillData(testator, directives, text)
 
         timestamp = curr_time()
 
@@ -153,11 +154,12 @@ class Edit:
 
 ```
 
-Creating a will is now fairly straightforward:
+Given a will whose natural-language text is `w_txt`, we can now create the will as follows:
 
 ```
-def create_will(testator, directives, witnesses):
-    w = Will(testator, witnesses, directives)
+def create_will(w_txt):
+    testator, directives, witnesses = nlp(w_txt)  # <-- NLP magic happens here
+    w = Will(testator, witnesses, directives, w_txt)
     export_will(w)    # write it out in appropriate format
 ```
 
