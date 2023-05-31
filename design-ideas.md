@@ -23,7 +23,7 @@ At the top level, the digital representation of a will contains the following in
 
 - `_data`: information about what the will specifies, e.g., the testator and the directives of the will;
 - `_metadata`: information about the creation and edit history of the will;
-- `hash`: a cryptographic hash of the `_data` and `_metadata` fields, to allow auditing and checking for unauthorized alterations.
+- `_hash`: a cryptographic hash of the `_data` and `_metadata` fields, to allow auditing and checking for unauthorized alterations.
 
 #### Will Data
 The data for a will consists of the following:
