@@ -18,6 +18,20 @@ The following is a (non-exhaustive) list of desiderata for representing wills in
 
 ## Implementation logic
 
+When a will is first created, its digital representation has to be written into some sort of persistent storage.  Subsequent accesses to the will, e.g., for modifications while the testator is alive or devolution after the testator's death, have to be able to locate this representation.  This means that the creation of the will needs to return some sort of locator for its digital representation, which is used for subsequent accesses.   For this, we need a way to map the testator's ID to the locator for that person's will.
+
+**TBD:** The details of how the ID-to-locator mapping is implemented.
+
+**Security requirements**
+We have to ensure that neither the ID-to-locator mapping nor the actual digital representation of the will can be hacked.  TBD.
+
+**Privacy considerations**
+What kinds of privacy/confidentiality guarantees do we need?  E.g.:
+
+- Is it important to allow the testator to keep the contents of the will confidential?
+- Is it important to allow the testator to keep the fact of the existence of a will, and/or whether or not it has been edited, confidential?
+
+
 ### Representation of a Will
 At the top level, the digital representation of a will contains the following information:
 
