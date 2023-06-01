@@ -22,10 +22,12 @@ When a will is first created, its digital representation has to be written into 
 
 **TBD:** The details of how the ID-to-locator mapping is implemented.
 
-**Security requirements**
+**Security requirements:**
+
 We have to ensure that neither the ID-to-locator mapping nor the actual digital representation of the will can be hacked.  TBD.
 
-**Privacy considerations**
+**Privacy considerations:**
+
 What kinds of privacy/confidentiality guarantees do we need?  E.g.:
 
 - Is it important to allow the testator to keep the contents of the will confidential?
