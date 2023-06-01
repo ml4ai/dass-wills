@@ -65,5 +65,9 @@ Given a will whose natural-language text is `w_txt`, we can create the will as f
 def create_will(w_txt):
     testator, directives, witnesses = nlp(w_txt)  # <-- NLP magic happens here
     w = Will(testator, witnesses, directives, w_txt)
-    export_will(w)    # write it out in appropriate format
+    loc = export_will(w)    # write it out in appropriate format
+    return (testator._id, loc)
 ```
+
+The value returned by `create_will()` is a pair `(id, loc)` where `id` is the testator's ID and `loc` is the locator for the will.  This should be published somewhere so that the will can be accessed subsequently.
+
