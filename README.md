@@ -5,9 +5,7 @@ The files in this directory are a first attempt at code for creating and manipul
 ## Creating a will
 To create a will, use the command
 
-    ```
     ./create_will -j <input_json_file>
-    ```
 
 ## The JSON representation of a will
 The JSON representation of a will currently contains the following top-level items:
