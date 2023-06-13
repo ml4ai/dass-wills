@@ -67,7 +67,8 @@ For now, we assume that the back-end of the system to create a digital will gets
 
 1) read the JSON file specified;
 2) extract and organize the resulting information appropriately;
-3) create a Will object using this information;
-4) write out the Will object to persistent storage; and
-5) publish the mapping from the testator's ID to the location of the digital will in persistent storage.
+3) perform any appropriate validity checks;
+4) create a Will object using this information;
+5) write out the Will object to persistent storage; and
+6) publish the mapping from the testator's ID to the location of the digital will in persistent storage.
 

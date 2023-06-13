@@ -88,7 +88,7 @@ def validate_witness(witness):
 #
 #     create_will -j <json-file>
 
-def create_will(w_txt):
+def create_will():
     opts = parse_cmd_line()
     if opts['input-json'] is None:
         sys.stderr.write('Input JSON file not specified... aborting\n')
@@ -123,4 +123,4 @@ def create_will(w_txt):
 
 
 if __name__ == '__main__':
-    create_will(None)
+    create_will()
