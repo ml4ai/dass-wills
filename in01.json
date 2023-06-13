@@ -2,30 +2,35 @@
     "text" : "I, John Doe, bequeath my red car to Tom Doe and my vacuum cleaner to Mary Hoover",
     "testator" : {
 	"name" : "John Doe",
-	"id" : "0x1234"
+	"id" : "0x1234",
+	"info" : ""
     },
     "witnesses" : {
 	"1" : {
 	    "name" : "Jack Doe",
-	    "id" : "0x2345"
+	    "id" : "0x2345",
+	    "info" : ""
 	},
 	"2" : {
 	    "name" : "Jane Doe",
-	    "id" : "0x3456"
+	    "id" : "0x3456",
+	    "info" : ""
 	}
     },
     "directives" : {
 	"red car" : {
 	    "beneficiary" : {
 		"name" : "Tom Doe",
-		"id" : "0x4567"
+		"id" : "0x4567",
+		"info" : ""
 	    },
 	    "condition" : "True"
 	},
 	"vacuum cleaner" : {
 	    "beneficiary" : {
 		"name" : "Mary Hoover",
-		"id" : "0x5678"
+		"id" : "0x5678",
+		"info" : ""
 	    },
 	    "condition" : "True"
 	}
