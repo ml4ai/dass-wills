@@ -63,15 +63,11 @@ Information about each edit contains the following information:
 - `_timestamp`: a timestamp of when the edit was performed            
 
 ### Will creation
-Given a will whose natural-language text is `w_txt`, we can create the will as follows:
+For now, we assume that the back-end of the system to create a digital will gets its information about the components of the will from a JSON file.  The creation of a create a will then involves the following steps:
 
-``` Python
-def create_will(w_txt):
-    testator, directives, witnesses = nlp(w_txt)  # <-- NLP magic happens here
-    w = Will(testator, witnesses, directives, w_txt)
-    loc = export_will(w)    # write it out in appropriate format
-    return (testator._id, loc)
-```
-
-The value returned by `create_will()` is a pair `(id, loc)` where `id` is the testator's ID and `loc` is the locator for the will.  This should be published somewhere so that the will can be accessed subsequently.
+1) read the JSON file specified;
+2) extract and organize the resulting information appropriately;
+3) create a Will object using this information;
+4) write out the Will object to persistent storage; and
+5) publish the mapping from the testator's ID to the location of the digital will in persistent storage.
 

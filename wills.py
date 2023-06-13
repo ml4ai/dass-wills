@@ -32,8 +32,8 @@ class WillData:
     """ Data about the testator and directives of the will. """
     def __init__(self, testator, directives, text):
         self._testator = testator
-	self._directives = directives
-	self._text = text
+        self._directives = directives
+        self._text = text
 
     def __str__(self):
         return('WillData: __str__() Not yet implemented')
@@ -43,7 +43,7 @@ class WillMetadata:
     """ Will metadata: information about its creation and edit history. """
     def __init__(self, creat_info, edit_history):
         self._creation_info = creat_info
-	self._edit_history = edit_history
+        self._edit_history = edit_history
 
     def __str__(self):
         return('WillMetadata: __str__() Not yet implemented')
@@ -56,21 +56,21 @@ class Will:
 
         timestamp = curr_time()
 
-	edit_info = EditInfo('create', None, w_data, testator, timestamp)
-	self._edit_history: [edit_info]
+        edit_info = EditInfo('create', None, w_data, testator, timestamp)
+        self._edit_history: [edit_info]
 
-	creat_info = self.creation_info(witnesses, timestamp)
+        creat_info = self.creation_info(witnesses, timestamp)
 
         w_meta = WillMetadata(creat_info, edit_info)
 
-	self._data = data
-	self._metadata = w_meta
+        self._data = data
+        self._metadata = w_meta
 
         w_hash = compute_hash(f'{str(w_data)}; {str(w_meta)}')
 
         self._data = w_data
-	self._metadata = w_meta
-	self._hash = w_hash
+        self._metadata = w_meta
+        self._hash = w_hash
 
     def creation_info(self, witness_list, timestamp):
         # creation_info(witness_list, min_num) takes a list of witnesses, 
@@ -79,22 +79,31 @@ class Will:
 	# checks pass.
         qualified_witnesses = {w for w in witness_list if chk_qualified(w)}
         assert len(qualified_witnesses) >= MIN_NUM_WITNESSES, \
-	       'Not enough qualified witnesses'
+            'Not enough qualified witnesses'
         return CreationInfo(qualified_witnesses, timestamp)
 
 
 ##################################################################################
 #                                                                                #
-# A Witness object records information about a witness to the creation of a will #
-# -- _name: the name of the witness                                              #
+# A Person object records information about a person named in a will, e.g., the  #
+# testator, a beneficiary, a witness, etc.  The information recorded is:         # 
+# -- _name: the person's name                                                    #
 # -- _id: since different people can share the same name                         #
+# -- _info: any additional information about the person, e.g., address, phone#   #
 #                                                                                #
 ##################################################################################
 
-class Witness:
-    def __init__(self, name, id):
+class Person:
+    def __init__(self, name, id, info):
         self._name = name
         self._id = id
+        self._info = info
+
+    def __str__(self):
+        return f'{self._name}:{self._id}'
+
+    def __repr__(self):
+        return str(self)
 
 
 ##################################################################################
@@ -127,10 +136,10 @@ class CreationInfo:
 class EditInfo:
     def __init__(self, edit_type, old_will, change, who, timestamp):
         self._type = edit_type
-	self._old = old_will
-	self._change = change
-	self._who = who
-	self._timestamp = timestamp
+        self._old = old_will
+        self._change = change
+        self._who = who
+        self._timestamp = timestamp
 
     def __str__(self):
         return('Edit: __str__() Not yet implemented')
