@@ -19,10 +19,10 @@ def read_will_info(infilename):
     will_info = {}
     # Extract the relevant data about the will from the input JSON
     t = json_info['testator']
-    will_info['testator'] = Person(t['name'], t['id'], None)
+    will_info['testator'] = Person(t['name'], t['id'], t['info'])
 
     w = json_info['witnesses']
-    will_info['witnesses'] = {Person(v['name'], v['id'], None)
+    will_info['witnesses'] = {Person(v['name'], v['id'], t['info'])
                               for v in w.values()}
 
     will_info['directives'] = json_info['directives']
