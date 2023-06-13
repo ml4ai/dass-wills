@@ -23,7 +23,7 @@ Example: the file `in01.json` encodes the following simple will:
     "testator" : {
 	"name" : "John Doe",
 	"id" : "0x1234",
-	"info" : ""
+	"info" : "address: 12 Magnolia Lane, Bisbee; phone: 123-456-7890"
     },
     "witnesses" : {
 	"1" : {
