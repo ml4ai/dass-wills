@@ -59,7 +59,7 @@ class Will:
         edit_info = EditInfo('create', None, w_data, testator, timestamp)
         self._edit_history: [edit_info]
 
-        creat_info = self.creation_info(witnesses, timestamp)
+        creat_info = CreationInfo(witnesses, timestamp)
 
         w_meta = WillMetadata(creat_info, edit_info)
 
@@ -71,16 +71,6 @@ class Will:
         self._data = w_data
         self._metadata = w_meta
         self._hash = w_hash
-
-    def creation_info(self, witness_list, timestamp):
-        # creation_info(witness_list, min_num) takes a list of witnesses, 
-        # performs various checks on them (including that the no. of witnesses 
-        # meets the minimum required), and returns a CreationInfo object if the
-	# checks pass.
-        qualified_witnesses = {w for w in witness_list if chk_qualified(w)}
-        assert len(qualified_witnesses) >= MIN_NUM_WITNESSES, \
-            'Not enough qualified witnesses'
-        return CreationInfo(qualified_witnesses, timestamp)
 
 
 ##################################################################################
