@@ -58,6 +58,21 @@ def parse_cmd_line():
 
 ##################################################################################
 #                                                                                #
+#                               VALIDATION CHECKS                                #
+#                                                                                #
+# Right now the validation checks don't do much.  Eventually they should make    #
+# appropriate calls to an oracle.                                                #
+#                                                                                #
+##################################################################################
+
+def validate_testator(testator):
+    print(f'... validating testator: {testator}')
+
+def validate_witness(witness):
+    print(f'... validating witness: {witness}')
+
+##################################################################################
+#                                                                                #
 #                                 WILL CREATION                                  #
 #                                                                                #
 ##################################################################################
@@ -84,6 +99,13 @@ def create_will(w_txt):
     # Read information about the will from the JSON file specified
     will_info = read_will_info(will_info_file)
 
+    # Check legality conditions on testator
+    validate_testator(will_info['testator'])
+    
+    # Check legality conditions on witnesses
+    for w in will_info['witnesses']:
+        validate_witness(w)
+
     # Create the will using information from the input JSON, write it out to
     # persistent storage, and publish the mapping from the testator's ID to the
     # will's location
@@ -97,7 +119,7 @@ def create_will(w_txt):
 
     # publish the association between the testator's ID and the location of
     # the will, for future retrieval and use
-    publish_loc(testator._id, loc)
+    publish_loc(will_info['testator']._id, loc)
 
 
 if __name__ == '__main__':
