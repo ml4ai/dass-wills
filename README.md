@@ -13,7 +13,7 @@ The JSON representation of a will currently contains the following top-level ite
 - `"text"` : the original natural-language text of the will;
 - `"testator"` : the name, ID, and possibly other information about the testator;
 - `"witnesses"` : the name, ID, and information about the witnesses;
-- `"directives"` : the directives of the will.  This is a mapping mapping assets to the beneficiary and any conditions governing the transfer.
+- `"directives"` : the directives of the will.  This is a mapping from assets to the beneficiary and any conditions governing the transfer.
 
 Example: the file `in01.json` encodes the following simple will:
 
