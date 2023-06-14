@@ -4,6 +4,7 @@
 
 import json
 import sys
+import pickle
 from wills import Person, Will
 
 ##################################################################################
@@ -11,6 +12,15 @@ from wills import Person, Will
 #                                   UTILITIES                                    #
 #                                                                                #
 ##################################################################################
+def export_will(will_object,file_name):
+    """Export will object as a pickle file"""
+    print(f"... exporting the will object with Testator:{will_object._data._testator}")
+    with open(file_name+".pickle", 'wb') as handle:
+        pickle.dump(will_object, handle, protocol=pickle.HIGHEST_PROTOCOL)
+def publish_loc(testor_id, loc):
+    """Publishing the will object"""
+    #To do......
+    print(f"... publishing the the locaiton of will object with Testator id:{testor_id}")
 
 def read_will_info(infilename):
     with open(infilename) as json_file:
@@ -55,7 +65,6 @@ def parse_cmd_line():
 
     return opts
 
-
 ##################################################################################
 #                                                                                #
 #                               VALIDATION CHECKS                                #
@@ -87,7 +96,6 @@ def validate_witness(witness):
 # that information is provided in a JSON file specified via the command-line:
 #
 #     create_will -j <json-file>
-
 def create_will():
     opts = parse_cmd_line()
     if opts['input-json'] is None:
@@ -115,7 +123,7 @@ def create_will():
              will_info['text'])
 
     # write out the digital will to persistent storage 
-    loc = export_will(w)
+    loc = export_will(w,opts['input-json'])
 
     # publish the association between the testator's ID and the location of
     # the will, for future retrieval and use

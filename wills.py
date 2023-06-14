@@ -28,6 +28,9 @@
 #                                                                                #
 ##################################################################################
 
+from hashlib import sha256
+from datetime import datetime
+
 class WillData:
     """ Data about the testator and directives of the will. """
     def __init__(self, testator, directives, text):
@@ -54,7 +57,7 @@ class Will:
         """ Create a will object with the fields specified."""
         w_data = WillData(testator, directives, text)
 
-        timestamp = curr_time()
+        timestamp = self.curr_time()
 
         edit_info = EditInfo('create', None, w_data, testator, timestamp)
         self._edit_history: [edit_info]
@@ -62,16 +65,19 @@ class Will:
         creat_info = CreationInfo(witnesses, timestamp)
 
         w_meta = WillMetadata(creat_info, edit_info)
-
-        self._data = data
-        self._metadata = w_meta
-
-        w_hash = compute_hash(f'{str(w_data)}; {str(w_meta)}')
+        w_hash = self.compute_hash(f'{str(w_data)}; {str(w_meta)}')
 
         self._data = w_data
         self._metadata = w_meta
         self._hash = w_hash
-
+    def compute_hash(self, string):
+        """Computes SHA-256 hash of the input string"""
+        hash_digest = sha256(string.encode()).hexdigest()
+        return hash_digest
+    def curr_time(self):
+        """Return current date and time in the following format: dd/mm/yy HH:MM:SS"""
+        date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        return date_time
 
 ##################################################################################
 #                                                                                #
