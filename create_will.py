@@ -14,8 +14,10 @@ from wills import Person, Will
 ##################################################################################
 def export_will(will_object,file_name):
     """Export will object as a pickle file"""
-    print(f"... exporting the will object with Testator:{will_object._data._testator}")
-    with open(file_name+".pickle", 'wb') as handle:
+    
+    pickle_file_name=file_name.split(".")[0]+".pickle"
+    print(f"... exporting the will object with Testator:{will_object._data._testator} to {pickle_file_name}")
+    with open(pickle_file_name, 'wb') as handle:
         pickle.dump(will_object, handle, protocol=pickle.HIGHEST_PROTOCOL)
 def publish_loc(testor_id, loc):
     """Publishing the will object"""
