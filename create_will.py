@@ -129,12 +129,7 @@ def create_will():
     # persistent storage, and publish the mapping from the testator's ID to the
     # will's location
     w = Will(testator, witnesses, directives, text)
-
-    # write out the digital will to persistent storage 
     loc = export_will(w,opts['input-json'])
-
-    # publish the association between the testator's ID and the location of
-    # the will, for future retrieval and use
     publish_loc(testator._id, loc)
 
 
