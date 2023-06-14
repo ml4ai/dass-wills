@@ -20,7 +20,7 @@ def export_will(will_object,file_name):
 def publish_loc(testor_id, loc):
     """Publishing the will object"""
     #To do......
-    print(f"... publishing the the locaiton of will object with Testator id:{testor_id}")
+    print(f"... publishing the the location of will object with Testator id:{testor_id}")
 
 def read_will_info(infilename):
     with open(infilename) as json_file:
