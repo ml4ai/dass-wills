@@ -14,15 +14,18 @@ from wills import Person, Will
 ##################################################################################
 def export_will(will_object,file_name):
     """Export will object as a pickle file"""
+
+    testator = will_object._data._testator
+    outfile = file_name.split(".")[0]+".pickle"
+    print(f"... exporting the will object with testator: {testator} to {outfile}")
     
-    pickle_file_name=file_name.split(".")[0]+".pickle"
-    print(f"... exporting the will object with Testator:{will_object._data._testator} to {pickle_file_name}")
-    with open(pickle_file_name, 'wb') as handle:
+    with open(outfile, 'wb') as handle:
         pickle.dump(will_object, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        
 def publish_loc(testor_id, loc):
     """Publishing the will object"""
     #To do......
-    print(f"... publishing the location of will object with Testator id:{testor_id}")
+    print(f"... [STUB] publishing the location of will object with Testator id:{testor_id}")
 
 def read_will_info(infilename):
     with open(infilename) as json_file:
@@ -76,11 +79,16 @@ def parse_cmd_line():
 #                                                                                #
 ##################################################################################
 
+def validate(testator, witnesses):
+    validate_testator(testator)
+    for w in witnesses:
+        validate_witness(w)
+
 def validate_testator(testator):
-    print(f'... validating testator: {testator}')
+    print(f'... [STUB] validating testator: {testator}')
 
 def validate_witness(witness):
-    print(f'... validating witness: {witness}')
+    print(f'... [STUB] validating witness: {witness}')
 
 ##################################################################################
 #                                                                                #
@@ -109,27 +117,25 @@ def create_will():
     # Read information about the will from the JSON file specified
     will_info = read_will_info(will_info_file)
 
-    # Check legality conditions on testator
-    validate_testator(will_info['testator'])
-    
-    # Check legality conditions on witnesses
-    for w in will_info['witnesses']:
-        validate_witness(w)
+    testator = will_info['testator']
+    witnesses = will_info['witnesses']
+    directives = will_info['directives']
+    text = will_info['text']
+
+    # perform validity checks on testator and witnesses
+    validate(testator, witnesses)
 
     # Create the will using information from the input JSON, write it out to
     # persistent storage, and publish the mapping from the testator's ID to the
     # will's location
-    w = Will(will_info['testator'],
-             will_info['witnesses'],
-             will_info['directives'],
-             will_info['text'])
+    w = Will(testator, witnesses, directives, text)
 
     # write out the digital will to persistent storage 
     loc = export_will(w,opts['input-json'])
 
     # publish the association between the testator's ID and the location of
     # the will, for future retrieval and use
-    publish_loc(will_info['testator']._id, loc)
+    publish_loc(testator._id, loc)
 
 
 if __name__ == '__main__':
