@@ -39,22 +39,25 @@ Example: the file `will01.json` encodes the following simple will:
     },
     "directives" : {
 	"red car" : {
-	    "beneficiary" : {
-		"name" : "Tom Doe",
-		"id" : "0x4567",
-		"info" : ""
-	    },
-	    "condition" : "True"
+	    "if" : "True",
+	    "then" : {
+		"beneficiary" : {
+		    "name" : "Tom Doe",
+		    "id" : "0x4567",
+		    "info" : ""
+		}
+	    }
 	},
 	"vacuum cleaner" : {
-	    "beneficiary" : {
-		"name" : "Mary Hoover",
-		"id" : "0x5678",
-		"info" : ""
-	    },
-	    "condition" : "True"
+	    "if" : "True",
+	    "then" : {
+		"beneficiary" : {
+		    "name" : "Mary Hoover",
+		    "id" : "0x5678",
+		    "info" : ""
+		}
+	    }
 	}
     }
 }
-
 ```
