@@ -105,17 +105,8 @@ def validate_witness(witness):
 # that information is provided in a JSON file specified via the command-line:
 #
 #     create_will -j <json-file>
-def create_will():
-    opts = parse_cmd_line()
-    if opts['input-json'] is None:
-        sys.stderr.write('Input JSON file not specified... aborting\n')
-        sys.exit(1)
-    else:
-        will_info_file = opts['input-json']
 
-    # Read information about the will from the JSON file specified
-    will_info = read_will_info(will_info_file)
-
+def create_will(will_info):
     testator = will_info['testator']
     witnesses = will_info['witnesses']
     directives = will_info['directives']
@@ -132,5 +123,17 @@ def create_will():
     publish_loc(testator._id, loc)
 
 
+# If the code is being run directly by the interpreter, we need to read
+# the information supplied via the JSON file specified on the command line,
+# then pass that structure to creat_will().
 if __name__ == '__main__':
-    create_will()
+    opts = parse_cmd_line()
+    if opts['input-json'] is None:
+        sys.stderr.write('Input JSON file not specified... aborting\n')
+        sys.exit(1)
+    else:
+        will_info_file = opts['input-json']
+
+    # Read information about the will from the JSON file specified
+    will_info = read_will_info(will_info_file)
+    create_will(will_info)
