@@ -36,9 +36,8 @@ def read_will_info(infilename):
     t = json_info['testator']
     will_info['testator'] = Person(t['name'], t['id'], t['info'])
 
-    w = json_info['witnesses']
     will_info['witnesses'] = {Person(v['name'], v['id'], t['info'])
-                              for v in w.values()}
+                              for v in json_info['witnesses']}
 
     will_info['directives'] = json_info['directives']
     will_info['text'] = json_info['text']

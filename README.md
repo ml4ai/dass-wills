@@ -25,18 +25,18 @@ Example: the file `will01.json` encodes the following simple will:
 	"id" : "0x1234",
 	"info" : "address: 12 Magnolia Lane, Bisbee; phone: 123-456-7890"
     },
-    "witnesses" : {
-	"1" : {
+    "witnesses" : [
+	{
 	    "name" : "Jack Doe",
 	    "id" : "0x2345",
 	    "info" : ""
 	},
-	"2" : {
+	{
 	    "name" : "Jane Doe",
 	    "id" : "0x3456",
 	    "info" : ""
 	}
-    },
+    ],
     "directives" : {
 	"red car" : {
 	    "if" : "True",
