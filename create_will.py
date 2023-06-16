@@ -69,6 +69,23 @@ def parse_cmd_line():
 
     return opts
 
+
+# If the code is invoked directly from the command line, it needs to read
+# the information supplied via the JSON file specified and pass that on to
+# create_will().
+def cmd_line_invocation():
+    opts = parse_cmd_line()
+    if opts['input-json'] is None:
+        sys.stderr.write('Input JSON file not specified... aborting\n')
+        sys.exit(1)
+    else:
+        will_info_file = opts['input-json']
+
+    # Read information about the will from the JSON file specified
+    will_info = read_will_info(will_info_file)
+    create_will(will_info, opts)
+
+
 ##################################################################################
 #                                                                                #
 #                               VALIDATION CHECKS                                #
@@ -106,7 +123,7 @@ def validate_witness(witness):
 #
 #     create_will -j <json-file>
 
-def create_will(will_info):
+def create_will(will_info, opts):
     testator = will_info['testator']
     witnesses = will_info['witnesses']
     directives = will_info['directives']
@@ -119,21 +136,9 @@ def create_will(will_info):
     # persistent storage, and publish the mapping from the testator's ID to the
     # will's location
     w = Will(testator, witnesses, directives, text)
-    loc = export_will(w,opts['input-json'])
+    loc = export_will(w, opts['input-json'])
     publish_loc(testator._id, loc)
 
 
-# If the code is being run directly by the interpreter, we need to read
-# the information supplied via the JSON file specified on the command line,
-# then pass that structure to creat_will().
 if __name__ == '__main__':
-    opts = parse_cmd_line()
-    if opts['input-json'] is None:
-        sys.stderr.write('Input JSON file not specified... aborting\n')
-        sys.exit(1)
-    else:
-        will_info_file = opts['input-json']
-
-    # Read information about the will from the JSON file specified
-    will_info = read_will_info(will_info_file)
-    create_will(will_info)
+    cmd_line_invocation()
