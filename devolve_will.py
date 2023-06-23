@@ -1,11 +1,10 @@
 """ devolve_will.py -- devolve (execute) a will """
 
 import argparse
-import json
 import sys
 import pickle
 from hashlib import sha256
-from wills import Person, Will
+from wills import Will
 
 ##################################################################################
 #                                                                                #
