@@ -17,6 +17,7 @@
 	    "info" : ""
 	}
     ],
+    "date" : "2021-01-01",
     "directives" : {
 	"$all_assets" : {
 	    "if" : "True",
