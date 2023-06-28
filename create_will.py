@@ -7,11 +7,11 @@ import sys
 import pickle
 from wills import Person, Will
 
-##################################################################################
-#                                                                                #
-#                                   UTILITIES                                    #
-#                                                                                #
-##################################################################################
+################################################################################
+#                                                                              #
+#                                  UTILITIES                                   #
+#                                                                              #
+################################################################################
 def export_will(will_object,file_name):
     """Export will object as a pickle file"""
 
@@ -143,8 +143,6 @@ def age_is_ok(person, date, oracle_info):
 #                                                                                #
 #                               VALIDATION CHECKS                                #
 #                                                                                #
-# Right now the validation checks don't do much.                                 #
-#                                                                                #
 ##################################################################################
 
 def validate(will_info, oracle_info):
@@ -166,11 +164,11 @@ def validate_witness(witness, will_date, oracle_info):
     assert age_is_ok(witness, will_date, oracle_info)
 
 
-##################################################################################
-#                                                                                #
-#                                 WILL CREATION                                  #
-#                                                                                #
-##################################################################################
+################################################################################
+#                                                                              #
+#                                WILL CREATION                                 #
+#                                                                              #
+################################################################################
 
 
 # create_will(): create a will and publish information about it to persistent
