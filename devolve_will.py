@@ -14,9 +14,12 @@ from wills import Will
 
 
 def cmd_line_invocation():
-    parser = argparse.ArgumentParser(
-        description="""Retrieve a will given a testator ID and perform the following actions:\n - retrieve directives \n - validate thier conditions \n - execute the validated directives."""
-    )
+    desc_text = """Retrieve a will given a testator ID and perform 
+    the following actions:\n
+    - retrieve directives \n
+    - validate thier conditions \n 
+    - execute the validated directives."""
+    parser = argparse.ArgumentParser(description=desc_text)
     parser.add_argument(
         "-p",
         "--path-to-will",
@@ -25,7 +28,9 @@ def cmd_line_invocation():
         help="Input path to the will's [pickle] object.",
     )
     # to-do: use testator ID for will's location
-    # parser.add_argument('-t', '--testator', type=str, help="[to-do] Input testator ID. This is to retrieve will using testator's ID.")
+    # parser.add_argument('-t', '--testator', type=str,
+    # help="[to-do] Input testator ID.
+    # This is to retrieve will using testator's ID.")
     args = parser.parse_args()
     return args
 
@@ -59,13 +64,13 @@ def validate_will(will):
     if current_hash == will._hash:
         print("... [STUB] Successful will validation.")
     else:
-        print("... [STUB] error: Unsuccesful will validation due to incorrect hash.")
+        print("... [STUB] error: will validation failed due to invalid hash.")
         sys.exit(1)
 
 
 def validate_directive(directive, asset):
     """Validate the given directive using the condition in will."""
-    """To-do: add better validation using by linking real life oracle of the condition here."""
+    """To-do: add better validation."""
 
     if directive["if"] == "True":
         print(f"... [STUB] Successful directive validation of '{asset}'.")
@@ -81,11 +86,14 @@ def validate_directive(directive, asset):
 #                                                                                #
 ##################################################################################
 def execute_directive(directive, asset):
-    """Execute the directive by transferring the asset to the corresponding entity."""
+    """Execute the directive by transferring
+    the asset to the corresponding entity."""
     """To-do: add link real life oracle here."""
 
     print(
-        f"... [STUB] Transferring '{asset}' to {directive['then']['beneficiary']['name']} with id {directive['then']['beneficiary']['id']}."
+        f"""... [STUB] Transferring '{asset}' to
+    {directive['then']['beneficiary']['name']}
+    with id {directive['then']['beneficiary']['id']}."""
     )
 
 
@@ -95,7 +103,9 @@ def execute_directive(directive, asset):
 #                                                                                #
 ##################################################################################
 def main():
-    """Load the will, validate its hash, validate each directive, and execute the validated directives."""
+    """Load the will, validate its hash,
+    validate each directive,
+    and execute the validated directives."""
 
     args = cmd_line_invocation()
     path_to_will = args.path_to_will
@@ -107,9 +117,10 @@ def main():
 
     validated_directives = []
     for directive in will_object._data._directives:
-        if validate_directive(will_object._data._directives[directive], directive):
+        directive_obj = will_object._data._directives[directive]
+        if validate_directive(directive_obj, directive):
             validated_directives.append(
-                (will_object._data._directives[directive], directive)
+                (will_object._data._directicdves[directive], directive)
             )
     if len(validated_directives) == 0:
         print("No directives to execute.")
