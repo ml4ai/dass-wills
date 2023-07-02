@@ -1,13 +1,18 @@
-# Creating and manipulating smart wills
+## This branch is pulled from and built upon the branch 'design-attempt-01', not 'main.'
+### Last updated: 2 July 2023
+
+--------------------
+
+### Creating and manipulating smart wills
 
 The files in this directory are a first attempt at code for creating and manipulating smart wills.
 
-## Creating a will
+#### Creating a will
 To create a will, use the command
 
     ./create_will -j <input_json_file>
 
-## The JSON representation of a will
+#### The JSON representation of a will
 The JSON representation of a will currently contains the following top-level items:
 
 - `"text"` : the original natural-language text of the will;
