@@ -1,14 +1,16 @@
-"""
-SALENA 2 July 2023         Comments about changes that I've made
-    * change 'born' to 'birthdate' so we can compare dates in a standardized format
-    * change 'died' to 'deathdate' so we can compare dates in a standardized format
-    * Date validation would use these birthdates.In this case, the validation would fail because:
+/* SALENA 2 July 2023         Comments about changes that I've made
+    * change 'born' to 'birth_date' so we can compare dates in a standardized format
+    * change 'died' to 'death_date' so we can compare dates in a standardized format
+    * Date validation would use these birth_dates.In this case, the validation would fail because:
         * Question if Tom and Mary really had the same birthdays
         * Question if Jane and Mary had the exact same birtdates. Possible but unlikely.
-        * These birthdate scenarios are great choices to validate what we are building!!
+        * These birth_date scenarios are great choices to validate what we are building!!
         * ---> Date validation is a cheap and reliable way that genealogists often use to assess the quality of 
         * others' research or the document itself.
-"""
+    *QUESTIONS:
+        * Do we want to standardize the dates to DD-MM-YYYY?
+        * What is used more for json files with our purposes? UUID or Hex for id numbers?
+*/
 
 {  "trigger" : "bequeath",
     "0x1234" : {
@@ -26,7 +28,7 @@ SALENA 2 July 2023         Comments about changes that I've made
     "0x2345" : {
         "name" : "Jack Doe",
         "birth_date" : "1980-09-12",
-        "died" : "2022-11-23",
+        "death_date" : "2022-11-23",
         "children" : [
             { "name" : "Adam Doe", "id" : "0x6789" }
         ],
