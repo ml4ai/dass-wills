@@ -59,7 +59,7 @@
             { "name" : "Tom Doe", "id" : "0x4567" }
         ]
     },
-    {"date_validation" : "placeholder",
+    "date_validation" : "placeholder",
         "if" : true,
         "then" : {
             "asset" : {
@@ -89,4 +89,5 @@
                       }
             }
     }
+}
 }
