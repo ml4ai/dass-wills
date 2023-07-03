@@ -86,6 +86,20 @@
                     "item" : ["bitcoin", "profit_shares", "apple_music"]
                 },
             "asset_directive" : {
+                "asset_id" : "personal_vac_01",
+                "asset_name" : "vacuum",
+                "asset_validation" : "Place-holder",
+                "testator_status" : "dead",
+                "beneficiary_isAvail" : true,
+                      "if" : true,
+                      "then" : {
+                        "beneficiary" : {
+                            "name" : "Mary Hoover",
+                            "id" : "0x5678",
+                            "info" : "place holder" }
+                      }
+            },
+            "asset_directive" : {
                 "asset_id" : "personal_car_red_01",
                 "asset_name" : "red_car",
                 "asset_validation" : "Place-holder",
@@ -97,7 +111,8 @@
                             "name" : "Tom Doe",
                             "id" : "0x4567",
                             "info" : "place holder" }
-                      },
+                      }
+            },
             "asset_directive" : {
                 "asset_id" : "real_house_01",
                 "asset_name" : "house",
