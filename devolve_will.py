@@ -105,7 +105,7 @@ def divide_by_stripes(beneficiaries,current_percentage=100):
             beneficiary['asset_percentage']=striped_percentage
         else:
             beneficiary['asset_percentage']=0
-            divide_by_stripes(beneficiary,asset,striped_percentage)
+            divide_by_stripes(beneficiary,striped_percentage)
 
 ################################################################################
 #                                                                              #
