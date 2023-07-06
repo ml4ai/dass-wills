@@ -1,0 +1,37 @@
+{
+  "text": "I, John Doe, bequeath all my tangible assets to my children, per stirpes",
+  "entities": [
+    {
+      "id": "e1",
+      "texts": [
+        "John Doe", "I", "my"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "tangible assets"
+      ],
+      "type": "Asset"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "children"
+      ],
+      "type": "BeneficiaryClass"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e2",
+      "AssetQuantifier": "All",
+      "BequestDistributionMethod": "PerStirpes",
+      "Benefactor": "e3"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+    "0x1234": {
+        "name": "John Doe",
+        "birth_date": "1975-07-07",
+        "death_date": "2023-02-03",
+        "spouse": {
+            "name": "Mary Hoover",
+            "id": "0x5678"
+        },
+        "children": [
+            {
+                "name": "Tom Doe",
+                "id": "0x4567"
+            }
+        ],
+        "siblings": [
+            {
+                "name": "Jack Doe",
+                "id": "0x2345"
+            },
+            {
+                "name": "Jane Doe",
+                "id": "0x3456"
+            }
+        ]
+    },
+    "0x2345": {
+        "name": "Jack Doe",
+        "birth_date": "1980-09-12",
+        "death_date": "2022-11-23",
+        "children": [
+            {
+                "name": "Adam Doe",
+                "id": "0x6789"
+            }
+        ],
+        "siblings": [
+            {
+                "name": "John Doe",
+                "id": "0x1234"
+            },
+            {
+                "name": "Jane Doe",
+                "id": "0x3456"
+            }
+        ]
+    },
+    "0x3456": {
+        "name": "Jane Doe",
+        "birth_date": "1978-06-17",
+        "children": [],
+        "siblings": [
+            {
+                "name": "Jack Doe",
+                "id": "0x2345"
+            },
+            {
+                "name": "John Doe",
+                "id": "0x1234"
+            }
+        ]
+    },
+    "0x4567": {
+        "name": "Tom Doe",
+        "birth_date": "1996-06-17"
+    },
+    "0x5678": {
+        "name": "Mary Hoover",
+        "birth_date": "1978-06-17",
+        "spouse": {
+            "name": "John Doe",
+            "id": "0x1234"
+        },
+        "children": [
+            {
+                "name": "Tom Doe",
+                "id": "0x4567"
+            }
+        ]
+    }
+}
