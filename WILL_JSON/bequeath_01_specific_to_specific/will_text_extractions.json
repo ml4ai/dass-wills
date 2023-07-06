@@ -13,14 +13,14 @@
       "texts": [
         "Tom Doe"
       ],
-      "type": "NamedBeneficiary"
+      "type": "BeneficiaryNamed"
     },
     {
       "id": "e3",
       "texts": [
         "Mary Hoover"
       ],
-      "type": "NamedBeneficiary"
+      "type": "BeneficiaryNamed"
     },
     {
       "id": "e4",

@@ -30,7 +30,7 @@
       "Testator": "e1",
       "Asset": "e2",
       "AssetQuantifier": "All",
-      "BequestCondition": "PerStirpes",
+      "BequestDistributionMethod": "PerStirpes",
       "Benefactor": "e3"
     }
   ]

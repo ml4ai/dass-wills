@@ -31,7 +31,7 @@ class Entity:
         self.type = entity_type
 
     def __str__(self):
-        return f"<Entity id={self.id}, texts={self.texts}, entity_type={self.type}:>"
+        return f"<Entity id={self.id}, texts={self.texts}, entity_type={self.type}>"
 
 
 class Event:
@@ -76,9 +76,9 @@ class BequestAsset(Event):
         asset_quantifier = None
         if 'AssetQuantifier' in d:
             asset_quantifier = d['AssetQuantifier']
-        bequest_condition = None
-        if 'BequestCondition' in d:
-            bequest_condition = d['BequestCondition']
+        bequest_distribution_method = None
+        if 'BequestDistributionMethod' in d:
+            bequest_distribution_method = d['BequestDistributionMethod']
         identifier = None
         if 'id' in d:
             identifier = d['id']
@@ -87,12 +87,12 @@ class BequestAsset(Event):
             event_type = d['type']
 
         return BequestAsset(testator=testator, asset=asset, benefactor=benefactor,
-                            asset_quantifier=asset_quantifier, bequest_condition=bequest_condition,
+                            asset_quantifier=asset_quantifier, bequest_distribution_method=bequest_distribution_method,
                             identifier=identifier, event_type=event_type)
 
     def __init__(self, testator: str, asset: str, benefactor: str,
                  asset_quantifier: str = None,
-                 bequest_condition: str = None,
+                 bequest_distribution_method: str = None,
                  identifier: str = None, event_type: str = None):
         if event_type is None:
             event_type = "BequestAsset"
@@ -101,10 +101,10 @@ class BequestAsset(Event):
         self.asset = asset
         self.asset_quantifier = asset_quantifier
         self.benefactor = benefactor
-        self.bequest_condition = bequest_condition
+        self.bequest_distribution_method = bequest_distribution_method
 
     def __str__(self):
-        return f'<BequestAsset id={self.id}, type={self.type}, testator={self.testator}, asset={self.asset}, asset_quantifier={self.asset_quantifier}, benefactor={self.benefactor}, bequest_condition={self.bequest_condition}>'
+        return f'<BequestAsset id={self.id}, type={self.type}, testator={self.testator}, asset={self.asset}, asset_quantifier={self.asset_quantifier}, benefactor={self.benefactor}, bequest_distribution_method={self.bequest_distribution_method}>'
 
 
 class Extractions:
@@ -153,7 +153,9 @@ class Extractions:
         # pprint.pprint(self.events)
 
 
-extractions = Extractions.from_json('WILL_JSON/bequeath_01_specific_to_specific/will_text_extractions.json')
+# -----------------------------------------------------------------------------
+
+extractions = Extractions.from_json('WILL_JSON/bequeath_03_all_to_type/will_text_extractions.json')
 extractions.pprint()
 
 # -----------------------------------------------------------------------------
