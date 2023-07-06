@@ -96,7 +96,7 @@ def execute_directive(directive, asset):
 
 
 def divide_by_stirpes(beneficiaries,current_percentage=100):
-    """Calculate the stripes of asset as per the
+    """Calculate the stirpes of asset as per the
     number of beneficiaries."""
     
     for beneficiary in beneficiaries:
@@ -105,7 +105,7 @@ def divide_by_stirpes(beneficiaries,current_percentage=100):
             beneficiary['asset_percentage']=stirped_percentage
         else:
             beneficiary['asset_percentage']=0
-            divide_by_stripes(beneficiary,stirped_percentage)
+            divide_by_stirpes(beneficiary,stirped_percentage)
 
 ################################################################################
 #                                                                              #
