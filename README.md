@@ -1,18 +1,16 @@
-## This branch is pulled from and built upon the branch 'design-attempt-01', not 'main.'
-### Last updated: 2 July 2023
-
---------------------
-
-### Creating and manipulating smart wills
+## Creating and manipulating smart wills
 
 The files in this directory are a first attempt at code for creating and manipulating smart wills.
 
-#### Creating a will
+### Creating a will
 To create a will, use the command
 
     ./create_will -j <input_json_file>
 
-#### The JSON representation of a will
+### Asset Distribution Chart
+The Distribution_Scenarios_DASS.pdf is a chart of distribution scenarios for Issue, Living Issue, and Per Stirpes. The top two scenarios assume that Living Issue and Issue mean the same thing and the bottom two scenarios assume they mean different distributions. Per stirpes does not show in the third or fourth scenario but would be the same distribution as the first two. It is omitted for ease of reading. The first and third scenarios show one set of living and deceased (in red letters) children and grandchildren. The second and fourth scenarios show another set of living and deceased children. Note that in the first third section of scenarios 1 and 2, it is not labeled issue, living issue or per stirpes. This scenario happens with a set of explicit conditions stated in the will itself.
+
+### The JSON representation of a will
 The JSON representation of a will currently contains the following top-level items:
 
 - `"text"` : the original natural-language text of the will;
