@@ -1,0 +1,1 @@
+Bequeath all assets to specific person

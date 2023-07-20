@@ -1,0 +1,37 @@
+{
+  "text": "I give, devise and bequeath all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated, to my wife, Athalene Arwood, if she survives me.",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "I", "my", "me"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "my wife", "Athalene Arwood", "she"
+      ],
+      "type": "BeneficiaryNamed1"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+      ],
+      "type": "Asset"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e3",
+      "AssetQuantifier": "all",
+      "BequestCondition": "e2 survives e1",
+      "Benefactor": "e2"
+    }
+  ]
+}

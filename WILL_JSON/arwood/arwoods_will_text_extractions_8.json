@@ -1,0 +1,60 @@
+{
+  "text": "We the undersigned subscribing witnesses, do hereby certify that we witnessed the foregoing Last Will and Testament of Leo Arwood, at his request, in his presence and in the presence of each other, and that he signed the same in our presence, and in the presence of each of us, declaring the same to be his Last Will and Testament.",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "We", "the undersigned subscribing witnesses", "we", "each other", "our", "each of us"
+      ],
+      "type": "Witness"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "the foregoing Last Will and Testament of Leo Arwood", "the same", "his Last Will and Testament"
+      ],
+      "type": "Will"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "Leo Arwood", "his", "each other", "he"
+      ],
+      "type": "Testator"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "Attestation",
+      "Witness": "e1",
+      "EventWitnessed": [
+        "v2", "v3"
+      ]
+    },
+    {
+      "id": "v2",
+      "type": "Attestation",
+      "Witness": "e1",
+      "EntityWitnessed": "e2",
+      "AttestationCondition": [
+        "at e3's request", "in e3's presence", "in the presence of e1 and e3"
+      ]
+    },
+    {
+      "id": "v3",
+      "type": "SignWill",
+      "Testator": "e3",
+      "Will": "e2",
+      "SignWillCondition": [
+        "in e1's presence", "in the presence of each of e1"
+      ]
+    },
+    {
+      "id": "v4",
+      "type": "WillCreation",
+      "Testator": "e3",
+      "Will": "e2"
+    }
+  ]
+}

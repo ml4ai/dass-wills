@@ -1,0 +1,1 @@
+Bequeath specific asset paired with specific person, 2x
