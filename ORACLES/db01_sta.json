@@ -1,24 +1,3 @@
-/* SALENA 2 July 2023         Comments about changes that I've made
-    * change 'born' to 'birth_date' so we can compare dates in a standardized format
-    * change 'died' to 'death_date' so we can compare dates in a standardized format
-    * Date validation would use these birth_dates. In this case, the validation would fail because:
-        * Question if Tom and Mary really had the same birthdays
-        * Question if Jane and Mary had the exact same birtdates. Possible but unlikely.
-        * These birth_date scenarios are great choices to validate what we are building!!
-        * ---> Date validation is a cheap and reliable way that genealogists often use to assess the quality of 
-        * others' research or the document itself.
-    * Added death date for John Doe. Otherwise, nothing else could happen.
-        * And making sure his death date is after Jack's date.
-    * Added bequeathed_item keys to the person. In this case, vacuum to Mary and car to Tom for personal items. Jane Doe inherits the house.
-
-    "I, John Doe, bequeath my red car to Tom Doe, my vacuum cleaner to Mary Hoover and my house to Jane Doe."
-
-    * QUESTIONS:
-        * Do we want to standardize the dates to DD-MM-YYYY?
-        * What is used more for json files with our purposes? UUID or Hex for id numbers?
-        * Should we use names of items that contain information like 'personal' or 'real'? In the ID or the name? 
-*/
-
 {  "trigger" : "bequeath",
     "0x1234" : {
         "name" : "John Doe",
