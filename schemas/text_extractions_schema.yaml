@@ -1,0 +1,94 @@
+openapi: 3.0.0
+
+# TODO
+#   (1) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+
+info:
+  title: DASS Text Extractions Schema
+  description: |
+    OpenAPI-style specification of the Text Extractions Schema
+
+  contact:
+    name: Salena Torres Ashton and Clayton T. Morrison
+    email: claytonm@arizona.edu
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: "0.1.0"
+
+paths: {}
+
+components:
+
+  schemas:
+
+    TEObject:
+      description: blee
+      properties:
+        comment:
+          type: string
+
+    TextExtractions:
+      description: |
+        Root structure containing the Machine Reading/NLP text extractions.
+      allOf:
+        - $ref: "#/components/schemas/TEObject"
+      required:
+        - text
+      properties:
+        text:
+          description: |
+            The original raw text of the will.
+          type: string
+        entities:
+          description: |
+            The array of extracted entities
+          type: array
+          items:
+            $ref: "#/components/schemas/Entity"
+        events:
+          description: |
+            The arry of extracted events
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+
+    Entity:
+      description: An extracted entity
+      properties:
+        id:
+          description: |
+            A string representing the identifier of the entity, using Soundex convention.
+            E.g., "A630_1" for the first intance of "Arwood"
+          type: string
+        texts:
+          description: |
+            Array of 1 or more strings representing the source text that is judged to refer to the entity
+          type: array
+          items:
+            type: string
+        type:
+          description: |
+            The DASS entity type
+          type: string
+
+    Event:
+      description: An extracted event
+      properties:
+        id:
+          description: |
+            A string representing the identifier of the event.
+          type: string
+        type:
+          description: The type of the event.
+          type: string
+
+    EventBequeath:
+        description: A Beaqueath event.
+        Testator:
+          description: string representing the id of the Entity that is the Testator
+          type: string
+        Asset:
+          description: string representing the id of the Entity that is the Asset being bequeathed
+          type: string
+        # TODO: Finish adding the remaining fields
