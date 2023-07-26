@@ -1,7 +1,8 @@
-openapi: 3.0.0
 
 # TODO
 #   (1) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+
+openapi: 3.0.0
 
 info:
   title: DASS Text Extractions Schema
@@ -84,11 +85,26 @@ components:
           type: string
 
     EventBequeath:
-        description: A Beaqueath event.
-        Testator:
-          description: string representing the id of the Entity that is the Testator
-          type: string
-        Asset:
-          description: string representing the id of the Entity that is the Asset being bequeathed
-          type: string
-        # TODO: Finish adding the remaining fields
+        description: A Bequeath event.
+        properties:
+          Testator:
+            description: A string representing the id of the Entity that is the Testator
+            type: string
+          Asset:
+            description: A string representing the id of the Entity that is the Asset being bequeathed
+            type: string
+          Benefactor: 
+            description: A string representing the id of the Entity that is the Benefactor
+            type: string
+          BequestCondition:
+            description: A string that describes the condition of asset bequesting
+            type: string
+          # example from arwood extraction 3 "e2 survives e1"
+          AssetQuantifier:
+            description: A string that quantifies the amount Asset bequeathed in text
+            type: string
+          Distribution:
+            description: |
+              The method of Asset distribution specified in text, Issue or Per Stirpes
+            type: string
+
