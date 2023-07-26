@@ -53,6 +53,18 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Event"
+        eventNomination:
+          description: |
+            The array of extracted events for executor nomination
+          type: array
+          items:
+            $ref: "#/components/schemas/EventNomination"
+        eventBequeath:
+          description: |
+            The array of extracted events for the Bequeath trigger
+          type: array
+          items:
+            $ref: "#/components/schemas/EventBequeath"
 
     Entity:
       description: An extracted entity
@@ -83,6 +95,20 @@ components:
         type:
           description: The type of the event.
           type: string
+        TestatorDied:
+          description: Trigger label that was extracted from the NLP annotations
+          type: string
+          # arwood 4 text extraction calls this "PersonDied"
+
+    EventNomination:
+        description: The testator names the executor
+        properties:
+          Testator:
+            description: A string representing the id of the Entity that is the Testator
+            type: string
+          Executor:
+            description: A string representing the id of the Entity that is the Executor 
+            type: string
 
     EventBequeath:
         description: A Bequeath event.
