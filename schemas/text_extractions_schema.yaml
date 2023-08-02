@@ -1,6 +1,6 @@
 
 # TODO
-#   (1) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+#   (*) Figure out how to support Union type (e.g., OneOf) in OpenAPI
 
 openapi: 3.0.0
 
@@ -52,19 +52,22 @@ components:
             The arry of extracted events
           type: array
           items:
-            $ref: "#/components/schemas/Event"
-        eventNomination:
-          description: |
-            The array of extracted events for executor nomination
-          type: array
-          items:
-            $ref: "#/components/schemas/EventNomination"
-        eventBequeath:
-          description: |
-            The array of extracted events for the Bequeath trigger
-          type: array
-          items:
-            $ref: "#/components/schemas/EventBequeath"
+            oneOf:
+              - $ref: "#/components/schemas/Event"
+              - $ref: "#/components/schemas/EventNomination"
+              - $ref: "#/components/schemas/EventBequeath"
+        # eventNomination:
+        #   description: |
+        #     The array of extracted events for executor nomination
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/EventNomination"
+        # eventBequeath:
+        #   description: |
+        #     The array of extracted events for the Bequeath trigger
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/EventBequeath"
 
     Entity:
       description: An extracted entity
@@ -101,36 +104,36 @@ components:
           # arwood 4 text extraction calls this "PersonDied"
 
     EventNomination:
-        description: The testator names the executor
-        properties:
-          Testator:
-            description: A string representing the id of the Entity that is the Testator
-            type: string
-          Executor:
-            description: A string representing the id of the Entity that is the Executor 
-            type: string
+      description: The testator names the executor
+      properties:
+        Testator:
+          description: A string representing the id of the Entity that is the Testator
+          type: string
+        Executor:
+          description: A string representing the id of the Entity that is the Executor
+          type: string
 
     EventBequeath:
-        description: A Bequeath event.
-        properties:
-          Testator:
-            description: A string representing the id of the Entity that is the Testator
-            type: string
-          Asset:
-            description: A string representing the id of the Entity that is the Asset being bequeathed
-            type: string
-          Benefactor: 
-            description: A string representing the id of the Entity that is the Benefactor
-            type: string
-          BequestCondition:
-            description: A string that describes the condition of asset bequesting
-            type: string
-          # example from arwood extraction 3 "e2 survives e1"
-          AssetQuantifier:
-            description: A string that quantifies the amount Asset bequeathed in text
-            type: string
-          Distribution:
-            description: |
-              The method of Asset distribution specified in text, Issue or Per Stirpes
-            type: string
+      description: A Bequeath event.
+      properties:
+        Testator:
+          description: A string representing the id of the Entity that is the Testator
+          type: string
+        Asset:
+          description: A string representing the id of the Entity that is the Asset being bequeathed
+          type: string
+        Benefactor:
+          description: A string representing the id of the Entity that is the Benefactor
+          type: string
+        BequestCondition:
+          description: A string that describes the condition of asset bequesting
+          type: string
+        # example from arwood extraction 3 "e2 survives e1"
+        AssetQuantifier:
+          description: A string that quantifies the amount Asset bequeathed in text
+          type: string
+        Distribution:
+          description: |
+            The method of Asset distribution specified in text, Issue or Per Stirpes
+          type: string
 
