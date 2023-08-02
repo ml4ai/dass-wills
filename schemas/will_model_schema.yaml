@@ -1,0 +1,64 @@
+
+# TODO
+#   (*) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+
+openapi: 3.0.0
+
+info:
+  title: DASS Will Model Schema
+  description: |
+    OpenAPI-style specification of the Will Model Schema
+
+  contact:
+    name: Salena Torres Ashton and Clayton T. Morrison
+    email: salena@arizona.edu, claytonm@arizona.edu
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: "0.1.0"
+
+paths: {}
+
+components:
+
+  schemas:
+
+    TextExtractions:
+      description: |
+        Root structure containing the Machine Reading/NLP text extractions.
+      required:
+        - text
+      properties:
+        text:
+          description: |
+            The original raw text of the will.
+          type: string
+        testator:
+          description: |
+            The Testator of the will.
+          type:
+            $ref: "#/components/schemas/Person"
+        witnesses:
+          description: |
+            Array of Witnesses witnessing the will creation.
+          type: array
+          items:
+            $ref: "#/components/schemas/Person"
+        date:
+          description: |
+            The date of the creation or modification of the current WillModel
+          type: string
+          format: date
+
+    Person:
+      description: A Person
+      required:
+        - name
+        - id
+      properties:
+        name:
+          description: The name of the Person
+          type: string
+        id:
+          description: A unique id for the Person, using Soundex representation
+          type: string
