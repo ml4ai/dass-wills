@@ -34,10 +34,9 @@ components:
             The original raw text of the will.
           type: string
         testator:
-          description: |
-            The Testator of the will.
-          type:
-            $ref: "#/components/schemas/Person"
+          # description: |
+          #   The Testator of the will.
+          $ref: "#/components/schemas/Person"
         witnesses:
           description: |
             Array of Witnesses witnessing the will creation.
@@ -54,7 +53,7 @@ components:
             Array of will Directives
           type: array
           items:
-            $ref: "#/components/schemas/DirectiveBody"
+            $ref: "#/components/schemas/DirectiveType"
 
     Person:
       description: A Person
@@ -69,23 +68,30 @@ components:
           description: A unique id for the Person, using Soundex representation
           type: string
 
+    DirectiveType:
+      description: TODO
+      properties:
+        directive_type:
+          type: string
+        body:
+          $ref: "#/components/schemas/DirectiveBody"
+
     DirectiveBody:
+      description: |
+        A DirectiveBody
       oneOf:
         - $ref: "#/components/schemas/Conditional"
-        - $ref: "#/components/schemas/DirectiveType"
+        - $ref: "#/components/schemas/DirectiveStatement"
 
     Conditional:
       description: A condition
       properties:
         condition:
-          type:
-            $ref: "#/components/schemas/Predicate"
+          $ref: "#/components/schemas/Predicate"
         body_if:
-          type:
-            $ref: "#/components/schemas/DirectiveBody"
+          $ref: "#/components/schemas/DirectiveBody"
         body_else:
-          type:
-            $ref: "#/components/schemas/DirectiveBody"
+          $ref: "#/components/schemas/DirectiveBody"
 
 #    PrimitiveOperator:
 #      oneOf:
@@ -109,21 +115,20 @@ components:
 #        - mult
 #        - div
 
-    NamedFunction:
+    EnumNamedFunction:
       type: string
       enum:
         - is_alive
 
-    ModifierType:
+    EnumModifierType:
       type: string
       enum:
         - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
 
-    DirectiveType:
+    DirectiveStatement:
       # TODO: needs changing
       oneOf:
         - $ref: "#/components/schemas/SExpr"
-
 
     LiteralValue:
       description: A literal value
@@ -152,22 +157,19 @@ components:
         An s-expression (Polish notation): (<op> <arg>*)
       properties:
         op:
-          type:
-            oneOf:
-              # - $ref: "#/components/schemas/PrimitiveOperator"
-              - $ref: "#/components/schemas/NamedFunction"
+          oneOf:
+            - $ref: "#/components/schemas/EnumNamedFunction"
 
         args:
           type: array
           items:
-            type:
-              oneOf:
-                - $ref: "#/components/schemas/LiteralValue"
-                - $ref: "#/components/schemas/VariableReference"
-                - $ref: "#/components/schemas/SExpr"
+            oneOf:
+              - $ref: "#/components/schemas/LiteralValue"
+              - $ref: "#/components/schemas/VariableReference"
+              - $ref: "#/components/schemas/SExpr"
 
     Predicate:
       description: A predicate (truth-valued function)
       properties:
         expression:
-          type: SExpr
+          $ref: "#/components/schemas/SExpr"
