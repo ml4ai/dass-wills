@@ -23,9 +23,9 @@ components:
 
   schemas:
 
-    TextExtractions:
+    WillModel:
       description: |
-        Root structure containing the Machine Reading/NLP text extractions.
+        Root structure of a WillModel.
       required:
         - text
       properties:
@@ -49,6 +49,12 @@ components:
             The date of the creation or modification of the current WillModel
           type: string
           format: date
+        directives:
+          description: |
+            Array of will Directives
+          type: array
+          items:
+            $ref: "#/components/schemas/DirectiveBody"
 
     Person:
       description: A Person
@@ -62,3 +68,106 @@ components:
         id:
           description: A unique id for the Person, using Soundex representation
           type: string
+
+    DirectiveBody:
+      oneOf:
+        - $ref: "#/components/schemas/Conditional"
+        - $ref: "#/components/schemas/DirectiveType"
+
+    Conditional:
+      description: A condition
+      properties:
+        condition:
+          type:
+            $ref: "#/components/schemas/Predicate"
+        body_if:
+          type:
+            $ref: "#/components/schemas/DirectiveBody"
+        body_else:
+          type:
+            $ref: "#/components/schemas/DirectiveBody"
+
+#    PrimitiveOperator:
+#      oneOf:
+#        - BooleanOperator
+#        - ArithmeticOperator
+#
+#    BooleanOperator:
+#      type: string
+#      enum:
+#        - eq
+#        - lt
+#        - leq
+#        - gt
+#        - geq
+#
+#    ArithmeticOperator:
+#      type: string
+#      enum:
+#        - add
+#        - sub
+#        - mult
+#        - div
+
+    NamedFunction:
+      type: string
+      enum:
+        - is_alive
+
+    ModifierType:
+      type: string
+      enum:
+        - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
+
+    DirectiveType:
+      # TODO: needs changing
+      oneOf:
+        - $ref: "#/components/schemas/SExpr"
+
+
+    LiteralValue:
+      description: A literal value
+      properties:
+        type:
+          description: |
+            The type of the literal value.
+            Determines how the value string is to be interpreted.
+          type: string
+        value:
+          description: |
+            The string representation of the value.
+            The string is to be interpreted according to the (value) type.
+          type: string
+
+    VariableReference:
+      description: |
+        A reference to a variable.
+      properties:
+        name:
+          description: The name of the Variable
+          type: string
+
+    SExpr:
+      description: |
+        An s-expression (Polish notation): (<op> <arg>*)
+      properties:
+        op:
+          type:
+            oneOf:
+              # - $ref: "#/components/schemas/PrimitiveOperator"
+              - $ref: "#/components/schemas/NamedFunction"
+
+        args:
+          type: array
+          items:
+            type:
+              oneOf:
+                - $ref: "#/components/schemas/LiteralValue"
+                - $ref: "#/components/schemas/VariableReference"
+                - $ref: "#/components/schemas/SExpr"
+
+    Predicate:
+      description: A predicate (truth-valued function)
+      properties:
+        expression:
+          type: SExpr
