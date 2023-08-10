@@ -28,6 +28,8 @@ components:
         Root structure of a WillModel.
       required:
         - text
+        - date
+        - dass_type
       properties:
         text:
           description: |
@@ -53,13 +55,17 @@ components:
             Array of will Directives
           type: array
           items:
-            $ref: "#/components/schemas/DirectiveType"
+            $ref: "#/components/schemas/DirectiveBody"
+        dass_type:
+          type: string
+          default: "WillModel"
 
     Person:
       description: A Person
       required:
         - name
         - id
+        - dass_type
       properties:
         name:
           description: The name of the Person
@@ -67,14 +73,35 @@ components:
         id:
           description: A unique id for the Person, using Soundex representation
           type: string
-
-    DirectiveType:
-      description: TODO
-      properties:
-        directive_type:
+        dass_type:
           type: string
-        body:
-          $ref: "#/components/schemas/DirectiveBody"
+          default: "Person"
+
+    Asset:
+      decription: An asset
+      required:
+        - name
+        - id
+        - dass_type
+      properties:
+        name:
+          description: An asset that can be bequeathed
+          type: string
+        id:
+          description: A unique id for an Asset
+          type: string
+        dass_type:
+          type: string
+          default: "Asset"
+
+#    DirectiveType:
+#      description: |
+#        Top-level directive structure
+#      properties:
+#        directive_type:
+#          type: string
+#        body:
+#          $ref: "#/components/schemas/DirectiveBody"
 
     DirectiveBody:
       description: |
@@ -85,6 +112,11 @@ components:
 
     Conditional:
       description: A condition
+      required:
+        - condition
+        - body_if
+        - body_else
+        - dass_type
       properties:
         condition:
           $ref: "#/components/schemas/Predicate"
@@ -92,6 +124,9 @@ components:
           $ref: "#/components/schemas/DirectiveBody"
         body_else:
           $ref: "#/components/schemas/DirectiveBody"
+        dass_type:
+          type: string
+          default: "Conditional"
 
 #    PrimitiveOperator:
 #      oneOf:
@@ -118,20 +153,55 @@ components:
     EnumNamedFunction:
       type: string
       enum:
+        - True
         - is_alive
 
-    EnumModifierType:
-      type: string
-      enum:
-        - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
+#    EnumModifierType:
+#      type: string
+#      enum:
+#        - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
 
     DirectiveStatement:
-      # TODO: needs changing
       oneOf:
-        - $ref: "#/components/schemas/SExpr"
+        - $ref: "#/components/schemas/DirectiveBequeath"
+        # - $ref: "#/components/schemas/SExpr"
+
+    DirectiveBequeath:
+      description: A Bequeath Directive
+      required:
+        - type
+        - beneficiaries
+        - assets
+        - dass_type
+      properties:
+        type:
+          type: string
+          default: "DirectiveBequeath"
+        beneficiaries:
+          type: array
+          items:
+            $ref: "#/components/schemas/TypeBeneficiary"
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Asset"
+        dass_type:
+          type: string
+          default: "DirectiveBequeath"
+
+    TypeBeneficiary:
+      description: |
+        Types that can play the role of a Beneficiary.
+        This enable multiple subtypes of Beneficiary.
+      oneOf:
+        - $ref: "#/components/schemas/Person"
 
     LiteralValue:
       description: A literal value
+      required:
+        - type
+        - value
+        - dass_type
       properties:
         type:
           description: |
@@ -143,23 +213,34 @@ components:
             The string representation of the value.
             The string is to be interpreted according to the (value) type.
           type: string
+        dass_type:
+          type: string
+          default: "LiteralValue"
 
     VariableReference:
       description: |
         A reference to a variable.
+      required:
+        - name
+        - dass_type
       properties:
         name:
           description: The name of the Variable
           type: string
+        dass_type:
+          type: string
+          default: "VariableReference"
 
     SExpr:
       description: |
         An s-expression (Polish notation): (<op> <arg>*)
+      required:
+        - fn
+        - dass_type
       properties:
-        op:
+        fn:
           oneOf:
             - $ref: "#/components/schemas/EnumNamedFunction"
-
         args:
           type: array
           items:
@@ -167,9 +248,17 @@ components:
               - $ref: "#/components/schemas/LiteralValue"
               - $ref: "#/components/schemas/VariableReference"
               - $ref: "#/components/schemas/SExpr"
+        dass_type:
+          type: string
+          default: "SExpr"
 
     Predicate:
       description: A predicate (truth-valued function)
+      allOf:
+        - $ref: "#/components/schemas/SExpr"
+      required:
+        - dass_type
       properties:
-        expression:
-          $ref: "#/components/schemas/SExpr"
+        dass_type:
+          type: string
+          default: "Predicate"
