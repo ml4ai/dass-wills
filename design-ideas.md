@@ -2,7 +2,7 @@
 
 ## Overview
 
-When a will is first created, its digital representation has to be written into some sort of persistent storage.  Subsequent accesses to the will, e.g., for modifications while the testator is alive or devolution after the testator's death, have to be able to locate this representation.  This means that the creation of the will needs to return some sort of locator for its digital representation, which is used for subsequent accesses.   For this, we need a way to map the testator's ID to the locator for that person's will.
+When a will is first created, its digital representation has to be written into some sort of persistent storage. When the will is accessed after this creation, (e.g., modifications while the testator is alive or devolution after the testator's death), the will must be easy to locate. This means that the creation of the will needs to return some sort of locator for its digital representation, which is used for subsequent accesses. For this, we need a way to map the testator's ID to the locator for that person's will.
 
 **TBD:** The details of how the ID-to-locator mapping is implemented.
 
@@ -23,9 +23,11 @@ When a will is first created, its digital representation has to be written into 
 The following is a (non-exhaustive) list of desiderata for representing wills in a form suitable for working with them via software.  
 
 1) **Interoperability.**  Ideally, we should not lock in the use of any one kind of software.  This argues for a flexible representation, such as JSON.
+
 2) **Editability.** Wills can be modified.  Their digital versions should be correspondingly editable.  However, this raises a number of issues:
 
-    * **Edit permissions.** Who is allowed to edit the a will?  Where is this checked?
+    * **Edit permissions.** Who is allowed to edit the a will?  Where is this checked? Should a significantly-edited will or codicil generate an additional locator or other id?
+
 3) **Provenance and auditability.** We should be able to check the provenance of the digital will:
 
     * At will execution time: what information came from where;
@@ -63,7 +65,9 @@ Information about each edit contains the following information:
 - `_timestamp`: a timestamp of when the edit was performed            
 
 ### Will creation
-For now, we assume that the back-end of the system to create a digital will gets its information about the components of the will from a JSON file.  The creation of a create a will then involves the following steps:
+For now, to create a digital will, we assume that the back-end of the system
+obtains its information about the will's components from a JSON file. The
+creation of this digital will involves the following steps:
 
 1) read the JSON file specified;
 2) extract and organize the resulting information appropriately;
