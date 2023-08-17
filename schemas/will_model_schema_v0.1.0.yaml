@@ -23,7 +23,7 @@ components:
 
   schemas:
 
-    WillModel:
+    WM_WillModel:
       description: |
         Root structure of a WillModel.
       required:
@@ -44,7 +44,7 @@ components:
             Array of Witnesses witnessing the will creation.
           type: array
           items:
-            $ref: "#/components/schemas/Person"
+            $ref: "#/components/schemas/WM_Person"
         date:
           description: |
             The date of the creation or modification of the current WillModel
@@ -55,12 +55,12 @@ components:
             Array of will Directives
           type: array
           items:
-            $ref: "#/components/schemas/DirectiveBody"
+            $ref: "#/components/schemas/WM_DirectiveBody"
         dass_type:
           type: string
-          default: "WillModel"
+          default: "WM_WillModel"
 
-    Person:
+    WM_Person:
       description: A Person
       required:
         - name
@@ -75,9 +75,9 @@ components:
           type: string
         dass_type:
           type: string
-          default: "Person"
+          default: "WM_Person"
 
-    Asset:
+    WM_Asset:
       decription: An asset
       required:
         - name
@@ -92,7 +92,7 @@ components:
           type: string
         dass_type:
           type: string
-          default: "Asset"
+          default: "WM_Asset"
 
 #    DirectiveType:
 #      description: |
@@ -103,14 +103,14 @@ components:
 #        body:
 #          $ref: "#/components/schemas/DirectiveBody"
 
-    DirectiveBody:
+    WM_DirectiveBody:
       description: |
         A DirectiveBody
       oneOf:
-        - $ref: "#/components/schemas/Conditional"
-        - $ref: "#/components/schemas/DirectiveStatement"
+        - $ref: "#/components/schemas/WM_Conditional"
+        - $ref: "#/components/schemas/WM_DirectiveStatement"
 
-    Conditional:
+    WM_Conditional:
       description: A condition
       required:
         - condition
@@ -119,14 +119,14 @@ components:
         - dass_type
       properties:
         condition:
-          $ref: "#/components/schemas/Predicate"
+          $ref: "#/components/schemas/WM_Predicate"
         body_if:
-          $ref: "#/components/schemas/DirectiveBody"
+          $ref: "#/components/schemas/WM_DirectiveBody"
         body_else:
-          $ref: "#/components/schemas/DirectiveBody"
+          $ref: "#/components/schemas/WM_DirectiveBody"
         dass_type:
           type: string
-          default: "Conditional"
+          default: "WM_Conditional"
 
 #    PrimitiveOperator:
 #      oneOf:
@@ -150,7 +150,7 @@ components:
 #        - mult
 #        - div
 
-    EnumNamedFunction:
+    WM_EnumNamedFunction:
       type: string
       enum:
         - True
@@ -161,12 +161,12 @@ components:
 #      enum:
 #        - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
 
-    DirectiveStatement:
+    WM_DirectiveStatement:
       oneOf:
-        - $ref: "#/components/schemas/DirectiveBequeath"
-        # - $ref: "#/components/schemas/SExpr"
+        - $ref: "#/components/schemas/WM_DirectiveBequeath"
+        # - $ref: "#/components/schemas/WM_SExpr"
 
-    DirectiveBequeath:
+    WM_DirectiveBequeath:
       description: A Bequeath Directive
       required:
         - type
@@ -180,23 +180,23 @@ components:
         beneficiaries:
           type: array
           items:
-            $ref: "#/components/schemas/TypeBeneficiary"
+            $ref: "#/components/schemas/WM_TypeBeneficiary"
         assets:
           type: array
           items:
-            $ref: "#/components/schemas/Asset"
+            $ref: "#/components/schemas/WM_Asset"
         dass_type:
           type: string
-          default: "DirectiveBequeath"
+          default: "WM_DirectiveBequeath"
 
-    TypeBeneficiary:
+    WM_TypeBeneficiary:
       description: |
         Types that can play the role of a Beneficiary.
         This enable multiple subtypes of Beneficiary.
       oneOf:
-        - $ref: "#/components/schemas/Person"
+        - $ref: "#/components/schemas/WM_Person"
 
-    LiteralValue:
+    WM_LiteralValue:
       description: A literal value
       required:
         - type
@@ -215,9 +215,9 @@ components:
           type: string
         dass_type:
           type: string
-          default: "LiteralValue"
+          default: "WM_LiteralValue"
 
-    VariableReference:
+    WM_VariableReference:
       description: |
         A reference to a variable.
       required:
@@ -229,9 +229,9 @@ components:
           type: string
         dass_type:
           type: string
-          default: "VariableReference"
+          default: "WM_VariableReference"
 
-    SExpr:
+    WM_SExpr:
       description: |
         An s-expression (Polish notation): (<op> <arg>*)
       required:
@@ -240,25 +240,25 @@ components:
       properties:
         fn:
           oneOf:
-            - $ref: "#/components/schemas/EnumNamedFunction"
+            - $ref: "#/components/schemas/WM_EnumNamedFunction"
         args:
           type: array
           items:
             oneOf:
-              - $ref: "#/components/schemas/LiteralValue"
-              - $ref: "#/components/schemas/VariableReference"
-              - $ref: "#/components/schemas/SExpr"
+              - $ref: "#/components/schemas/WM_LiteralValue"
+              - $ref: "#/components/schemas/WM_VariableReference"
+              - $ref: "#/components/schemas/WM_SExpr"
         dass_type:
           type: string
-          default: "SExpr"
+          default: "WM_SExpr"
 
-    Predicate:
+    WM_Predicate:
       description: A predicate (truth-valued function)
       allOf:
-        - $ref: "#/components/schemas/SExpr"
+        - $ref: "#/components/schemas/WM_SExpr"
       required:
         - dass_type
       properties:
         dass_type:
           type: string
-          default: "Predicate"
+          default: "WM_Predicate"
