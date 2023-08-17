@@ -23,17 +23,17 @@ components:
 
   schemas:
 
-    TEObject:
+    TE_Object:
       description: blee
       properties:
         comment:
           type: string
 
-    TextExtractions:
+    TE_TextExtractions:
       description: |
         Root structure containing the Machine Reading/NLP text extractions.
       allOf:
-        - $ref: "#/components/schemas/TEObject"
+        - $ref: "#/components/schemas/TE_Object"
       required:
         - text
       properties:
@@ -46,16 +46,16 @@ components:
             The array of extracted entities
           type: array
           items:
-            $ref: "#/components/schemas/Entity"
+            $ref: "#/components/schemas/TE_Entity"
         events:
           description: |
             The arry of extracted events
           type: array
           items:
             oneOf:
-              - $ref: "#/components/schemas/Event"
-              - $ref: "#/components/schemas/EventNomination"
-              - $ref: "#/components/schemas/EventBequeath"
+              - $ref: "#/components/schemas/TE_Event"
+              - $ref: "#/components/schemas/TE_EventNomination"
+              - $ref: "#/components/schemas/TE_EventBequeath"
         # eventNomination:
         #   description: |
         #     The array of extracted events for executor nomination
@@ -69,7 +69,7 @@ components:
         #   items:
         #     $ref: "#/components/schemas/EventBequeath"
 
-    Entity:
+    TE_Entity:
       description: An extracted entity
       properties:
         id:
@@ -88,7 +88,7 @@ components:
             The DASS entity type
           type: string
 
-    Event:
+    TE_Event:
       description: An extracted event
       properties:
         id:
@@ -103,7 +103,7 @@ components:
           type: string
           # arwood 4 text extraction calls this "PersonDied"
 
-    EventNomination:
+    TE_EventNomination:
       description: The testator names the executor
       properties:
         Testator:
@@ -113,7 +113,7 @@ components:
           description: A string representing the id of the Entity that is the Executor
           type: string
 
-    EventBequeath:
+    TE_EventBequeath:
       description: A Bequeath event.
       properties:
         Testator:
