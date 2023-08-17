@@ -54,7 +54,7 @@ def get_url(url_base: str, version: str) -> str:
     return f"{url_base}{version}.yaml"
 
 
-def move_existing_model_dir(model_root: str, model_type: str, copy_readme: bool, verbose=True):
+def move_existing_model_dir(model_root: str, model_type: str, copy_readme: bool, verbose: bool = True):
     if verbose:
         print(f"(1) mv existing {model_type} model")
     if os.path.exists(model_root):
@@ -187,6 +187,17 @@ def copy_and_replace_import_paths(src_files: List[str], src_root: str, dst_root:
                                   verbose: bool = True):
     if verbose:
         print("(4) copy_and_replace_import_paths()")
+        print(f"        >> src_files: {src_files}")
+        print(f"        >> src_root: {src_root}")
+        print(f"        >> dst_root: {dst_root}")
+        print(f"        >> import_path: {import_path}")
+        print(f"        >> model_type: {model_type}")
+
+    if not os.path.isdir(dst_root):
+        print(f"NOTE: '{dst_root}' does not exist, creating...")
+        Path(dst_root).mkdir(parents=True, exist_ok=True)
+        print(f"DONE: created '{dst_root}'")
+
     for filename in src_files:
         src_filepath = os.path.join(src_root, filename)
         dst_filepath = os.path.join(dst_root, filename)
@@ -262,8 +273,8 @@ def main():
     # parser = argparse.ArgumentParser(description='Use swagger-codegen to generate '
     #                                              'TE, WM data model')
     # parser.add_argument()
-    process('TE', TE_VERSION, verbose=True)
-    # process('WM', WM_VERSION)
+    # process('TE', TE_VERSION, verbose=True)
+    process('WM', WM_VERSION)
 
 
 if __name__ == "__main__":
