@@ -19,6 +19,10 @@ info:
 
 paths: {}
 
+### Possible other document references
+# letters of exclusion or estrangement ?
+#
+
 components:
 
   schemas:
@@ -177,6 +181,11 @@ components:
         type:
           type: string
           default: "DirectiveBequeath"
+
+          # generalize the WM_DirectiveBequeath.type
+          # When dispursement is "ambiguous", e.g., no disbursement rules, then:
+          # Default_rule_of_constructions
+
         beneficiaries:
           type: array
           items:
