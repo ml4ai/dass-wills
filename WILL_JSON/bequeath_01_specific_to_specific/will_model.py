@@ -25,12 +25,12 @@ def make_instance():
 
     beneficiary_tom_doe = wm_person.WMPerson(
         name="Tom Doe",
-        id=""
+        id="0x4567"
     )
 
     beneficiary_mary_hoover = wm_person.WMPerson(
         name="Mary Hoover",
-        id=""
+        id="0x5678"
     )
 
     asset_red_car = wm_asset.WMAsset(
