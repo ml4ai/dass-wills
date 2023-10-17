@@ -42,7 +42,7 @@ components:
         testator:
           # description: |
           #   The Testator of the will.
-          $ref: "#/components/schemas/Person"
+          $ref: "#/components/schemas/WM_Person"
         witnesses:
           description: |
             Array of Witnesses witnessing the will creation.
@@ -271,3 +271,4 @@ components:
         dass_type:
           type: string
           default: "WM_Predicate"
+
