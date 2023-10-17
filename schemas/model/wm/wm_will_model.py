@@ -29,7 +29,7 @@ class WMWillModel(object):
     """
     swagger_types = {
         'text': 'str',
-        'testator': 'Person',
+        'testator': 'WMPerson',
         'witnesses': 'list[WMPerson]',
         '_date': 'date',
         'directives': 'list[WMDirectiveBody]',
@@ -95,7 +95,7 @@ class WMWillModel(object):
 
 
         :return: The testator of this WMWillModel.  # noqa: E501
-        :rtype: Person
+        :rtype: WMPerson
         """
         return self._testator
 
@@ -105,7 +105,7 @@ class WMWillModel(object):
 
 
         :param testator: The testator of this WMWillModel.  # noqa: E501
-        :type: Person
+        :type: WMPerson
         """
 
         self._testator = testator
