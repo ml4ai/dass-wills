@@ -29,6 +29,7 @@ class TETextExtractions(TEObject):
                             and the value is json key in definition.
     """
     swagger_types = {
+        '_date': 'date',
         'text': 'str',
         'entities': 'list[TEEntity]',
         'events': 'list[OneOfTETextExtractionsEventsItems]'
@@ -37,6 +38,7 @@ class TETextExtractions(TEObject):
         swagger_types.update(TEObject.swagger_types)
 
     attribute_map = {
+        '_date': 'date',
         'text': 'text',
         'entities': 'entities',
         'events': 'events'
@@ -44,18 +46,45 @@ class TETextExtractions(TEObject):
     if hasattr(TEObject, "attribute_map"):
         attribute_map.update(TEObject.attribute_map)
 
-    def __init__(self, text=None, entities=None, events=None, *args, **kwargs):  # noqa: E501
+    def __init__(self, _date=None, text=None, entities=None, events=None, *args, **kwargs):  # noqa: E501
         """TETextExtractions - a model defined in Swagger"""  # noqa: E501
+        self.__date = None
         self._text = None
         self._entities = None
         self._events = None
         self.discriminator = None
+        self._date = _date
         self.text = text
         if entities is not None:
             self.entities = entities
         if events is not None:
             self.events = events
         TEObject.__init__(self, *args, **kwargs)
+
+    @property
+    def _date(self):
+        """Gets the _date of this TETextExtractions.  # noqa: E501
+
+        The date of the creation or modification of the current WillModel   # noqa: E501
+
+        :return: The _date of this TETextExtractions.  # noqa: E501
+        :rtype: date
+        """
+        return self.__date
+
+    @_date.setter
+    def _date(self, _date):
+        """Sets the _date of this TETextExtractions.
+
+        The date of the creation or modification of the current WillModel   # noqa: E501
+
+        :param _date: The _date of this TETextExtractions.  # noqa: E501
+        :type: date
+        """
+        if _date is None:
+            raise ValueError("Invalid value for `_date`, must not be `None`")  # noqa: E501
+
+        self.__date = _date
 
     @property
     def text(self):
