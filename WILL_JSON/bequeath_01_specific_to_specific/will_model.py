@@ -8,10 +8,14 @@ from schemas.model.wm import (
 
 def make_instance():
 
+    # Testator
+
     testator_john_doe = wm_person.WMPerson(
         name="John Doe",
         id="0x1234"
     )
+
+    # Witnesses
 
     witness_jack_doe = wm_person.WMPerson(
         name="Jack Doe",
@@ -23,6 +27,8 @@ def make_instance():
         id="0x3456"
     )
 
+    # Beneficiaries
+
     beneficiary_tom_doe = wm_person.WMPerson(
         name="Tom Doe",
         id="0x4567"
@@ -32,6 +38,8 @@ def make_instance():
         name="Mary Hoover",
         id="0x5678"
     )
+
+    # Assets
 
     asset_red_car = wm_asset.WMAsset(
         name="red car",
@@ -43,6 +51,8 @@ def make_instance():
         id="0x7890"
     )
 
+    # Directives
+
     directive_bequeath_car_to_tom = wm_directive_bequeath.WMDirectiveBequeath(
         beneficiaries=[beneficiary_tom_doe],
         assets=[asset_red_car]
@@ -52,6 +62,8 @@ def make_instance():
         beneficiaries=[beneficiary_mary_hoover],
         assets=[asset_vacuum_cleaner]
     )
+
+    # The Will Model (top-level structure)
 
     model = wm_will_model.WMWillModel(
         _date="2023-09-14",
