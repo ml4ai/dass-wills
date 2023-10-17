@@ -35,8 +35,14 @@ components:
       allOf:
         - $ref: "#/components/schemas/TE_Object"
       required:
+        - date
         - text
       properties:
+        date:
+          description: |
+            The date of the creation or modification of the current WillModel
+          type: string
+          format: date
         text:
           description: |
             The original raw text of the will.
@@ -71,6 +77,8 @@ components:
 
     TE_Entity:
       description: An extracted entity
+      allOf:
+        - $ref: "#/components/schemas/TE_Object"
       properties:
         id:
           description: |
@@ -90,6 +98,8 @@ components:
 
     TE_Event:
       description: An extracted event
+      allOf:
+        - $ref: "#/components/schemas/TE_Object"
       properties:
         id:
           description: |
@@ -105,6 +115,8 @@ components:
 
     TE_EventNomination:
       description: The testator names the executor
+      allOf:
+        - $ref: "#/components/schemas/TE_Event"
       properties:
         Testator:
           description: A string representing the id of the Entity that is the Testator
@@ -115,6 +127,8 @@ components:
 
     TE_EventBequeath:
       description: A Bequeath event.
+      allOf:
+        - $ref: "#/components/schemas/TE_Event"
       properties:
         Testator:
           description: A string representing the id of the Entity that is the Testator
