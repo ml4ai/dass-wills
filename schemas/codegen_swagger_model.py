@@ -273,8 +273,8 @@ def main():
     # parser = argparse.ArgumentParser(description='Use swagger-codegen to generate '
     #                                              'TE, WM data model')
     # parser.add_argument()
-    # process('TE', TE_VERSION, verbose=True)
-    process('WM', WM_VERSION)
+    process('TE', TE_VERSION, verbose=True)
+    process('WM', WM_VERSION, verbose=True)
 
 
 if __name__ == "__main__":
