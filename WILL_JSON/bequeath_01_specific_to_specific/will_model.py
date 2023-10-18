@@ -17,15 +17,15 @@ def make_instance():
 
     # Witnesses
 
-    witness_jack_doe = wm_person.WMPerson(
-        name="Jack Doe",
-        id="0x2345"
-    )
-
-    witness_jane_doe = wm_person.WMPerson(
-        name="Jane Doe",
-        id="0x3456"
-    )
+    # witness_jack_doe = wm_person.WMPerson(
+    #     name="Jack Doe",
+    #     id="0x2345"
+    # )
+    #
+    # witness_jane_doe = wm_person.WMPerson(
+    #     name="Jane Doe",
+    #     id="0x3456"
+    # )
 
     # Beneficiaries
 
@@ -69,7 +69,7 @@ def make_instance():
         _date="2023-09-14",
         text="I, John Doe, bequeath my red car to Tom Doe and my vacuum cleaner to Mary Hoover",
         testator=testator_john_doe,
-        witnesses=[witness_jack_doe, witness_jane_doe],
+        # witnesses=[witness_jack_doe, witness_jane_doe],
         directives=[directive_bequeath_car_to_tom, directive_bequeath_vacuum_to_mary]
     )
 
