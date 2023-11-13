@@ -45,7 +45,7 @@ class WMWillModel(object):
         'dass_type': 'dass_type'
     }
 
-    def __init__(self, text=None, testator=None, witnesses=None, _date=None, directives=None, dass_type='WM_WillModel'):  # noqa: E501
+    def __init__(self, text=None, testator=None, witnesses=None, _date=None, directives=None, executor=None, dass_type='WM_WillModel'):  # noqa: E501
         """WMWillModel - a model defined in Swagger"""  # noqa: E501
         self._text = None
         self._testator = None
@@ -55,6 +55,7 @@ class WMWillModel(object):
         self._dass_type = None
         self.discriminator = None
         self.text = text
+        self.executor=executor
         if testator is not None:
             self.testator = testator
         if witnesses is not None:

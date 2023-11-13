@@ -41,8 +41,9 @@ class WMConditional(object):
         'dass_type': 'dass_type'
     }
 
-    def __init__(self, condition=None, body_if=None, body_else=None, dass_type='WM_Conditional'):  # noqa: E501
+    def __init__(self, id,condition=None, body_if=None, body_else=None, dass_type='WM_Conditional'):  # noqa: E501
         """WMConditional - a model defined in Swagger"""  # noqa: E501
+        self._id = id
         self._condition = None
         self._body_if = None
         self._body_else = None
@@ -94,8 +95,9 @@ class WMConditional(object):
         :param body_if: The body_if of this WMConditional.  # noqa: E501
         :type: WMDirectiveBody
         """
-        if body_if is None:
-            raise ValueError("Invalid value for `body_if`, must not be `None`")  # noqa: E501
+        # to-do: come back to it
+        # if body_if is None:
+        #     raise ValueError("Invalid value for `body_if`, must not be `None`")  # noqa: E501
 
         self._body_if = body_if
 
@@ -117,8 +119,9 @@ class WMConditional(object):
         :param body_else: The body_else of this WMConditional.  # noqa: E501
         :type: WMDirectiveBody
         """
-        if body_else is None:
-            raise ValueError("Invalid value for `body_else`, must not be `None`")  # noqa: E501
+        # to-do: come back to it
+        # if body_else is None:
+        #     raise ValueError("Invalid value for `body_else`, must not be `None`")  # noqa: E501
 
         self._body_else = body_else
 

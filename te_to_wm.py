@@ -83,6 +83,42 @@ def find_obj_with_id(list_of_objs, target_id):
     return None
 
 
+def find_objs_with_id(list_of_objs, target_ids):
+    """Returns the objs given an id"""
+    objs=[]
+    for target_id in target_ids:
+        for item in list_of_objs:
+            if item._id == target_id:
+                objs.append(item)
+    if len(objs)==0:
+        print(f"error: no object found with id: {target_id}")
+    return objs
+
+
+def find_objs_with_id(list_of_objs, target_ids):
+    """Returns the objs given an id"""
+    objs=[]
+    for target_id in target_ids:
+        for item in list_of_objs:
+            if item._id == target_id:
+                objs.append(item)
+    if len(objs)==0:
+        print(f"error: no object found with id: {target_id}")
+    return objs
+
+
+def find_unused(te_obj, used):
+    """Returns the unused items in will extractions."""
+    unused=[]
+    total_items=[]
+    for type in te_obj:
+        for item in te_obj[type]:
+            total_items.append(item)
+            if item['id'] not in used:
+                unused.append(item)
+    print(f"... Total items unused: {len(unused)} out of: {len(total_items)}")
+    return unused
+
 ################################################################################
 #                                                                              #
 #                               Importing Modules                              #
@@ -128,14 +164,14 @@ and name: {asset_name}"""
 
 def extract_beneficiaries(te):
     """Returns a list of beneficiaries given
-    a te dict.
+    a te dict. gets the name by first index.
     to-do: currently handles single beneficiary,
     add logic for multiple."""
 
     beneficiaries = []
     for entity in te["entities"]:
-        if entity["type"] == "BeneficiaryNamed":
-            beneficiary_name = entity["texts"][0]
+        if entity["type"] == "Beneficiary":
+            beneficiary_name = list(entity["texts"].keys())[0]
             beneficiary_id = entity["id"]
             print(
                 f"""... extracted beneficiary with\
@@ -150,25 +186,64 @@ def extract_beneficiaries(te):
     return beneficiaries
 
 
-def extract_testaor(te):
+def extract_conditions(te):
+    """Returns a list of conditions given
+    a te dict. gets the text by first index."""
+
+    conditions = []
+    for entity in te["entities"]:
+        if entity["type"] == "Condition":
+            condition_text = list(entity["texts"].keys())[0]
+            condition_id = entity["id"]
+            print(
+                f"""... extracted condition with\
+ id: {condition_id} and text: {condition_text}"""
+            )
+            conditions.append(
+                WMConditional(
+                    condition=condition_text,
+                    id=condition_id
+                )
+            )
+    return conditions
+
+def extract_testaor(te,used):
     """Returns a the name of the testator.
-    currently get the testator name by the
-    longest len string among texts."""
+    currently gets the testator name by the
+    first index."""
 
     for entity in te["entities"]:
         if entity["type"] == "Testator":
-            testator_name = max(entity["texts"], key=len)
+            testator_name = list(entity["texts"].keys())[0]
             testator_id = entity["id"]
             print(
                 f"""... extracted testator with id:\
  {testator_id} and name: {testator_name}"""
             )
+            used.append(testator_id)
             return WMPerson(name=testator_name,
             id=testator_id, dass_type="Testator")
     print("Error: no testator found")
     return None
 
+def extract_executor(te,used):
+    """Returns a the name of the executor.
+    currently gets the executor name by the
+    first index."""
 
+    for entity in te["entities"]:
+        if entity["type"] == "Executor":
+            executor_name = list(entity["texts"].keys())[0]
+            executor_id = entity["id"]
+            print(
+                f"""... extracted executor with id:\
+ {executor_id} and name: {executor_name}"""
+            )
+            used.append(executor_id)
+            return WMPerson(name=executor_name,
+            id=executor_id, dass_type="executor")
+    print("Error: no executor found")
+    return None
 ################################################################################
 #                                                                              #
 #                               Fetch  Directives                              #
@@ -176,31 +251,48 @@ def extract_testaor(te):
 ################################################################################
 
 
-def infer_directives(te, beneficairies, assets):
+def infer_directives(te, beneficairies, assets,conditions,used):
     """Returns a list of beneficiaries given a te dict,
     beneficairies, and assets.
     to-do: currently handles single beneficiary, add 
     logic for multiple."""
     directives = []
-    bequeath_types = ["BequestAsset"]  ## add more types here
+    bequeath_types = ["BequestAsset","Bequest"]  ## add more types here
     for event in te["events"]:
         if event["type"] in bequeath_types:
-            if event["type"] == "BequestAsset":
+            if event["type"] in ["BequestAsset",'Bequest'] :
                 d_id = event["id"]
                 d_type = event["type"]
                 asset_id = event["Asset"]
-                benefactor_id = event["Benefactor"]
+                benefactor_id = event["Beneficiary"]
+                condition_id = event["Condition"]
+                if type(condition_id)==list:
+                    conditions_asset=find_objs_with_id(conditions,
+                condition_id)
+                    
+                else:
+                    conditions_asset=[find_obj_with_id(conditions,
+                condition_id)]
+                conditions_ids=[condition._id for condition in conditions_asset] 
                 beneficiary = find_obj_with_id(beneficairies,
                 benefactor_id)
                 asset = find_obj_with_id(assets, asset_id)
                 bequeath_directive = WMDirectiveBequeath(
-                    beneficiaries=[beneficiary], assets=[asset]
+                    beneficiaries=[beneficiary], assets=[asset],
+                    conditions=conditions_asset
                 )
+                
+                used.append(asset_id)
+                used.append(benefactor_id)
+                used.extend(conditions_ids)
+
+                condition_texts=[condition._condition for condition in conditions_asset]
+                conditions_full_text=', and '.join(condition_texts)
                 bequeath_directive.type = d_type
                 print(f"... infered directive with id: {d_id}")
                 print(
                     f"""... directive: Bequest asset \
-{asset._name} to {beneficiary._name}."""
+"{asset._name}" to "{beneficiary._name}" with following condition/s: {conditions_full_text}."""
                 )
                 directives.append(bequeath_directive)
 
@@ -220,27 +312,33 @@ def main():
     Infer the directives.
     Add all of these to the WM
     Output the WM to a pickle file."""
-
+    
     args = cmd_line_invocation()
     path_to_te_json = args.path_to_te
     path_to_wm_obj = args.path_to_wm_obj
     te_obj = load_json_object(path_to_te_json)
 
-    testator = extract_testaor(te_obj)
-    beneficiaries = extract_beneficiaries(te_obj)
-    assets = extract_assets(te_obj)
-    directives = infer_directives(te_obj, beneficiaries, assets)
+    used_ids=[] # to keep track of what's used and what's not
+
+    executor=extract_executor(te_obj['extractions'],used_ids)
+    testator = extract_testaor(te_obj['extractions'],used_ids)
+    beneficiaries = extract_beneficiaries(te_obj['extractions'])
+    conditions= extract_conditions(te_obj['extractions'])
+    assets = extract_assets(te_obj['extractions'])
+    directives = infer_directives(te_obj['extractions'], beneficiaries,
+            assets,conditions,used_ids)
+    unused=find_unused(te_obj['extractions'], used_ids)
+    unused_ids=[item['id'] for item in unused]
 
     ## to-do: add will's date ; this is 
     # due to the lack of the date in existing will tes
-
+    print(f"... the following items ids are unused from TE json: {unused_ids}")
     today_date = datetime.date.today()
 
     will_model = WMWillModel(
-        text=te_obj["text"], _date=today_date,
-        directives=directives, testator=testator
+        text=te_obj['full_text'], _date=today_date,
+        directives=directives, testator=testator,executor=executor 
     )
-    will_model
     save_pickle_object(will_model, path_to_wm_obj)
 
 
