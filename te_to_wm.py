@@ -256,28 +256,6 @@ def extract_executors(te, used):
     return executors
 
 
-def extract_testaor(te, used):
-    """Returns the testator.
-    currently gets the testator name by the
-    first index."""
-
-    testator = None
-    for entity in te["entities"]:
-        if entity["type"] == "Testator":
-            testator_name = list(entity["texts"].keys())[0]
-            testator_id = entity["id"]
-            print(
-                f"""... extracted testator with\
- id: {testator_id} and name: {testator_name}"""
-            )
-            testator = WMPerson(
-                name=testator_name, id=testator_id, dass_type="Testator"
-            )
-            break
-
-    return testator
-
-
 ################################################################################
 #                                                                              #
 #                               Fetch  Directives                              #
