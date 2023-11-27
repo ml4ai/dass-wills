@@ -6,7 +6,8 @@ import sys, os
 import pickle
 import json
 import datetime
-
+from pprint import pprint
+import hashlib
 
 ################################################################################
 #                                                                              #
@@ -52,6 +53,12 @@ def cmd_line_invocation():
         required=True,
         help="Output path to the converted will model's pickle file.",
     )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Increase output verbosity.",
+    )
 
     args = parser.parse_args()
     return args
@@ -70,8 +77,10 @@ def save_pickle_object(obj, path):
     """Save an object as a pickle file."""
     with open(path, "wb") as f:
         pickle.dump(obj, f)
-        print(f"... Successfully saved \
-Will Model pickle object to file {path}")
+        print(
+            f"... Successfully saved \
+Will Model pickle object to file {path}"
+        )
 
 
 def find_obj_with_id(list_of_objs, target_id):
@@ -85,39 +94,45 @@ def find_obj_with_id(list_of_objs, target_id):
 
 def find_objs_with_id(list_of_objs, target_ids):
     """Returns the objs given an id"""
-    objs=[]
+    objs = []
     for target_id in target_ids:
         for item in list_of_objs:
             if item._id == target_id:
                 objs.append(item)
-    if len(objs)==0:
+    if len(objs) == 0:
         print(f"error: no object found with id: {target_id}")
     return objs
 
 
 def find_objs_with_id(list_of_objs, target_ids):
     """Returns the objs given an id"""
-    objs=[]
+    objs = []
     for target_id in target_ids:
         for item in list_of_objs:
             if item._id == target_id:
                 objs.append(item)
-    if len(objs)==0:
+    if len(objs) == 0:
         print(f"error: no object found with id: {target_id}")
     return objs
 
 
 def find_unused(te_obj, used):
     """Returns the unused items in will extractions."""
-    unused=[]
-    total_items=[]
+    unused = []
+    total_items = []
+    unused_types = {}
     for type in te_obj:
         for item in te_obj[type]:
             total_items.append(item)
-            if item['id'] not in used:
+            if item["id"] not in used:
+                if item["type"] not in unused_types:
+                    unused_types[item["type"]] = [item["id"]]
+                else:
+                    unused_types[item["type"]].append(item["id"])
                 unused.append(item)
     print(f"... Total items unused: {len(unused)} out of: {len(total_items)}")
-    return unused
+    return unused, unused_types
+
 
 ################################################################################
 #                                                                              #
@@ -179,8 +194,7 @@ def extract_beneficiaries(te):
             )
             beneficiaries.append(
                 WMPerson(
-                    name=beneficiary_name,
-                    id=beneficiary_id, dass_type="Beneficiary"
+                    name=beneficiary_name, id=beneficiary_id, dass_type="Beneficiary"
                 )
             )
     return beneficiaries
@@ -199,15 +213,11 @@ def extract_conditions(te):
                 f"""... extracted condition with\
  id: {condition_id} and text: {condition_text}"""
             )
-            conditions.append(
-                WMConditional(
-                    condition=condition_text,
-                    id=condition_id
-                )
-            )
+            conditions.append(WMConditional(condition=condition_text, id=condition_id))
     return conditions
 
-def extract_testaor(te,used):
+
+def extract_testaor(te, used):
     """Returns a the name of the testator.
     currently gets the testator name by the
     first index."""
@@ -221,29 +231,53 @@ def extract_testaor(te,used):
  {testator_id} and name: {testator_name}"""
             )
             used.append(testator_id)
-            return WMPerson(name=testator_name,
-            id=testator_id, dass_type="Testator")
+            return WMPerson(name=testator_name, id=testator_id, dass_type="Testator")
     print("Error: no testator found")
     return None
 
-def extract_executor(te,used):
-    """Returns a the name of the executor.
+
+def extract_executors(te, used):
+    """Returns the list of executors.
     currently gets the executor name by the
     first index."""
 
+    executors = []
     for entity in te["entities"]:
         if entity["type"] == "Executor":
             executor_name = list(entity["texts"].keys())[0]
             executor_id = entity["id"]
             print(
-                f"""... extracted executor with id:\
- {executor_id} and name: {executor_name}"""
+                f"""... extracted testator with\
+ id: {executor_id} and name: {executor_name}"""
             )
-            used.append(executor_id)
-            return WMPerson(name=executor_name,
-            id=executor_id, dass_type="executor")
-    print("Error: no executor found")
-    return None
+            executors.append(
+                WMPerson(name=executor_name, id=executor_id, dass_type="Executor")
+            )
+    return executors
+
+
+def extract_testaor(te, used):
+    """Returns the testator.
+    currently gets the testator name by the
+    first index."""
+
+    testator = None
+    for entity in te["entities"]:
+        if entity["type"] == "Testator":
+            testator_name = list(entity["texts"].keys())[0]
+            testator_id = entity["id"]
+            print(
+                f"""... extracted testator with\
+ id: {testator_id} and name: {testator_name}"""
+            )
+            testator = WMPerson(
+                name=testator_name, id=testator_id, dass_type="Testator"
+            )
+            break
+
+    return testator
+
+
 ################################################################################
 #                                                                              #
 #                               Fetch  Directives                              #
@@ -251,43 +285,54 @@ def extract_executor(te,used):
 ################################################################################
 
 
-def infer_directives(te, beneficairies, assets,conditions,used):
+def infer_directives(te, beneficairies, assets, conditions, executors, used):
     """Returns a list of beneficiaries given a te dict,
     beneficairies, and assets.
-    to-do: currently handles single beneficiary, add 
+    to-do: currently handles single beneficiary, add
     logic for multiple."""
     directives = []
-    bequeath_types = ["BequestAsset","Bequest"]  ## add more types here
+    bequeath_types = ["BequestAsset", "Bequest"]  ## add more types here
     for event in te["events"]:
         if event["type"] in bequeath_types:
-            if event["type"] in ["BequestAsset",'Bequest'] :
+            if event["type"] in ["BequestAsset", "Bequest"]:
                 d_id = event["id"]
                 d_type = event["type"]
                 asset_id = event["Asset"]
                 benefactor_id = event["Beneficiary"]
                 condition_id = event["Condition"]
-                if type(condition_id)==list:
-                    conditions_asset=find_objs_with_id(conditions,
-                condition_id)
-                    
+                if "Executor" in event:
+                    executor_id = event["Executor"]
                 else:
-                    conditions_asset=[find_obj_with_id(conditions,
-                condition_id)]
-                conditions_ids=[condition._id for condition in conditions_asset] 
-                beneficiary = find_obj_with_id(beneficairies,
-                benefactor_id)
+                    executor_id = None
+                if type(condition_id) == list:
+                    conditions_asset = find_objs_with_id(conditions, condition_id)
+
+                else:
+                    conditions_asset = [find_obj_with_id(conditions, condition_id)]
+                conditions_ids = [condition._id for condition in conditions_asset]
+                beneficiary = find_obj_with_id(beneficairies, benefactor_id)
                 asset = find_obj_with_id(assets, asset_id)
+                if executor_id:
+                    executor = find_obj_with_id(executors, executor_id)
+                else:
+                    executor = None
                 bequeath_directive = WMDirectiveBequeath(
-                    beneficiaries=[beneficiary], assets=[asset],
-                    conditions=conditions_asset
+                    beneficiaries=[beneficiary],
+                    assets=[asset],
+                    executor=executor,
+                    conditions=conditions_asset,
                 )
-                
+
                 used.append(asset_id)
                 used.append(benefactor_id)
                 used.extend(conditions_ids)
+                if executor_id:
+                    used.append(executor_id)
 
-                condition_texts=[condition._condition for condition in conditions_asset]
-                conditions_full_text=', and '.join(condition_texts)
+                condition_texts = [
+                    condition._condition for condition in conditions_asset
+                ]
+                conditions_full_text = ", and ".join(condition_texts)
                 bequeath_directive.type = d_type
                 print(f"... infered directive with id: {d_id}")
                 print(
@@ -297,6 +342,27 @@ def infer_directives(te, beneficairies, assets,conditions,used):
                 directives.append(bequeath_directive)
 
     return directives
+
+
+################################################################################
+#                                                                              #
+#                               Match Testator from database                   #
+#                                                                              #
+################################################################################
+
+
+def find_person_by_dob_and_name(dob, full_name):
+    """Finds a person in the provided data based on
+    their date of birth (DOB) and full name.
+    """
+    ## default path, replace later with dynamic path
+    json_file_path = "ORACLES/people_db.json"
+    peoples_obj = load_json_object(json_file_path)
+
+    for person in peoples_obj:
+        if person["date_of_birth"] == dob and person["full_name"] == full_name:
+            return person
+    return None
 
 
 ################################################################################
@@ -312,33 +378,60 @@ def main():
     Infer the directives.
     Add all of these to the WM
     Output the WM to a pickle file."""
-    
+
     args = cmd_line_invocation()
     path_to_te_json = args.path_to_te
     path_to_wm_obj = args.path_to_wm_obj
     te_obj = load_json_object(path_to_te_json)
 
-    used_ids=[] # to keep track of what's used and what's not
+    used_ids = []  # to keep track of what's used and what's not
 
-    executor=extract_executor(te_obj['extractions'],used_ids)
-    testator = extract_testaor(te_obj['extractions'],used_ids)
-    beneficiaries = extract_beneficiaries(te_obj['extractions'])
-    conditions= extract_conditions(te_obj['extractions'])
-    assets = extract_assets(te_obj['extractions'])
-    directives = infer_directives(te_obj['extractions'], beneficiaries,
-            assets,conditions,used_ids)
-    unused=find_unused(te_obj['extractions'], used_ids)
-    unused_ids=[item['id'] for item in unused]
+    testator = extract_testaor(te_obj["extractions"], used_ids)
 
-    ## to-do: add will's date ; this is 
-    # due to the lack of the date in existing will tes
-    print(f"... the following items ids are unused from TE json: {unused_ids}")
-    today_date = datetime.date.today()
+    ## match testator with existing database of people
+
+    ## stub date of birth, to-do: replace with dynamic date
+    dob_to_match = "1992-05-15"
+
+    matching_testator = find_person_by_dob_and_name(dob_to_match, testator.name)
+
+    if matching_testator:
+        print(
+            f"Matching testator found from peoples db with id: {matching_testator['id']}"
+        )
+        if args.verbose:
+            print(f"Testor detailed info:")
+            pprint(matching_testator)
+    else:
+        print("No matching testator found.")
+
+    ## extract other entities
+    executors = extract_executors(te_obj["extractions"], used_ids)
+    beneficiaries = extract_beneficiaries(te_obj["extractions"])
+    conditions = extract_conditions(te_obj["extractions"])
+    assets = extract_assets(te_obj["extractions"])
+    directives = infer_directives(
+        te_obj["extractions"], beneficiaries, assets, conditions, executors, used_ids
+    )
+    unused_items, unused_types = find_unused(te_obj["extractions"], used_ids)
+
+    if args.verbose:
+        print(f"... the following item types and ids are unused from TE json:")
+        pprint(unused_types)
 
     will_model = WMWillModel(
-        text=te_obj['full_text'], _date=today_date,
-        directives=directives, testator=testator,executor=executor 
+        text=te_obj["full_text"],
+        _date=te_obj["execution_date"],
+        directives=directives,
+        testator=testator,
     )
+    ## add willmodel checksum
+    will_model.checksum = None
+    will_model_bytes = pickle.dumps(will_model)
+    will_model.checksum = hashlib.sha256(will_model_bytes).hexdigest()
+    print(f"... Will model Checksum: {will_model.checksum}")
+
+    ## Save Will Model
     save_pickle_object(will_model, path_to_wm_obj)
 
 
