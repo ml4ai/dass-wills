@@ -48,6 +48,7 @@ class WMAsset(object):
         self.name = name
         self.id = id
         self.dass_type = dass_type
+        self.source_text = None
 
     @property
     def name(self):

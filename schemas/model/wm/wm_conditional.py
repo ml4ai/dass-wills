@@ -53,6 +53,7 @@ class WMConditional(object):
         self.body_if = body_if
         self.body_else = body_else
         self.dass_type = dass_type
+        self.source_text = None
 
     @property
     def condition(self):

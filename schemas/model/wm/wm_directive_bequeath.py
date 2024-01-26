@@ -54,6 +54,7 @@ class WMDirectiveBequeath(object):
         self.conditions=conditions
         self.executor=executor
         self.dass_type = dass_type
+        self.source_text = None
 
     @property
     def type(self):
