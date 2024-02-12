@@ -1,0 +1,921 @@
+﻿will_creation,"   ""text"": ""I, [Person-1], [Number-1], a citizen and resident of Lauderdale County, Tennessee, being of sound mind and disposing memory, do hereby make and publish and declare this as my Last Will and Testament."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""Lauderdale County""
+           ],
+           ""type"": ""County""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""Tennessee""
+           ],
+           ""type"": ""State""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""being of sound mind and disposing memory""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""my Last Will and Testament"",
+               ""this""
+           ],
+           ""type"": ""Will""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""I"",
+               ""a citizen and resident of Lauderdale County"",
+               ""my"",
+               ""[Person-1]""
+           ],
+           ""type"": ""Testator""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""WillCreation"",
+           ""Will"": [
+               ""e4""
+           ],
+           ""Testator"": [
+               ""e5""
+           ],
+           ""Condition"": [
+               ""e3""
+           ]
+       }
+   ]"
+direction,"   ""text"": ""I direct my Executor to pay all my just debts and all funeral expenses, which shall be probated, registered and allowed against my estate, as soon after my death as can conveniently be done."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""my Executor""
+           ],
+           ""type"": ""Executor""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""all my just debts""
+           ],
+           ""type"": ""Debt""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""all funeral expenses""
+           ],
+           ""type"": ""Expense""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""my estate""
+           ],
+           ""type"": ""Asset""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""as soon after my death as can conveniently be done""
+           ],
+           ""type"": ""Time""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""against my estate""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e7"",
+           ""texts"": [
+               ""to pay all my just debts and all funeral expenses""
+           ],
+           ""type"": ""Duty""
+       },
+       {
+           ""id"": ""e8"",
+           ""texts"": [
+               ""I"",
+               ""my""
+           ],
+           ""type"": ""Testator""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Direction"",
+           ""Executor"": [
+               ""e1""
+           ],
+           ""Time"": [
+               ""e5""
+           ],
+           ""Duty"": [
+               ""e7""
+           ],
+           ""Testator"": [
+               ""e8""
+           ],
+           ""Condition"": [
+               ""e6""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""Probate"",
+           ""Debt"": [
+               ""e2""
+           ],
+           ""Expense"": [
+               ""e3""
+           ]
+       },
+       {
+           ""id"": ""v3"",
+           ""type"": ""Death"",
+           ""Testator"": [
+               ""e8""
+           ]
+       }
+   ]"
+bequest,"   ""text"": ""I hereby give, devise and bequeath all of my property real, personal or mixed, to my husband, [Person-2]. If my husband and I should die simultaneously, or my husband predecease me, all my property, real, personal or mixed, I give, devise and bequeath to my two children, [Person-3], and [Person-4], equally, share and share alike."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""equally, share and share alike""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""simultaneously""
+           ],
+           ""type"": ""Time""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""If my husband and I should die simultaneously, or my husband predecease me""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""I"",
+               ""my"",
+               ""me""
+           ],
+           ""type"": ""Testator""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""my husband"",
+               ""[Person-2]""
+           ],
+           ""type"": ""Beneficiary""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""[Person-4]"",
+               ""my two children"",
+               ""[Person-3]""
+           ],
+           ""type"": ""Beneficiary""
+       },
+       {
+           ""id"": ""e7"",
+           ""texts"": [
+               ""all of my property real, personal or mixed"",
+               ""all my property, real, personal or mixed""
+           ],
+           ""type"": ""Asset""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Bequest"",
+           ""Testator"": [
+               ""e4""
+           ],
+           ""Beneficiary"": [
+               ""e5""
+           ],
+           ""Asset"": [
+               ""e7""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""Bequest"",
+           ""Condition"": [
+               ""e1"",
+               ""e3""
+           ],
+           ""Testator"": [
+               ""e4""
+           ],
+           ""Beneficiary"": [
+               ""e6""
+           ],
+           ""Asset"": [
+               ""e7""
+           ]
+       },
+       {
+           ""id"": ""v3"",
+           ""type"": ""Death"",
+           ""Time"": [
+               ""e2""
+           ],
+           ""Testator"": [
+               ""e4""
+           ],
+           ""Beneficiary"": [
+               ""e5""
+           ]
+       },
+       {
+           ""id"": ""v4"",
+           ""type"": ""Death"",
+           ""Beneficiary"": [
+               ""e5""
+           ]
+       }
+   ]"
+nomination,"   ""text"": ""In the event that he is deceased, unable or unwilling to act as such, I appoint [Person-3] as the Executor of this my Last Will and Testament and request that the Court permit him to serve without bond, and that he be relieved of the necessity of filing an inventory, settlement, or any other accounting at any time in any Court."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""bond""
+           ],
+           ""type"": ""Bond""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""the necessity of filing an inventory, settlement, or any other accounting""
+           ],
+           ""type"": ""Duty""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""at any time""
+           ],
+           ""type"": ""Time""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""in any Court""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""In the event that he is deceased, unable or unwilling to act as such""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""without bond""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e7"",
+           ""texts"": [
+               ""this"",
+               ""my Last Will and Testament""
+           ],
+           ""type"": ""Will""
+       },
+       {
+           ""id"": ""e8"",
+           ""texts"": [
+               ""I"",
+               ""my""
+           ],
+           ""type"": ""Testator""
+       },
+       {
+           ""id"": ""e9"",
+           ""texts"": [
+               ""he""
+           ],
+           ""type"": ""Executor""
+       },
+       {
+           ""id"": ""e10"",
+           ""texts"": [
+               ""him"",
+               ""[Person-3]"",
+               ""he"",
+               ""the Executor""
+           ],
+           ""type"": ""Executor""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Death"",
+           ""Executor"": [
+               ""e9""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""Disqualification"",
+           ""Executor"": [
+               ""e9""
+           ]
+       },
+       {
+           ""id"": ""v3"",
+           ""type"": ""Renunciation"",
+           ""Executor"": [
+               ""e9""
+           ]
+       },
+       {
+           ""id"": ""v4"",
+           ""type"": ""Nomination"",
+           ""Testator"": [
+               ""e8""
+           ],
+           ""Executor"": [
+               ""e10""
+           ],
+           ""Condition"": [
+               ""e5"",
+               ""e6""
+           ]
+       },
+       {
+           ""id"": ""v5"",
+           ""type"": ""Direction"",
+           ""Excuse"": [
+               ""v6"",
+               ""v7""
+           ],
+           ""Testator"": [
+               ""e8""
+           ]
+       },
+       {
+           ""id"": ""v6"",
+           ""type"": ""Excuse"",
+           ""Duty"": [
+               ""e2""
+           ],
+           ""Executor"": [
+               ""e10""
+           ],
+           ""Testator"": [
+               ""e8""
+           ],
+           ""Time"": [
+               ""e3""
+           ],
+           ""Condition"": [
+               ""e4""
+           ]
+       },
+       {
+           ""id"": ""v7"",
+           ""type"": ""Excuse"",
+           ""Bond"": [
+               ""e1""
+           ],
+           ""Executor"": [
+               ""e10""
+           ],
+           ""Testator"": [
+               ""e8""
+           ]
+       }
+   ]"
+sign_will,"   ""text"": ""IN WITNESS WHEREOF, I have hereunto signed, published and declared this instrument as my Last Will and Testament, in Lauderdale County, Tennessee, on this 23rd day of January, 2001."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""Lauderdale County""
+           ],
+           ""type"": ""County""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""Tennessee""
+           ],
+           ""type"": ""State""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""on this 23rd day of January, 2001""
+           ],
+           ""type"": ""Date""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""IN WITNESS WHEREOF""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""my"",
+               ""I""
+           ],
+           ""type"": ""Testator""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""this instrument"",
+               ""my Last Will and Testament""
+           ],
+           ""type"": ""Will""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""SignWill"",
+           ""Date"": [
+               ""e3""
+           ],
+           ""Condition"": [
+               ""e4""
+           ],
+           ""Testator"": [
+               ""e5""
+           ],
+           ""Will"": [
+               ""e6""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""WillCreation"",
+           ""Date"": [
+               ""e3""
+           ],
+           ""Condition"": [
+               ""e4""
+           ],
+           ""Testator"": [
+               ""e5""
+           ],
+           ""Will"": [
+               ""e6""
+           ]
+       }
+   ]"
+attestation,"   ""text"": ""We, the undersigned and subscribing witnesses, do hereby certify that we witnessed the foregoing Last Will and Testament of [Person-1], at her request, in her presence, and in the presence of each presence, and that she signed the same in our presence, and in the presence of each of us declaring the same to be her Last Will and Testament. This 17th day of September, 1997."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""at her request""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""in her presence""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""in the presence of each presence""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""This 17th day of September, 1997""
+           ],
+           ""type"": ""Date""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""in our presence""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""in the presence of each of us""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e7"",
+           ""texts"": [
+               ""the undersigned and subscribing witnesses"",
+               ""We"",
+               ""we"",
+               ""each of us"",
+               ""our""
+           ],
+           ""type"": ""Witness""
+       },
+       {
+           ""id"": ""e8"",
+           ""texts"": [
+               ""her Last Will and Testament"",
+               ""the foregoing Last Will and Testament"",
+               ""the same""
+           ],
+           ""type"": ""Will""
+       },
+       {
+           ""id"": ""e9"",
+           ""texts"": [
+               ""her"",
+               ""she"",
+               ""[Person-1]""
+           ],
+           ""type"": ""Testator""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Attestation"",
+           ""Attestation"": [
+               ""v2""
+           ],
+	""SignWill"": [
+               ""v3""
+           ],
+           ""Date"": [
+               ""e4""
+           ],
+           ""Witness"": [
+               ""e7""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""Attestation"",
+           ""Condition"": [
+               ""e1"",
+               ""e2"",
+               ""e3""
+           ],
+           ""Witness"": [
+               ""e7""
+           ],
+           ""Will"": [
+               ""e8""
+           ]
+       },
+       {
+           ""id"": ""v3"",
+           ""type"": ""SignWill"",
+           ""Condition"": [
+               ""e5"",
+               ""e6""
+           ],
+           ""Will"": [
+               ""e8""
+           ],
+           ""Testator"": [
+               ""e9""
+           ]
+       },
+       {
+           ""id"": ""v4"",
+           ""type"": ""WillCreation"",
+           ""Will"": [
+               ""e8""
+           ],
+           ""Testator"": [
+               ""e9""
+           ]
+       }
+   ]"
+authorization,"   ""text"": ""I specifically authorize my Executor, Alternate Executor, or any person whom he may choose to serve with him, in the exercise of reasonable discretion, with respect to all property, real, personal or mixed, at any time forming part of my estate, to exercise any and all powers set forth at Tennessee Code Annotated, ¬ß35-50-110, to the extent applicable, all of which provisions and powers are incorporated herein by reference as if fully copied herein verbatim."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""my Executor"",
+               ""he"",
+               ""him""
+           ],
+           ""type"": ""Executor""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""any person whom he may choose to serve with him""
+           ],
+           ""type"": ""Executor""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""in the exercise of reasonable discretion""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""all property, real, personal or mixed, at any time forming part of my estate""
+           ],
+           ""type"": ""Asset""
+       },
+       {
+           ""id"": ""e5"",
+           ""texts"": [
+               ""at any time""
+           ],
+           ""type"": ""Time""
+       },
+       {
+           ""id"": ""e6"",
+           ""texts"": [
+               ""my estate""
+           ],
+           ""type"": ""Asset""
+       },
+       {
+           ""id"": ""e7"",
+           ""texts"": [
+               ""as if fully copied herein verbatim""
+           ],
+           ""type"": ""Condition""
+       },
+       {
+           ""id"": ""e8"",
+           ""texts"": [
+               ""Tennessee""
+           ],
+           ""type"": ""State""
+       },
+       {
+           ""id"": ""e9"",
+           ""texts"": [
+               ""my"",
+               ""I""
+           ],
+           ""type"": ""Testator""
+       },
+       {
+           ""id"": ""e10"",
+           ""texts"": [
+               ""he"",
+               ""him"",
+               ""Alternate Executor""
+           ],
+           ""type"": ""Executor""
+       },
+       {
+           ""id"": ""e11"",
+           ""texts"": [
+               ""all of which provisions and powers"",
+               ""exercise any and all powers set forth at Tennessee Code Annotated, ¬ß35-50-110, to the extent applicable""
+           ],
+           ""type"": ""Right""
+       },
+       {
+           ""id"": ""e12"",
+           ""texts"": [
+               ""with respect to all property, real, personal or mixed, at any time forming part of my estate""
+           ],
+           ""type"": ""Condition""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Authorization"",
+           ""Executor"": [
+               ""e1"",
+               ""e2"",
+               ""e10""
+           ],
+           ""Condition"": [
+               ""e3"",
+               ""e7"",
+               ""e12""
+           ],
+           ""Testator"": [
+               ""e9""
+           ],
+           ""Right"": [
+               ""e11""
+           ]
+       }
+   ]"
+revocation,"   ""text"": ""I hereby expressly revoke all former wills and codicils by me at any time heretofore made."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""all former wills""
+           ],
+           ""type"": ""Will""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""codicils""
+           ],
+           ""type"": ""Codicil""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""at any time heretofore""
+           ],
+           ""type"": ""Time""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""me"",
+               ""I""
+           ],
+           ""type"": ""Testator""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Revocation"",
+           ""Will"": [
+               ""e1""
+           ],
+           ""Codicil"": [
+               ""e2""
+           ],
+           ""Testator"": [
+               ""e4""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""WillCreation"",
+           ""Will"": [
+               ""e1""
+           ],
+           ""Time"": [
+               ""e3""
+           ],
+           ""Testator"": [
+               ""e4""
+           ]
+       },
+       {
+           ""id"": ""v3"",
+           ""type"": ""Codicil"",
+           ""Codicil"": [
+               ""e2""
+           ],
+           ""Time"": [
+               ""e3""
+           ],
+           ""Testator"": [
+               ""e4""
+           ]
+       }
+   ]"
+excuse,"   ""text"": ""I direct that no bond be required of my said Executor for the faithful performance of his duties."",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""bond""
+           ],
+           ""type"": ""Bond""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""his duties""
+           ],
+           ""type"": ""Duty""
+       },
+       {
+           ""id"": ""e3"",
+           ""texts"": [
+               ""I"",
+               ""my""
+           ],
+           ""type"": ""Testator""
+       },
+       {
+           ""id"": ""e4"",
+           ""texts"": [
+               ""his"",
+               ""my said Executor""
+           ],
+           ""type"": ""Executor""
+       }
+   ],
+   ""events"": [
+       {
+           ""id"": ""v1"",
+           ""type"": ""Direction"",
+           ""Excuse"": [
+               ""v2""
+           ],
+           ""Testator"": [
+               ""e3""
+           ]
+       },
+       {
+           ""id"": ""v2"",
+           ""type"": ""Excuse"",
+           ""Testator"": [
+               ""e3""
+           ],
+           ""Executor"": [
+               ""e4""
+           ],
+           ""Bond"": [
+               ""e1""
+           ]
+       }
+   ]"
+etc,"   ""text"": ""STATE OF TENNESSEE"",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""STATE OF TENNESSEE""
+           ],
+           ""type"": ""State""
+       }
+   ],
+   ""events"": [],
+   ""text"": ""COUNTY OF LAUDERDALE"",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""COUNTY OF LAUDERDALE""
+           ],
+           ""type"": ""County""
+       }
+   ],
+   ""events"": [],
+   ""text"": ""LAST WILL AND TESTAMENT OF [Person-1]"",
+   ""entities"": [
+       {
+           ""id"": ""e1"",
+           ""texts"": [
+               ""LAST WILL AND TESTAMENT""
+           ],
+           ""type"": ""Will""
+       },
+       {
+           ""id"": ""e2"",
+           ""texts"": [
+               ""[Person-1]""
+           ],
+           ""type"": ""Testator""
+       }
+   ],
+   ""events"": []"
