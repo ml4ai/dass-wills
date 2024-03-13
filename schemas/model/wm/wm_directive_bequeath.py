@@ -41,20 +41,19 @@ class WMDirectiveBequeath(object):
         'dass_type': 'dass_type'
     }
 
-    def __init__(self, type='DirectiveBequeath', beneficiaries=None, assets=None, conditions=None,executor=None, dass_type='WM_DirectiveBequeath'):  # noqa: E501
+    def __init__(self, type='DirectiveBequeath', beneficiaries=None, assets=None, conditions=None,executor=None,serialized_text=None, dass_type='WM_DirectiveBequeath'):  # noqa: E501
         """WMDirectiveBequeath - a model defined in Swagger"""  # noqa: E501
         self._type = None
-        self._beneficiaries = None
-        self._assets = None
-        self._dass_type = None
+        self._id=None
+        self._beneficiaries = beneficiaries
+        self._assets = assets
+        self._dass_type = dass_type
         self.discriminator = None
         self.type = type
-        self.beneficiaries = beneficiaries
-        self.assets = assets
         self.conditions=conditions
         self.executor=executor
-        self.dass_type = dass_type
         self.source_text = None
+        self.serialized_text=serialized_text
 
     @property
     def type(self):
