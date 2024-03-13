@@ -6,6 +6,7 @@ import sys, os
 import pickle
 import json
 import datetime
+import re
 from pprint import pprint
 import hashlib
 
@@ -26,9 +27,11 @@ def path_to_module_name(path):
         module_name = file_name.split(".")[0]
         module_name = module_name.split("_")
         module_name = [
-            word.upper()
-            if (word.startswith("wm") or word == "te")
-            else word.capitalize()
+            (
+                word.upper()
+                if (word.startswith("wm") or word == "te")
+                else word.capitalize()
+            )
             for word in module_name
         ]
         module_name = "".join(module_name)
@@ -46,6 +49,7 @@ def cmd_line_invocation():
         required=True,
         help="Input path to the will's text extractions json file.",
     )
+
     parser.add_argument(
         "-o",
         "--path-to-wm-obj",
@@ -55,17 +59,26 @@ def cmd_line_invocation():
     )
 
     parser.add_argument(
+        "-x",
+        "--highlight",
+        action="store_true",
+        help="Highlight the text used from the will.\
+        The attributes related to part of the \
+        text is passed for further processing. ",
+    )
+
+    parser.add_argument(
         "-p",
         "--provenance",
         action="store_true",
-        help="Show the source text of each extracted attribute.",
+        help="Print the source text of each extracted attribute.",
     )
 
     parser.add_argument(
         "-s",
         "--serialize",
         action="store_true",
-        help="Show the serialized string of each directive.",
+        help="Print the serialized version of each directive.",
     )
 
     parser.add_argument(
@@ -74,8 +87,6 @@ def cmd_line_invocation():
         action="store_true",
         help="Increase output verbosity.",
     )
-
-    
 
     args = parser.parse_args()
     return args
@@ -100,37 +111,25 @@ Will Model pickle object to file {path}"
         )
 
 
-def find_obj_with_id(list_of_objs, target_id):
+def find_obj_with_id(list_of_objs, target_ids):
     """Returns the obj given an id"""
-    for item in list_of_objs:
-        if item._id == target_id:
-            return item
-    print(f"error: no object found with id: {target_id}")
-    return None
 
-
-def find_objs_with_id(list_of_objs, target_ids):
-    """Returns the objs given an id"""
-    objs = []
-    for target_id in target_ids:
+    if not type(target_ids) == list:
         for item in list_of_objs:
-            if item._id == target_id:
-                objs.append(item)
-    if len(objs) == 0:
-        print(f"error: no object found with id: {target_id}")
-    return objs
+            if item._id == target_ids:
+                return item
+        print(f"error: no object found with id: {target_ids}")
+        return None
 
-
-def find_objs_with_id(list_of_objs, target_ids):
-    """Returns the objs given an id"""
-    objs = []
-    for target_id in target_ids:
-        for item in list_of_objs:
-            if item._id == target_id:
-                objs.append(item)
-    if len(objs) == 0:
-        print(f"error: no object found with id: {target_id}")
-    return objs
+    else:
+        objs = []
+        for target_id in target_ids:
+            for item in list_of_objs:
+                if item._id == target_id:
+                    objs.append(item)
+        if len(objs) == 0:
+            print(f"error: no object found with id: {target_id}")
+        return objs
 
 
 def find_unused(te_obj, used):
@@ -149,6 +148,102 @@ def find_unused(te_obj, used):
                 unused.append(item)
     print(f"... Total items unused: {len(unused)} out of: {len(total_items)}")
     return unused, unused_types
+
+
+def remove_surplus_assets(input_string):
+    """Removes surplus asset names given an asset name string."""
+    pattern = re.compile(r"\ball\b.*?(property|estate)")
+    match = pattern.search(input_string)
+    if match:
+        concise_property = "All my " + match.group(1).strip().capitalize()
+        return concise_property
+
+    return input_string
+
+
+def highlight_used_text(te_obj, used_ids, sentence_ids=[], highlight=False):
+    """Highlight used part of the will."""
+    will_text = te_obj["full_text"]
+    will_text_list = list(will_text)
+    entities = te_obj["extractions"]["entities"]
+    all_offsets = []
+    for entity in entities:
+        if entity["id"] in used_ids:
+            texts = entity["texts"]
+            for word in texts:
+                for offset in entity["texts"][word]:
+                    char_offset = offset["character_offsets"]
+                    all_offsets.append([char_offset[0], char_offset[1] + 1])
+    all_offsets = sorted(all_offsets, key=lambda x: x[0])
+    aligned_offsets = []
+    prev = None
+    for offset in all_offsets:
+        if prev != None:
+            if prev[1] >= offset[0]:
+                offset[0] = prev[1] + 1
+            if offset[0] < offset[1]:
+                aligned_offsets.append(offset)
+            else:
+                continue
+        else:
+            aligned_offsets.append(offset)
+        prev = offset
+    edit_text_list = list(will_text)
+    color_offset = 0
+    for offset in aligned_offsets:
+        word_from_will = "".join(will_text_list[offset[0] : offset[1]])
+        colored_word = "\033[32m" + word_from_will + "\033[0m"
+        edit_text_list[offset[0] + color_offset : offset[1] + color_offset] = (
+            colored_word
+        )
+        color_offset += len(colored_word) - len(word_from_will)
+    interm_text = "".join(edit_text_list)
+    sentences = re.split(r"\. |\.\x1b", interm_text)
+    sentences_raw = will_text.split(". ")
+    for s_id in sentence_ids:
+        given_sentence = sentences_raw[s_id]
+        colored_sentence = "\033[32m" + given_sentence + "\033[0m"
+        sentences[s_id] = colored_sentence
+    final_text = ". ".join(sentences)
+    if highlight:
+        print("Highlighted used text:\n", final_text)
+    return final_text
+
+
+def fetch_objects(entities, target_ids, used):
+    """Returns the list of objects and their names."""
+
+    if target_ids == None:
+        return None, None
+    objs = find_obj_with_id(entities, target_ids)
+    obj_names = ""
+    if isinstance(target_ids, list):
+        used.extend(target_ids)
+        obj_names = " and, ".join(
+            [obj._name if hasattr(obj, "_name") else obj._condition for obj in objs]
+        )
+
+    else:
+        used.append(target_ids)
+        obj_names = objs._name if hasattr(objs, "_name") else objs._condition
+        objs = [objs]
+
+    return objs, obj_names
+
+
+def serialize_directive(d_id, asset, beneficiary, condition, executor):
+    "A stringbuilder that builds a serialized directive"
+
+    directive_text = f"""... serialized directive with id {d_id}: Bequest asset/s \
+'{asset}' to '{beneficiary}'"""
+
+    if condition:
+        directive_text += f" with following conditions: {condition}"
+    if executor:
+        directive_text += f". The name executor is {executor}"
+    directive_text += "."
+
+    return directive_text
 
 
 ################################################################################
@@ -178,28 +273,28 @@ for model_path in schema_paths:
 ################################################################################
 
 
-def extract_assets(te,prov=False):
+def extract_assets(te, prov=False, verbose=False):
     """Returns a list of assets given a te dict."""
-
     assets = []
     for entity in te["entities"]:
         if entity["type"] == "Asset":
             asset_name = ", ".join(entity["texts"])
+            asset_name = remove_surplus_assets(asset_name.lower())
             asset_id = entity["id"]
-            if prov:
+            if verbose:
                 print(
-                f"""... extracted asset with id: {asset_id} \
+                    f"""... extracted asset with id: {asset_id} \
 and name: {asset_name}"""
-            )
-            asset=WMAsset(name=asset_name, id=asset_id)
-            asset.source_text=entity['texts']
+                )
+            asset = WMAsset(name=asset_name, id=asset_id)
+            asset.source_text = entity["texts"]
             if prov:
                 print(f"... source text from will: {asset.source_text}\n")
             assets.append(asset)
     return assets
 
 
-def extract_beneficiaries(te,prov=False):
+def extract_beneficiaries(te, prov=False, verbose=False):
     """Returns a list of beneficiaries given
     a te dict. gets the name by first index.
     to-do: currently handles single beneficiary,
@@ -207,25 +302,25 @@ def extract_beneficiaries(te,prov=False):
 
     beneficiaries = []
     for entity in te["entities"]:
-        if entity["type"] == "Beneficiary":
-            beneficiary_name = list(entity["texts"].keys())[0]
+        if entity["type"] == "Beneficiary" or entity["type"] == "NamedBeneficiary":
+            beneficiary_name = ", ".join(entity["texts"])
             beneficiary_id = entity["id"]
-            if prov:
+            if verbose:
                 print(
-                f"""... extracted beneficiary with\
+                    f"""... extracted beneficiary with\
  id: {beneficiary_id} and name: {beneficiary_name}"""
-            )
-            beneficiary=WMPerson(
-                    name=beneficiary_name, id=beneficiary_id, dass_type="Beneficiary"
                 )
-            beneficiary.source_text=entity['texts']
+            beneficiary = WMPerson(
+                name=beneficiary_name, id=beneficiary_id, dass_type="Beneficiary"
+            )
+            beneficiary.source_text = entity["texts"]
             if prov:
                 print(f"... source text from will: {beneficiary.source_text}\n")
             beneficiaries.append(beneficiary)
     return beneficiaries
 
 
-def extract_conditions(te,prov=False):
+def extract_conditions(te, prov=False, verbose=False):
     """Returns a list of conditions given
     a te dict. gets the text by first index."""
 
@@ -234,13 +329,13 @@ def extract_conditions(te,prov=False):
         if entity["type"] == "Condition":
             condition_text = list(entity["texts"].keys())[0]
             condition_id = entity["id"]
-            if prov:
+            if verbose:
                 print(
-                f"""... extracted condition with\
+                    f"""... extracted condition with\
  id: {condition_id} and text: {condition_text}"""
-            )
-            condition=WMConditional(condition=condition_text, id=condition_id)
-            condition.source_text=entity["texts"]
+                )
+            condition = WMConditional(condition=condition_text, id=condition_id)
+            condition.source_text = entity["texts"]
             conditions.append(condition)
             if prov:
                 print(f"... source text from will: {condition.source_text}\n")
@@ -248,7 +343,7 @@ def extract_conditions(te,prov=False):
     return conditions
 
 
-def extract_testaor(te, used,prov=False):
+def extract_testaor(te, used, prov=False, verbose=False):
     """Returns a the name of the testator.
     currently gets the testator name by the
     first index."""
@@ -256,15 +351,18 @@ def extract_testaor(te, used,prov=False):
     for entity in te["entities"]:
         if entity["type"] == "Testator":
             testator_name = list(entity["texts"].keys())[0]
+            print(f"Testator: ", list(entity["texts"].keys()))
             testator_id = entity["id"]
-            if prov:
+            if verbose:
                 print(
-                f"""... extracted testator with id:\
+                    f"""... extracted testator with id:\
  {testator_id} and name: {testator_name}"""
-            )
+                )
             used.append(testator_id)
-            testator=WMPerson(name=testator_name, id=testator_id, dass_type="Testator")
-            testator.source_text=entity["texts"]
+            testator = WMPerson(
+                name=testator_name, id=testator_id, dass_type="Testator"
+            )
+            testator.source_text = entity["texts"]
 
             if prov:
                 print(f"... source text from will: {testator.source_text}\n")
@@ -274,7 +372,7 @@ def extract_testaor(te, used,prov=False):
     return None
 
 
-def extract_executors(te, used,prov=False):
+def extract_executors(te, used, prov=False, verbose=False):
     """Returns the list of executors.
     currently gets the executor name by the
     first index."""
@@ -284,15 +382,15 @@ def extract_executors(te, used,prov=False):
         if entity["type"] == "Executor":
             executor_name = list(entity["texts"].keys())[0]
             executor_id = entity["id"]
-            if prov:
+            if verbose:
                 print(
-                f"""... extracted testator with\
+                    f"""... extracted testator with\
  id: {executor_id} and name: {executor_name}"""
                 )
-            
-            
-            executor=WMPerson(name=executor_name, id=executor_id, dass_type="Executor")
-            executor.source_text=entity["texts"]
+            executor = WMPerson(
+                name=executor_name, id=executor_id, dass_type="Executor"
+            )
+            executor.source_text = entity["texts"]
             if prov:
                 print(f"... source text from will: {executor.source_text}\n")
             executors.append(executor)
@@ -306,62 +404,61 @@ def extract_executors(te, used,prov=False):
 ################################################################################
 
 
-def infer_directives(te, beneficairies, assets, conditions, executors, used,prov=False, serialize=False):
+def infer_directives(
+    te,
+    beneficairies,
+    assets,
+    conditions,
+    executors,
+    used,
+    s_ids,
+    prov=False,
+    serialize=False,
+):
     """Returns a list of beneficiaries given a te dict,
     beneficairies, and assets.
     to-do: currently handles single beneficiary, add
-    logic for multiple."""
+    support for multiple."""
     directives = []
     bequeath_types = ["BequestAsset", "Bequest"]  ## add more types here
     for event in te["events"]:
         if event["type"] in bequeath_types:
             if event["type"] in ["BequestAsset", "Bequest"]:
+                ## processing entities
                 d_id = event["id"]
                 d_type = event["type"]
                 asset_id = event["Asset"]
                 benefactor_id = event["Beneficiary"]
-                condition_id = event["Condition"]
-                if "Executor" in event:
-                    executor_id = event["Executor"]
-                else:
-                    executor_id = None
-                if type(condition_id) == list:
-                    conditions_asset = find_objs_with_id(conditions, condition_id)
-
-                else:
-                    conditions_asset = [find_obj_with_id(conditions, condition_id)]
-                conditions_ids = [condition._id for condition in conditions_asset]
-                beneficiary = find_obj_with_id(beneficairies, benefactor_id)
-                asset = find_obj_with_id(assets, asset_id)
-                if executor_id:
-                    executor = find_obj_with_id(executors, executor_id)
-                else:
-                    executor = None
-                bequeath_directive = WMDirectiveBequeath(
-                    beneficiaries=[beneficiary],
-                    assets=[asset],
-                    executor=executor,
-                    conditions=conditions_asset,
+                condition_id = event["Condition"] if "Condition" in event else None
+                executor_id = event["Executor"] if "Executor" in event else None
+                beneficiary_fetched, b_name = fetch_objects(
+                    beneficairies, benefactor_id, used
+                )
+                asset_fetched, a_name = fetch_objects(assets, asset_id, used)
+                condition_fetched, c_name = fetch_objects(
+                    conditions, condition_id, used
+                )
+                executor_fetched, e_name = fetch_objects(executors, executor_id, used)
+                serialized_text = serialize_directive(
+                    d_id, a_name, b_name, c_name, e_name
                 )
 
-                used.append(asset_id)
-                used.append(benefactor_id)
-                used.extend(conditions_ids)
-                if executor_id:
-                    used.append(executor_id)
-
-                condition_texts = [
-                    condition._condition for condition in conditions_asset
-                ]
-                conditions_full_text = ", and ".join(condition_texts)
+                ## creating bequeath directive
+                bequeath_directive = WMDirectiveBequeath(
+                    beneficiaries=beneficiary_fetched,
+                    assets=asset_fetched,
+                    executor=executor_fetched,
+                    conditions=condition_fetched,
+                    serialized_text=serialized_text,
+                )
                 bequeath_directive.type = d_type
+                bequeath_directive._id = d_id
+                ## creating bequeath directive
                 if prov:
                     print(f"... infered directive with id: {d_id}")
                 if serialize:
-                    print(
-                    f"""... serialized directive: Bequest asset/s \
-"{asset._name}" to "{beneficiary._name}" with following condition/s: {conditions_full_text}.\n"""
-                    )
+                    print(serialized_text)
+
                 directives.append(bequeath_directive)
 
     return directives
@@ -406,41 +503,32 @@ def main():
     path_to_te_json = args.path_to_te
     path_to_wm_obj = args.path_to_wm_obj
     te_obj = load_json_object(path_to_te_json)
-    provenance=args.provenance
-    serialize=args.serialize
+    provenance = args.provenance
+    verbose = args.verbose
+    serialize = args.serialize
+    highlight = args.highlight
     used_ids = []  # to keep track of what's used and what's not
-
+    sentence_ids = []
     testator = extract_testaor(te_obj["extractions"], used_ids)
 
-    ## match testator with existing database of people
-
-    ## stub date of birth, to-do: replace with dynamic date
-    dob_to_match = "1992-05-15"
-
-    matching_testator = find_person_by_dob_and_name(dob_to_match, testator.name)
-
-    if matching_testator:
-        if provenance:
-            print(
-            f"Matching testator found from peoples db with id: {matching_testator['id']}"
-        )
-        if args.verbose:
-            print(f"Testor detailed info:")
-            pprint(matching_testator)
-    else:
-        print("No matching testator found.")
-
-    ## extract other entities
-    executors = extract_executors(te_obj["extractions"], used_ids,provenance)
-    beneficiaries = extract_beneficiaries(te_obj["extractions"],provenance)
-    conditions = extract_conditions(te_obj["extractions"],provenance)
-    assets = extract_assets(te_obj["extractions"],provenance)
+    ## extract entities  in the directive
+    executors = extract_executors(te_obj["extractions"], used_ids, provenance, verbose)
+    beneficiaries = extract_beneficiaries(te_obj["extractions"], provenance, verbose)
+    conditions = extract_conditions(te_obj["extractions"], provenance, verbose)
+    assets = extract_assets(te_obj["extractions"], provenance, verbose)
     directives = infer_directives(
-        te_obj["extractions"], beneficiaries, assets, conditions, executors, used_ids,
-        provenance,serialize
+        te_obj["extractions"],
+        beneficiaries,
+        assets,
+        conditions,
+        executors,
+        used_ids,
+        sentence_ids,
+        provenance,
+        serialize,
     )
     unused_items, unused_types = find_unused(te_obj["extractions"], used_ids)
-
+    highlight_used_text(te_obj, used_ids, sentence_ids, highlight)
     if args.verbose:
         print(f"... the following item types and ids are unused from TE json:")
         pprint(unused_types)
@@ -455,8 +543,6 @@ def main():
     will_model.checksum = None
     will_model_bytes = pickle.dumps(will_model)
     will_model.checksum = hashlib.sha256(will_model_bytes).hexdigest()
-    print(f"... Will model Checksum: {will_model.checksum}")
-
     ## Save Will Model
     save_pickle_object(will_model, path_to_wm_obj)
 
