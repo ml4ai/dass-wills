@@ -42,7 +42,8 @@ def main():
 
     # assemble from each sentence into full extractions for the entire document
     full_doc = sentence_to_full_doc.process_json(extracted_info, input_path)
-    export_to_json(full_doc, output_path)
+    final_doc = sentence_to_full_doc.condition_pronoun_replacement(full_doc)
+    export_to_json(final_doc, output_path)
     print("Extraction completed!")
 
 

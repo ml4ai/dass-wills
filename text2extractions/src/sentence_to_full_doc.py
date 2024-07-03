@@ -1,6 +1,7 @@
 import re
 import json
 import spacy
+import difflib
 from collections import OrderedDict
 from fuzzywuzzy import fuzz
 
@@ -279,3 +280,86 @@ def update_dict_with_id_map(input_dict, id_map):
             if updated_value not in updated_dict[key]:
                 updated_dict[key].append(updated_value)
     return updated_dict
+
+
+def find_pronouns(condition, char_offsets):
+    core = spacy.load("en_core_web_sm")
+    condition_token = core(condition)
+    pronouns = {}
+    for token in condition_token:
+        if token.pos_ == "PRON":
+            token_word_offsets = get_word_offsets(condition, str(token))
+            true_word_offset_list = []
+            for offset in token_word_offsets:
+                true_word_offset = [offset[0] + char_offsets[0], offset[1] + char_offsets[0]]
+                true_word_offset_list.append((offset, true_word_offset))
+            pronouns[token] = true_word_offset_list
+    return pronouns
+
+
+def find_entity_set(dictionary, pronoun, character_offset):
+    for entity in dictionary['extractions']['entities']:
+        for text in entity['texts']:
+            if text == pronoun:
+                for char_offset in entity['texts'][text]:
+                    if char_offset['character_offsets'] == character_offset:
+                        return entity['texts']
+
+
+def find_proper_noun(entity_set):
+    longest_with_cap = ""
+    current_longest = 0
+    for text in entity_set:
+        if len(text) > current_longest and text[0].isupper():
+            longest_with_cap = text
+            current_longest = len(text)
+    return longest_with_cap
+
+
+def add_proper_noun(condition, character_offset, proper_noun):
+    new_condition = condition[:character_offset[1] + 1] + "(=" + proper_noun + ")" + condition[character_offset[1]:]
+    return new_condition
+
+
+def union_strings(strings):
+    n = 0
+    total_string = ""
+    while n < len(strings):
+        string_to_compare = total_string
+        total_string = ""
+        matcher = difflib.SequenceMatcher(None, string_to_compare, strings[n])
+        differences = list(matcher.get_opcodes())
+        # Print the differences
+        for tag, i1, i2, j1, j2 in differences:
+            if tag == "equal":
+                total_string += strings[n][j1:j2]
+            else:
+                if len(string_to_compare[i1:i2]) > len(strings[n][j1:j2]):
+                    total_string += string_to_compare[i1:i2]
+                else:
+                    total_string += strings[n][j1:j2]
+        n += 1
+    return total_string
+
+
+def condition_pronoun_replacement(dictionary):
+    entities_copy = dictionary['extractions']['entities'][:]
+
+    for entity in entities_copy:
+        if entity['type'] == "Condition":
+            # Create a copy of the keys to avoid RuntimeError
+            texts_copy = list(entity['texts'].keys())
+            for text in texts_copy:
+                char_offsets = entity['texts'][text][0]['character_offsets']
+                pronouns = find_pronouns(text, char_offsets)
+                for pronoun in pronouns:
+                    for char_offset in pronouns[pronoun]:
+                        entity_set = find_entity_set(dictionary, str(pronoun), char_offset[1])
+                        if entity_set is not None:
+                            proper_noun = find_proper_noun(entity_set)
+                            if proper_noun is not None:
+                                new_condition = add_proper_noun(text, char_offset[0], proper_noun)
+                                condition_list = [list(entity['texts'].keys())[0], new_condition]
+                                union_condition = union_strings(condition_list)
+                                entity['texts'][union_condition] = entity['texts'].pop(list(entity['texts'].keys())[0])
+    return dictionary

@@ -391,6 +391,21 @@
             },
             {
                 "id": "e10",
+                "type": "Duty",
+                "texts": {
+                    "to pay all my just debts and all funeral expenses": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                358,
+                                407
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e11",
                 "type": "Debt",
                 "texts": {
                     "all my just debts": [
@@ -405,7 +420,7 @@
                 }
             },
             {
-                "id": "e11",
+                "id": "e12",
                 "type": "Expense",
                 "texts": {
                     "all funeral expenses": [
@@ -420,7 +435,7 @@
                 }
             },
             {
-                "id": "e12",
+                "id": "e13",
                 "type": "Asset",
                 "texts": {
                     "my estate": [
@@ -435,7 +450,7 @@
                 }
             },
             {
-                "id": "e13",
+                "id": "e14",
                 "type": "Time",
                 "texts": {
                     "as soon after my death as can conveniently be done": [
@@ -450,30 +465,15 @@
                 }
             },
             {
-                "id": "e14",
+                "id": "e15",
                 "type": "Condition",
                 "texts": {
-                    "against my estate": [
+                    "against my (=LEO ARWOOD) estate": [
                         {
                             "sentence_id": 1,
                             "character_offsets": [
                                 457,
                                 474
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "e15",
-                "type": "Duty",
-                "texts": {
-                    "to pay all my just debts and all funeral expenses": [
-                        {
-                            "sentence_id": 1,
-                            "character_offsets": [
-                                358,
-                                407
                             ]
                         }
                     ]
@@ -498,7 +498,7 @@
                 "id": "e17",
                 "type": "Condition",
                 "texts": {
-                    "if she survives me": [
+                    "if she (=Athalene Arwood) survives me(=LEO ARWOOD)": [
                         {
                             "sentence_id": 2,
                             "character_offsets": [
@@ -522,21 +522,21 @@
                             ]
                         }
                     ],
-                    "she": [
-                        {
-                            "sentence_id": 2,
-                            "character_offsets": [
-                                692,
-                                695
-                            ]
-                        }
-                    ],
                     "my wife": [
                         {
                             "sentence_id": 2,
                             "character_offsets": [
                                 663,
                                 670
+                            ]
+                        }
+                    ],
+                    "she": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                692,
+                                695
                             ]
                         }
                     ]
@@ -559,6 +559,21 @@
             },
             {
                 "id": "e20",
+                "type": "Condition",
+                "texts": {
+                    "Should my (=LEO ARWOOD) wife not survive me,(=LEO ARWOOD), or should we die at the same time, or as a result of a common disaster": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                713,
+                                814
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e21",
                 "type": "Asset",
                 "texts": {
                     "all my property": [
@@ -573,7 +588,7 @@
                 }
             },
             {
-                "id": "e21",
+                "id": "e22",
                 "type": "Beneficiary",
                 "texts": {
                     "Clayton F. Bentley": [
@@ -588,7 +603,7 @@
                 }
             },
             {
-                "id": "e22",
+                "id": "e23",
                 "type": "NonBeneficiary",
                 "texts": {
                     "son of E. F. Bentley, Jr.": [
@@ -603,64 +618,7 @@
                 }
             },
             {
-                "id": "e23",
-                "type": "Condition",
-                "texts": {
-                    "Should my wife not survive me, or should we die at the same time, or as a result of a common disaster": [
-                        {
-                            "sentence_id": 3,
-                            "character_offsets": [
-                                713,
-                                814
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
                 "id": "e24",
-                "type": "Executor",
-                "texts": {
-                    "my wife": [
-                        {
-                            "sentence_id": 4,
-                            "character_offsets": [
-                                963,
-                                970
-                            ]
-                        }
-                    ],
-                    "Athalene Arwood": [
-                        {
-                            "sentence_id": 4,
-                            "character_offsets": [
-                                972,
-                                987
-                            ]
-                        }
-                    ],
-                    "Executor": [
-                        {
-                            "sentence_id": 4,
-                            "character_offsets": [
-                                989,
-                                997
-                            ]
-                        }
-                    ],
-                    "she": [
-                        {
-                            "sentence_id": 4,
-                            "character_offsets": [
-                                1042,
-                                1045
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "e25",
                 "type": "Will",
                 "texts": {
                     "this": [
@@ -684,7 +642,7 @@
                 }
             },
             {
-                "id": "e26",
+                "id": "e25",
                 "type": "Asset",
                 "texts": {
                     "estate": [
@@ -699,7 +657,7 @@
                 }
             },
             {
-                "id": "e27",
+                "id": "e26",
                 "type": "Bond",
                 "texts": {
                     "bond": [
@@ -714,7 +672,7 @@
                 }
             },
             {
-                "id": "e28",
+                "id": "e27",
                 "type": "Condition",
                 "texts": {
                     "without bond": [
@@ -723,6 +681,48 @@
                             "character_offsets": [
                                 1066,
                                 1078
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e28",
+                "type": "Executor",
+                "texts": {
+                    "she": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                1042,
+                                1045
+                            ]
+                        }
+                    ],
+                    "Executor": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                989,
+                                997
+                            ]
+                        }
+                    ],
+                    "Athalene Arwood": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                972,
+                                987
+                            ]
+                        }
+                    ],
+                    "my wife": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                963,
+                                970
                             ]
                         }
                     ]
@@ -769,21 +769,6 @@
             },
             {
                 "id": "e31",
-                "type": "Bond",
-                "texts": {
-                    "bond": [
-                        {
-                            "sentence_id": 5,
-                            "character_offsets": [
-                                1195,
-                                1199
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "e32",
                 "type": "Condition",
                 "texts": {
                     "without bond": [
@@ -798,10 +783,25 @@
                 }
             },
             {
+                "id": "e32",
+                "type": "Bond",
+                "texts": {
+                    "bond": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1195,
+                                1199
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
                 "id": "e33",
                 "type": "Condition",
                 "texts": {
-                    "If for any reason my wife is unable to serve": [
+                    "If for any reason my (=LEO ARWOOD) wife is unable to serve": [
                         {
                             "sentence_id": 5,
                             "character_offsets": [
@@ -900,7 +900,7 @@
                 "id": "e39",
                 "type": "Condition",
                 "texts": {
-                    "at his request": [
+                    "at his (=LEO ARWOOD) request": [
                         {
                             "sentence_id": 7,
                             "character_offsets": [
@@ -915,7 +915,7 @@
                 "id": "e40",
                 "type": "Condition",
                 "texts": {
-                    "in his presence": [
+                    "in his (=LEO ARWOOD) presence": [
                         {
                             "sentence_id": 7,
                             "character_offsets": [
@@ -945,7 +945,7 @@
                 "id": "e42",
                 "type": "Condition",
                 "texts": {
-                    "in our presence": [
+                    "in our (=We) presence": [
                         {
                             "sentence_id": 7,
                             "character_offsets": [
@@ -1138,14 +1138,14 @@
                 "Executor": [
                     "e9"
                 ],
-                "Time": [
-                    "e13"
-                ],
                 "Duty": [
-                    "e15"
+                    "e10"
                 ],
                 "Testator": [
                     "e6"
+                ],
+                "Time": [
+                    "e14"
                 ]
             },
             {
@@ -1157,13 +1157,13 @@
                 ],
                 "sentence_id": 1,
                 "Debt": [
-                    "e10"
-                ],
-                "Expense": [
                     "e11"
                 ],
+                "Expense": [
+                    "e12"
+                ],
                 "Condition": [
-                    "e14"
+                    "e15"
                 ]
             },
             {
@@ -1219,17 +1219,17 @@
                     "Bequest"
                 ],
                 "sentence_id": 3,
-                "Asset": [
-                    "e20"
-                ],
-                "Condition": [
-                    "e23"
-                ],
                 "Testator": [
                     "e6"
                 ],
-                "Beneficiary": [
+                "Condition": [
+                    "e20"
+                ],
+                "Asset": [
                     "e21"
+                ],
+                "Beneficiary": [
+                    "e22"
                 ]
             },
             {
@@ -1244,7 +1244,7 @@
                     "e6"
                 ],
                 "Executor": [
-                    "e24"
+                    "e28"
                 ]
             },
             {
@@ -1270,11 +1270,11 @@
                     "Excuse"
                 ],
                 "sentence_id": 4,
-                "Executor": [
-                    "e24"
-                ],
                 "Bond": [
-                    "e27"
+                    "e26"
+                ],
+                "Executor": [
+                    "e28"
                 ]
             },
             {
@@ -1287,6 +1287,9 @@
                 "sentence_id": 5,
                 "Executor": [
                     "e29"
+                ],
+                "Condition": [
+                    "e33"
                 ]
             },
             {
@@ -1297,14 +1300,14 @@
                     "Nomination"
                 ],
                 "sentence_id": 5,
-                "Condition": [
-                    "e33"
+                "Testator": [
+                    "e6"
                 ],
                 "Executor": [
                     "e30"
                 ],
-                "Testator": [
-                    "e6"
+                "Condition": [
+                    "e33"
                 ]
             },
             {
@@ -1315,17 +1318,14 @@
                     "Excuse"
                 ],
                 "sentence_id": 5,
-                "Bond": [
-                    "e31"
-                ],
-                "Condition": [
-                    "e32"
-                ],
                 "Executor": [
                     "e30"
                 ],
-                "Testator": [
-                    "e6"
+                "Bond": [
+                    "e32"
+                ],
+                "Condition": [
+                    "e31"
                 ]
             },
             {
@@ -1375,14 +1375,26 @@
                     "v18"
                 ],
                 "type": [
+                    "SignWill"
+                ],
+                "sentence_id": 7,
+                "Testator": [
+                    "e6"
+                ]
+            },
+            {
+                "id": [
+                    "v19"
+                ],
+                "type": [
                     "Attestation"
                 ],
                 "sentence_id": 7,
                 "Attestation": [
-                    "v2"
+                    "v3"
                 ],
                 "SignWill": [
-                    "v3"
+                    "v4"
                 ],
                 "Witness": [
                     "e44"
@@ -1390,7 +1402,7 @@
             },
             {
                 "id": [
-                    "v19"
+                    "v20"
                 ],
                 "type": [
                     "Attestation"
@@ -1410,7 +1422,7 @@
             },
             {
                 "id": [
-                    "v20"
+                    "v21"
                 ],
                 "type": [
                     "SignWill"
@@ -1429,7 +1441,7 @@
             },
             {
                 "id": [
-                    "v21"
+                    "v22"
                 ],
                 "type": [
                     "WillCreation"
