@@ -180,14 +180,8 @@ def process_json(extracted_info, input_path):
         if entity['type'] == "Date":
             new_dict['execution_date'] = list(entity["texts"].keys())[-1]
         if entity['type'] == "Testator":
-            # ak: currently I'm just assuming that the longest text with capitalization will be the testator's name
-            longest_with_cap = ""
-            current_longest = 0
-            for key in entity["texts"].keys():
-                if len(key) > current_longest and key[0].isupper():
-                    longest_with_cap = key
-                    current_longest = len(key)
-            new_dict['testator_name'] = longest_with_cap
+            proper_noun = find_proper_noun(entity["texts"].keys())
+            new_dict['testator_name'] = proper_noun
     return new_dict
 
 
@@ -310,7 +304,10 @@ def find_proper_noun(entity_set):
     longest_with_cap = ""
     current_longest = 0
     for text in entity_set:
-        if len(text) > current_longest and text[0].isupper():
+        # for the anonymized wills
+        if text[0] == "[":
+            return text
+        elif len(text) > current_longest and text[0].isupper():
             longest_with_cap = text
             current_longest = len(text)
     return longest_with_cap
