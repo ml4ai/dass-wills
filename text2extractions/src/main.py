@@ -9,9 +9,10 @@ import sentence_to_full_doc
 import json
 from nltk.tokenize import sent_tokenize
 
+nltk.download('punkt')
+
 
 def read_and_tokenize(file_path):
-    nltk.download('punkt')
     try:
         # Read the content of the file
         with open(file_path, 'r', encoding='utf-8') as file:
