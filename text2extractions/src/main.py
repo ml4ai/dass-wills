@@ -8,6 +8,7 @@ import classify_and_extract
 import sentence_to_full_doc
 import json
 from nltk.tokenize import sent_tokenize
+from openai import OpenAI
 
 nltk.download('punkt')
 
@@ -35,6 +36,10 @@ def process_files(input_dir, output_dir):
     # Ensure the output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
+    # prompt the user for their api key
+    key = input("Please enter your openai api key: ")
+    client = OpenAI(api_key=key)
+
     # Process each .txt file in the input directory
     for filename in os.listdir(input_dir):
         if filename.endswith(".txt"):
@@ -46,10 +51,10 @@ def process_files(input_dir, output_dir):
             sentences = read_and_tokenize(input_path)
 
             # Text extraction
-            extracted_info = classify_and_extract.main(sentences)
+            extracted_info = classify_and_extract.main(sentences, client)
 
             # Assemble from each sentence into full extractions for the entire document
-            full_doc = sentence_to_full_doc.process_json(extracted_info, input_path)
+            full_doc = sentence_to_full_doc.process_json(extracted_info, input_path, client)
             final_doc = sentence_to_full_doc.condition_pronoun_replacement(full_doc)
 
             # Export the results to a JSON file

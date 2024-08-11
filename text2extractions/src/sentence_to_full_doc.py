@@ -4,6 +4,7 @@ import spacy
 import difflib
 from collections import OrderedDict
 from fuzzywuzzy import fuzz
+import gpt_assisted_coreference_resolution
 
 nlp_core = spacy.load("en_core_web_sm")
 nlp_coref = spacy.load("en_coreference_web_trf")
@@ -39,6 +40,7 @@ def add_or_update_entities(entity_id_map, dict_to_add, full_text_len, data, enti
                 prev_entity['texts'][text] = [{'sentence_id': sentence, 'character_offsets': offset} for offset in offsets]
     else:
         new_id = "e" + str(len(dict_to_add['extractions']['entities']) + 1)
+        entity_id_map[original_id] = new_id
         create_updated_entity(new_id, dict_to_add, {}, full_text_len, data, entity, sentence)
 
 
@@ -60,7 +62,7 @@ def update_event_dicts(event, sentence):
     return dict(event_dict)
 
 
-def process_json(extracted_info, input_path):
+def process_json(extracted_info, input_path, client):
     sentence = 0
     new_dict = {
         'file_name': input_path,
@@ -89,8 +91,9 @@ def process_json(extracted_info, input_path):
             if prev_entity and entity['type'] == "Testator":
                 add_or_update_entities(entity_id_map, new_dict, full_text_len, data, entity, prev_entity, sentence)
             elif prev_entity:
-                coref_res = x_sentence_coref_res(new_dict['extractions']['entities'], entity, new_dict['full_text'])
-                add_or_update_entities(entity_id_map, new_dict, full_text_len, data, entity, prev_entity if coref_res else None, sentence)
+                gpt_coref_res = gpt_assisted_coreference_resolution.main(entity, new_dict, client)
+                # coref_res = x_sentence_coref_res(new_dict['extractions']['entities'], entity, new_dict['full_text'])
+                add_or_update_entities(entity_id_map, new_dict, full_text_len, data, entity, prev_entity if gpt_coref_res else None, sentence)
             else:
                 new_id = "e" + str(len(new_dict['extractions']['entities']) + 1)
                 create_updated_entity(new_id, new_dict, {}, full_text_len, data, entity, sentence)

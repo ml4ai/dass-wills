@@ -83,13 +83,9 @@ def extract_for_text(index, text, client, directory, preds, num_of_examples):
         return None
 
 
-def main(text_list):
+def main(text_list, client):
     directory = "../doc/example_pool"
     num_of_examples = 5
-
-    # prompt the user for their api key
-    key = input("Please enter your openai api key: ")
-    client = OpenAI(api_key=key)
 
     # make predictions using pretrained models
     preds = classify_text_list(text_list, client)
