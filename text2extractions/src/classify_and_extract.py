@@ -94,12 +94,14 @@ def main(text_list, client):
     assert len(preds) == len(text_list)
 
     # using predictions, create prompts and extract information
-    extracted_info = []
+    extracted_info = [None] * len(text_list)  # Initialize a list with the same length as text_list
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(extract_for_text, i, text_list[i], client, directory, preds, num_of_examples) for i in range(len(text_list))]
+        futures = {executor.submit(extract_for_text, i, text_list[i], client, directory, preds, num_of_examples): i for i in range(len(text_list))}
         for future in concurrent.futures.as_completed(futures):
+            index = futures[future]
             result = future.result()
             if result is not None:
-                extracted_info.append(result)
+                extracted_info[index] = result  # Store result in the correct position
 
     return extracted_info
+

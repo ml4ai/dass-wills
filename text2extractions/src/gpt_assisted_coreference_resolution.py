@@ -9,7 +9,7 @@ def create_cr_prompt(current_extraction, prev_extractions):
 
 %Note about the special tokens: Please note that any words that contain square brackets ("[" and "]") are special tokens used for anonymization. For example, [Person-1] and [Address-1] are special tokens representing a person's name and address. If the number within the token differs, it means that the tokens represent different entities. For example, [Person-1] and [Person-2] are special tokens representing two different persons.
 
-%Output format: You should only produce a number (e.g., 0, 1, 2, etc.) as an output. If the given entity does not have any antecedant, do not say "no antecedant" but choose among the choices and output the correct choice number (e.g., 3, if 3 is the choice that states "no antecedant")
+%Output format: You should only produce a number (e.g., 1, 2, 3, etc.) as an output. If the given entity does not have any antecedant, do not say "no antecedant" but choose among the choices and output the correct choice number (e.g., 3, if 3 is the choice that states "no antecedant")
 
 %Taxonomy:
 
@@ -59,5 +59,5 @@ def main(current_extraction, prev_extractions, client):
     if prompt:
         response = coreference_resolution(prompt, client)
         if response and int(response) < len(choices):
-            resolved = choices[int(response)]
+            resolved = choices[int(response)-1]
             return resolved
