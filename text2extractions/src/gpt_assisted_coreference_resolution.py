@@ -58,6 +58,6 @@ def main(current_extraction, prev_extractions, client):
     choices, prompt = create_cr_prompt(current_extraction, prev_extractions)
     if prompt:
         response = coreference_resolution(prompt, client)
-        if response and int(response) < len(choices):
+        if response and int(response)-1 < len(choices):
             resolved = choices[int(response)-1]
             return resolved
