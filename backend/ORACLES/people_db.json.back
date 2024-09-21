@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "first_name": "LEO",
+        "last_name": "ARWOOD",
+        "full_name": "LEO ARWOOD",
+        "age": 30,
+        "date_of_birth": "1992-05-15",
+        "email": "john.doe@example.com",
+        "phone": "+1-555-1234",
+        "address": "123 Main St, Cityville, USA"
+    },
+    {
+        "id": 2,
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "full_name": "Jane Smith",
+        "age": 25,
+        "date_of_birth": "1997-11-22",
+        "email": "jane.smith@example.com",
+        "phone": "+1-555-5678",
+        "address": "456 Oak St, Townsville, USA"
+    },
+    {
+        "id": 3,
+        "first_name": "Bob",
+        "last_name": "Johnson",
+        "full_name": "Bob Johnson",
+        "age": 40,
+        "date_of_birth": "1982-08-07",
+        "email": "bob.johnson@example.com",
+        "phone": "+1-555-9012",
+        "address": "789 Pine St, Villageland, USA"
+    }
+]

@@ -1,0 +1,56 @@
+{
+  "text": "I, John Doe, bequeath my red car to Tom Doe and my vacuum cleaner to Mary Hoover",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "John Doe", "I", "my"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "Tom Doe"
+      ],
+      "type": "BeneficiaryNamed"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "Mary Hoover"
+      ],
+      "type": "BeneficiaryNamed"
+    },
+    {
+      "id": "e4",
+      "texts": [
+        "red car"
+      ],
+      "type": "Asset"
+    },
+    {
+      "id": "e5",
+      "texts": [
+        "vacuum cleaner"
+      ],
+      "type": "Asset"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e4",
+      "Benefactor": "e2"
+    },
+    {
+      "id": "v2",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e5",
+      "Benefactor": "e3"
+    }
+  ]
+}

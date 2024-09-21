@@ -1,0 +1,827 @@
+{
+    "file_name": "simple_wills/simple_will_3.txt",
+    "testator_name": "[Person-1]",
+    "execution_date": "This 12th day of June, 1989",
+    "full_text": "I, [Person-1], an adult resident citizen of Lauderdale County, Tennessee, being of sound and disposing mind, memory and understanding, do hereby make, expressly revoking any and all testamentary dispositions heretofore made by me. I direct my Executor to pay all my just debts and all funeral expenses, which shall be probated, registered and allowed against my estate, as soon after my death as can conveniently be done. I give, devise and bequeath all my property, real personal and mixed, of whatever kind and nature and wheresoever situate, to my children, [Person-2], [Person-3], [Person-4], [Person-5], [Person-6] and my granddaughter, [Person-7], in equal shares, share and share alike, a 1/6 interest each. It is my desire that the real property be kept in the family and enjoyed by them as long as possible. I name, nominate and appoint [Person-2], Executor of this my will and estate, and direct that he be allowed to serve without bond. IN WITNESS WHEREOF, I have hereunto signed, published and declared this instrument as my Last Will and Testament, in Lauderdale County, Tennessee, on this 12th day of June, 1989 We the undersigned subscribing witnesses, do hereby certify that we witnessed the foregoing Last Will and Testament of [Person-1], at her request, in her presence and in the presence of each other, and that she signed the same in our presence, and in the presence of each of us, declaring the same to be her Last Will and Testament. This 12th day of June, 1989.",
+    "extractions": {
+        "entities": [
+            {
+                "id": "e1",
+                "type": "County",
+                "texts": {
+                    "Lauderdale County": [
+                        {
+                            "sentence_id": 0,
+                            "character_offsets": [
+                                44,
+                                61
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1064,
+                                1081
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e2",
+                "type": "State",
+                "texts": {
+                    "Tennessee": [
+                        {
+                            "sentence_id": 0,
+                            "character_offsets": [
+                                63,
+                                72
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1083,
+                                1092
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e3",
+                "type": "Condition",
+                "texts": {
+                    "being of sound and disposing mind, memory and understanding": [
+                        {
+                            "sentence_id": 0,
+                            "character_offsets": [
+                                74,
+                                133
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e4",
+                "type": "Testator",
+                "texts": {
+                    "me": [
+                        {
+                            "sentence_id": 0,
+                            "character_offsets": [
+                                227,
+                                229
+                            ]
+                        }
+                    ],
+                    "I": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                816,
+                                817
+                            ]
+                        }
+                    ],
+                    "[Person-1]": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1244,
+                                1254
+                            ]
+                        }
+                    ],
+                    "my": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1033,
+                                1035
+                            ]
+                        }
+                    ],
+                    "It": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                714,
+                                716
+                            ]
+                        }
+                    ],
+                    "her": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1259,
+                                1262
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1275,
+                                1278
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1429,
+                                1432
+                            ]
+                        }
+                    ],
+                    "she": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1332,
+                                1335
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e5",
+                "type": "Will",
+                "texts": {
+                    "any and all testamentary dispositions heretofore made by me": [
+                        {
+                            "sentence_id": 0,
+                            "character_offsets": [
+                                170,
+                                229
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e6",
+                "type": "Executor",
+                "texts": {
+                    "my Executor": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                239,
+                                250
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e7",
+                "type": "Debt",
+                "texts": {
+                    "all my just debts": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                258,
+                                275
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e8",
+                "type": "Expense",
+                "texts": {
+                    "all funeral expenses": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                280,
+                                300
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e9",
+                "type": "Asset",
+                "texts": {
+                    "my estate": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                358,
+                                367
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e10",
+                "type": "Time",
+                "texts": {
+                    "as soon after my death as can conveniently be done": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                369,
+                                419
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e11",
+                "type": "Condition",
+                "texts": {
+                    "against my estate": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                350,
+                                367
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e12",
+                "type": "Duty",
+                "texts": {
+                    "to pay all my just debts and all funeral expenses": [
+                        {
+                            "sentence_id": 1,
+                            "character_offsets": [
+                                251,
+                                300
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e13",
+                "type": "Condition",
+                "texts": {
+                    "equal shares, share and share alike": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                656,
+                                691
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e14",
+                "type": "Condition",
+                "texts": {
+                    "a 1/6 interest each": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                693,
+                                712
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e15",
+                "type": "Beneficiary",
+                "texts": {
+                    "[Person-2]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                560,
+                                570
+                            ]
+                        }
+                    ],
+                    "[Person-3]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                572,
+                                582
+                            ]
+                        }
+                    ],
+                    "[Person-4]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                584,
+                                594
+                            ]
+                        }
+                    ],
+                    "[Person-5]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                596,
+                                606
+                            ]
+                        }
+                    ],
+                    "[Person-6]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                608,
+                                618
+                            ]
+                        }
+                    ],
+                    "my children": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                547,
+                                558
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e16",
+                "type": "Beneficiary",
+                "texts": {
+                    "my granddaughter": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                623,
+                                639
+                            ]
+                        }
+                    ],
+                    "[Person-7]": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                641,
+                                651
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e17",
+                "type": "Asset",
+                "texts": {
+                    "all my property, real personal and mixed, of whatever kind and nature and wheresoever situate": [
+                        {
+                            "sentence_id": 2,
+                            "character_offsets": [
+                                449,
+                                542
+                            ]
+                        }
+                    ],
+                    "the real property": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                735,
+                                752
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e18",
+                "type": "NonBeneficiary",
+                "texts": {
+                    "the family": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                764,
+                                774
+                            ]
+                        }
+                    ],
+                    "them": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                790,
+                                794
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e19",
+                "type": "Time",
+                "texts": {
+                    "as long as possible": [
+                        {
+                            "sentence_id": 3,
+                            "character_offsets": [
+                                795,
+                                814
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e20",
+                "type": "Condition",
+                "texts": {
+                    "without bond": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                933,
+                                945
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e21",
+                "type": "Will",
+                "texts": {
+                    "this": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                869,
+                                873
+                            ]
+                        }
+                    ],
+                    "my will": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                874,
+                                881
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e22",
+                "type": "Asset",
+                "texts": {
+                    "my estate": []
+                }
+            },
+            {
+                "id": "e23",
+                "type": "Executor",
+                "texts": {
+                    "[Person-2]": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                845,
+                                855
+                            ]
+                        }
+                    ],
+                    "he": [
+                        {
+                            "sentence_id": 4,
+                            "character_offsets": [
+                                910,
+                                912
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e24",
+                "type": "Date",
+                "texts": {
+                    "this 12th day of June, 1989": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1097,
+                                1124
+                            ]
+                        }
+                    ],
+                    "This 12th day of June, 1989": [
+                        {
+                            "sentence_id": 6,
+                            "character_offsets": [
+                                1458,
+                                1485
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e25",
+                "type": "Will",
+                "texts": {
+                    "this instrument": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1014,
+                                1029
+                            ]
+                        }
+                    ],
+                    "my Last Will and Testament": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1033,
+                                1059
+                            ]
+                        }
+                    ],
+                    "the foregoing Last Will and Testament": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1203,
+                                1240
+                            ]
+                        }
+                    ],
+                    "the same": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1343,
+                                1351
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1414,
+                                1422
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e26",
+                "type": "Witness",
+                "texts": {
+                    "We": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1125,
+                                1127
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1190,
+                                1192
+                            ]
+                        }
+                    ],
+                    "the undersigned subscribing witnesses": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1128,
+                                1165
+                            ]
+                        }
+                    ],
+                    "we": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1125,
+                                1127
+                            ]
+                        },
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1190,
+                                1192
+                            ]
+                        }
+                    ],
+                    "each of us": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1392,
+                                1402
+                            ]
+                        }
+                    ],
+                    "our": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1355,
+                                1358
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "e27",
+                "type": "Condition",
+                "texts": {
+                    "at her request": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1256,
+                                1270
+                            ]
+                        }
+                    ],
+                    "in her presence": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1272,
+                                1287
+                            ]
+                        }
+                    ],
+                    "in the presence of each other": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1292,
+                                1321
+                            ]
+                        }
+                    ],
+                    "in our presence": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1352,
+                                1367
+                            ]
+                        }
+                    ],
+                    "in the presence of each of us": [
+                        {
+                            "sentence_id": 5,
+                            "character_offsets": [
+                                1373,
+                                1402
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "WillCreation",
+                "sentence_id": 0,
+                "Testator": [
+                    "e4"
+                ],
+                "Condition": [
+                    "e3"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Revocation",
+                "sentence_id": 0,
+                "Testator": [
+                    "e4"
+                ],
+                "Will": [
+                    "e5"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Direction",
+                "sentence_id": 1,
+                "Executor": "e6",
+                "Time": "e10",
+                "Duty": "e12",
+                "Testator": "e4",
+                "Condition": "e11"
+            },
+            {
+                "id": "v4",
+                "type": "Probate",
+                "sentence_id": 1,
+                "Debt": "e7",
+                "Expense": "e8"
+            },
+            {
+                "id": "v5",
+                "type": "Death",
+                "sentence_id": 1,
+                "Testator": "e4"
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "sentence_id": 2,
+                "Condition": "e14",
+                "Testator": "e4",
+                "Beneficiary": "e16",
+                "Asset": "e17"
+            },
+            {
+                "id": "v7",
+                "type": "Direction",
+                "sentence_id": 3,
+                "Asset": "e17",
+                "NonBeneficiary": "e18",
+                "Time": "e19",
+                "Testator": "e4"
+            },
+            {
+                "id": "v8",
+                "type": "Nomination",
+                "sentence_id": 4,
+                "Testator": "e4",
+                "Executor": "e23"
+            },
+            {
+                "id": "v9",
+                "type": "Direction",
+                "sentence_id": 4,
+                "Testator": "e4",
+                "Executor": "e23",
+                "Condition": "e20"
+            },
+            {
+                "id": "v10",
+                "type": "SignWill",
+                "sentence_id": 5,
+                "Date": "e24",
+                "Testator": "e4",
+                "Will": "e25"
+            },
+            {
+                "id": "v11",
+                "type": "WillCreation",
+                "sentence_id": 5,
+                "Date": "e24",
+                "Testator": "e4",
+                "Will": "e25"
+            },
+            {
+                "id": "v12",
+                "type": "Attestation",
+                "sentence_id": 5,
+                "Condition": "e27",
+                "Witness": "e26",
+                "Will": "e25"
+            },
+            {
+                "id": "v13",
+                "type": "SignWill",
+                "sentence_id": 5,
+                "Condition": "e27",
+                "Testator": "e4",
+                "Will": "e25"
+            },
+            {
+                "id": "v14",
+                "type": "Attestation",
+                "sentence_id": 5,
+                "Date": "e24",
+                "Witness": "e26"
+            }
+        ]
+    }
+}

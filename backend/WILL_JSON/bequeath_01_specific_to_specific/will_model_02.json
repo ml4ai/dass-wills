@@ -1,0 +1,61 @@
+{
+    "text" : "I, John Doe, bequeath my red car to Tom Doe and my vacuum cleaner to Mary Hoover",
+    "testator" : {
+        "name" : "John Doe",
+	    "id" : "0x1234",
+	    "info" : "address: 12 Magnolia Lane, Bisbee; phone: 123-456-7890"
+    },
+    "witnesses" : [
+		{
+	    	"name" : "Jack Doe",
+	    	"id" : "0x2345",
+	    	"info" : ""
+		},
+		{
+	    	"name" : "Jane Doe",
+	    	"id" : "0x3456",
+	    	"info" : ""
+		}
+    ],
+	"assets" : [
+		{
+			"name" : "red car",
+			"id" : "0x6789"
+		},
+		{
+			"name" : "vacuum cleaner",
+			"id" : "0x7890"
+		}
+	],
+    "directives" : [
+		{
+			"if" : "True",
+			"then" : {
+				"type" : "bequeath",
+				"assets" : [
+					"0x6789"
+				],
+				"beneficiary" : {
+					"name" : "Tom Doe",
+					"id" : "0x4567",
+					"info" : ""
+				}
+			}
+		},
+		{
+			"if" : "True",
+			"then" : {
+				"type" : "bequeath",
+				"assets" : [
+					"0x7890"
+				],
+				"beneficiary" : {
+					"name" : "Mary Hoover",
+					"id" : "0x5678",
+					"info" : ""
+				}
+			}
+		}
+    ]
+}
+

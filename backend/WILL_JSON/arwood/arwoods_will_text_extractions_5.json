@@ -1,0 +1,61 @@
+{
+  "text": "I name, nominate and appoint my wife, Athalene Arwood, Executor of this my will and estate, and direct that she be allowed to serve without bond.",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "I", "my"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "my wife", "Athalene Arwood", "she"
+      ],
+      "type": "Executor1"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "my will"
+      ],
+      "type": "Will"
+    },
+    {
+      "id": "e4",
+      "texts": [
+        "estate"
+      ],
+      "type": "Asset"
+    },
+    {
+      "id": "e5",
+      "texts": [
+        "bond"
+      ],
+      "type": "Bond"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "Nomination",
+      "Testator": "e1",
+      "Executor": "e2"
+    },
+    {
+      "id": "v2",
+      "type": "Direction",
+      "Testator": "e1",
+      "EventDirected": "v3"
+    },
+    {
+      "id": "v3",
+      "type": "Excuse",
+      "Testator": "e1",
+      "Executor": "e2",
+      "DutyExcused": "e5"
+    }
+  ]
+}

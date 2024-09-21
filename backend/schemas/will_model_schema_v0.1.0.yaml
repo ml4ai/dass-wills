@@ -1,0 +1,274 @@
+
+# TODO
+#   (*) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+
+openapi: 3.0.0
+
+info:
+  title: DASS Will Model Schema
+  description: |
+    OpenAPI-style specification of the Will Model Schema
+
+  contact:
+    name: Salena Torres Ashton and Clayton T. Morrison
+    email: salena@arizona.edu, claytonm@arizona.edu
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: "0.1.0"
+
+paths: {}
+
+### Possible other document references
+# letters of exclusion or estrangement ?
+#
+
+components:
+
+  schemas:
+
+    WM_WillModel:
+      description: |
+        Root structure of a WillModel.
+      required:
+        - text
+        - date
+        - dass_type
+      properties:
+        text:
+          description: |
+            The original raw text of the will.
+          type: string
+        testator:
+          # description: |
+          #   The Testator of the will.
+          $ref: "#/components/schemas/WM_Person"
+        witnesses:
+          description: |
+            Array of Witnesses witnessing the will creation.
+          type: array
+          items:
+            $ref: "#/components/schemas/WM_Person"
+        date:
+          description: |
+            The date of the creation or modification of the current WillModel
+          type: string
+          format: date
+        directives:
+          description: |
+            Array of will Directives
+          type: array
+          items:
+            $ref: "#/components/schemas/WM_DirectiveBody"
+        dass_type:
+          type: string
+          default: "WM_WillModel"
+
+    WM_Person:
+      description: A Person
+      required:
+        - name
+        - id
+        - dass_type
+      properties:
+        name:
+          description: The name of the Person
+          type: string
+        id:
+          description: A unique id for the Person, using Soundex representation
+          type: string
+        dass_type:
+          type: string
+          default: "WM_Person"
+
+    WM_Asset:
+      decription: An asset
+      required:
+        - name
+        - id
+        - dass_type
+      properties:
+        name:
+          description: An asset that can be bequeathed
+          type: string
+        id:
+          description: A unique id for an Asset
+          type: string
+        dass_type:
+          type: string
+          default: "WM_Asset"
+
+#    DirectiveType:
+#      description: |
+#        Top-level directive structure
+#      properties:
+#        directive_type:
+#          type: string
+#        body:
+#          $ref: "#/components/schemas/DirectiveBody"
+
+    WM_DirectiveBody:
+      description: |
+        A DirectiveBody
+      oneOf:
+        - $ref: "#/components/schemas/WM_Conditional"
+        - $ref: "#/components/schemas/WM_DirectiveStatement"
+
+    WM_Conditional:
+      description: A condition
+      required:
+        - condition
+        - body_if
+        - body_else
+        - dass_type
+      properties:
+        condition:
+          $ref: "#/components/schemas/WM_Predicate"
+        body_if:
+          $ref: "#/components/schemas/WM_DirectiveBody"
+        body_else:
+          $ref: "#/components/schemas/WM_DirectiveBody"
+        dass_type:
+          type: string
+          default: "WM_Conditional"
+
+#    PrimitiveOperator:
+#      oneOf:
+#        - BooleanOperator
+#        - ArithmeticOperator
+#
+#    BooleanOperator:
+#      type: string
+#      enum:
+#        - eq
+#        - lt
+#        - leq
+#        - gt
+#        - geq
+#
+#    ArithmeticOperator:
+#      type: string
+#      enum:
+#        - add
+#        - sub
+#        - mult
+#        - div
+
+    WM_EnumNamedFunction:
+      type: string
+      enum:
+        - True
+        - is_alive
+
+#    EnumModifierType:
+#      type: string
+#      enum:
+#        - fee_simple  # Fee simple is a legal term used in real estate that means full and irrevocable ownership of land, and any buildings on that land. Fee simple is the highest form of ownership — it means the land is owned outright, without any limitations or restrictions other than local zoning ordinances.
+
+    WM_DirectiveStatement:
+      oneOf:
+        - $ref: "#/components/schemas/WM_DirectiveBequeath"
+        # - $ref: "#/components/schemas/WM_SExpr"
+
+    WM_DirectiveBequeath:
+      description: A Bequeath Directive
+      required:
+        - type
+        - beneficiaries
+        - assets
+        - dass_type
+      properties:
+        type:
+          type: string
+          default: "DirectiveBequeath"
+
+          # generalize the WM_DirectiveBequeath.type
+          # When dispursement is "ambiguous", e.g., no disbursement rules, then:
+          # Default_rule_of_constructions
+
+        beneficiaries:
+          type: array
+          items:
+            $ref: "#/components/schemas/WM_TypeBeneficiary"
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/WM_Asset"
+        dass_type:
+          type: string
+          default: "WM_DirectiveBequeath"
+
+    WM_TypeBeneficiary:
+      description: |
+        Types that can play the role of a Beneficiary.
+        This enable multiple subtypes of Beneficiary.
+      oneOf:
+        - $ref: "#/components/schemas/WM_Person"
+
+    WM_LiteralValue:
+      description: A literal value
+      required:
+        - type
+        - value
+        - dass_type
+      properties:
+        type:
+          description: |
+            The type of the literal value.
+            Determines how the value string is to be interpreted.
+          type: string
+        value:
+          description: |
+            The string representation of the value.
+            The string is to be interpreted according to the (value) type.
+          type: string
+        dass_type:
+          type: string
+          default: "WM_LiteralValue"
+
+    WM_VariableReference:
+      description: |
+        A reference to a variable.
+      required:
+        - name
+        - dass_type
+      properties:
+        name:
+          description: The name of the Variable
+          type: string
+        dass_type:
+          type: string
+          default: "WM_VariableReference"
+
+    WM_SExpr:
+      description: |
+        An s-expression (Polish notation): (<op> <arg>*)
+      required:
+        - fn
+        - dass_type
+      properties:
+        fn:
+          oneOf:
+            - $ref: "#/components/schemas/WM_EnumNamedFunction"
+        args:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/WM_LiteralValue"
+              - $ref: "#/components/schemas/WM_VariableReference"
+              - $ref: "#/components/schemas/WM_SExpr"
+        dass_type:
+          type: string
+          default: "WM_SExpr"
+
+    WM_Predicate:
+      description: A predicate (truth-valued function)
+      allOf:
+        - $ref: "#/components/schemas/WM_SExpr"
+      required:
+        - dass_type
+      properties:
+        dass_type:
+          type: string
+          default: "WM_Predicate"
+
