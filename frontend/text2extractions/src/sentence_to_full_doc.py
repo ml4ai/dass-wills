@@ -100,6 +100,7 @@ def process_json(extracted_info, input_path, client):
                 # add_or_update_entities(entity_id_map, new_dict, full_text_len, data, entity, prev_entity if coref_res else None, sentence)
             else:
                 new_id = "e" + str(len(new_dict['extractions']['entities']) + 1)
+                entity_id_map[entity['id']] = new_id
                 create_updated_entity(new_id, new_dict, {}, full_text_len, data, entity, sentence)
 
         if 'events' in data:
