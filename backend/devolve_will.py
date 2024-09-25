@@ -221,12 +221,11 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,region=
     
     identifier= directive._identifier if hasattr(directive, '_identifier')  else 'division.equally' 
     example_output="""{'Rule': 'equally', 'Assets': { 'AssetX': 'Proportions': {'PersonX': 0.5, 'PersonY': 0.5}}}"""
-    llm_query='Based on the provided rules and abstractions, process the given directive text. Identify the name of the Rule to be applied and calculate the proportion share of each party involved. Return ONLY and ONLY a python dictionary as plain text. The example output is: {example_output}.  Directive: {directive_text}. Rules: '+rules_text
+    llm_query='Based on the provided rules and abstractions, assets, and beneficiaries, process the given directive text. Identify the name of the Rule to be applied and calculate the proportion share of each party involved. Return ONLY and ONLY a python dictionary as plain text. The example output is: {example_output}. Assets: {a}. Beneficiaries: {b}. Directive: {directive_text}. Rules: '+rules_text
     division={}
-    
     dict_directive={}
     while dict_directive=={}:
-        llm_query_dir=llm_query.format(directive_text=directive.serialized_text,example_output=example_output)
+        llm_query_dir=llm_query.format(directive_text=directive.serialized_text,example_output=example_output,a=assets,b= beneficiaries)
         llm_query_output= query_llm(llm_query_dir)
         # print(llm_query_output)
         dict_directive = parse_llm_dict(llm_query_output)
@@ -294,14 +293,25 @@ def find_assets(directive,testator):
     """Find and validate the assets of the testator from the db."""
     assets_directive=directive._assets
     output_assets=[]
-    if len(assets_directive) == 1 and assets_directive[0].name.lower() =='all the rest of property':
-        for asset_t in testator['assets']:
-            output_assets.append(asset_t)
-        return output_assets
+
+    if len(assets_directive) == 1:
+
+        llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Tell whether the asset name "{assets_directive[0].name.lower()}" means all the rest of property ?'
+        query_ans=''
+        while (query_ans not in ['yes','no']):
+            query_ans=query_llm(llm_query)
+        if (query_ans =='yes'):
+            for asset_t in testator['assets']:
+                output_assets.append(asset_t)
+            return output_assets
     for asset in assets_directive:
         match=False
         for asset_t in testator['assets']:
-            if asset_t['name'] == asset.name:
+            llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Tell whether the asset name "{asset.name.lower()}" matches with the following asset: {asset_t} ?'
+            query_ans=''
+            while (query_ans not in ['yes','no']):
+                query_ans=query_llm(llm_query)
+            if (query_ans =='yes'):
                 output_assets.append(asset_t)
                 match=True
                 break

@@ -68,9 +68,8 @@ def main():
         sys.exit(1)
 
     if not os.path.isdir(output_path):
-        print(f"Error: The output directory '{output_path}' does not exist.")
-        sys.exit(1)
-
+        print(f"The output directory '{output_path}' does not exist. Creating it now.")
+        os.makedirs(output_path) 
 
     env = os.environ.copy()
     env['OPENAI_API_KEY'] = key
@@ -95,53 +94,70 @@ def main():
     if not os.path.isfile(devolution_script):
         print(f"Error: The module 'Will Model Devulution' does not exist.")
         sys.exit(1)
+    if os.path.abspath(input_file) != os.path.abspath(te_input_path):
+        shutil.copy(input_file, te_input_path)
 
-    shutil.copy(input_file, te_input_path)
     cmd_te = ['python3', te_script]
-
+    print("... Will Text to TE Module processing.\n")
     p1 = subprocess.Popen(cmd_te, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =te_base_path,env=env)
+    for stdout_line in iter(p1.stdout.readline, b''):
+        sys.stdout.write(stdout_line.decode())
+        sys.stdout.flush()
+
     stdout1, stderr1 = p1.communicate()
 
     if p1.returncode == 0:
         print("Will Text to TE Module processed successfully.\n")
     else:
         print(f"Will Text to TE Module failed with return code {p1.returncode}")
-        print(f"Error:\n{stderr1.decode('utf-8')}\n{stdout1.decode('utf-8')}")
+        print(f"Error:\n{stderr1.decode('utf-8')}\n")
         sys.exit(1)
     
 
     will_text_extraction_json= os.path.splitext(input_file)[0] + '.json'
     output_will_text_extraction_json = os.path.abspath(os.path.join(base_dir, '..','frontend', 
     'text2extractions','output', will_text_extraction_json))
-    shutil.copy(output_will_text_extraction_json, output_path)
+    if os.path.abspath(input_file) != os.path.abspath(te_input_path):
+        shutil.copy(output_will_text_extraction_json, output_path)
+    
     te_json_path= os.path.abspath(os.path.join(output_path,will_text_extraction_json))
     print(f"Text Extraction Json file saved successfully:\n- {te_json_path}")
 
     wm_obj = os.path.splitext(input_file)[0] + '.obj'
     wm_obj_path = os.path.abspath(os.path.join(output_path,wm_obj))
     cmd_te_to_wm = ['python3', te_to_wm_script,'-t',te_json_path,'-o',wm_obj_path]
+    print("... TE to WM Module processing.\n")
     p2 = subprocess.Popen(cmd_te_to_wm, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path)
+    for stdout_line in iter(p2.stdout.readline, b''):
+        sys.stdout.write(stdout_line.decode())
+        sys.stdout.flush()
+
     stdout2, stderr2 = p2.communicate()
 
     if p2.returncode == 0:
         print("TE to WM Module processed successfully.\n")
     else:
         print(f"TE to WM Module failed with return code {p2.returncode}")
-        print(f"Error:\n{stderr2.decode('utf-8')}\n{stdout2.decode('utf-8')}")
+        print(f"Error:\n{stderr2.decode('utf-8')}\n")
         sys.exit(1)
     print(f"Will Model file saved successfully:\n- {wm_obj_path}")
 
     devolution_text_file = os.path.splitext(input_file)[0] + '.devolution.txt'
     devolution_text_file_path = os.path.abspath(os.path.join(output_path,devolution_text_file))
     cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path]
+    print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
+    for stdout_line in iter(p3.stdout.readline, b''):
+        sys.stdout.write(stdout_line.decode())
+        sys.stdout.flush()
+
     stdout3, stderr3 = p3.communicate()
 
     if p3.returncode == 0:
         print("WM to Devolution Module processed successfully.\n")
     else:
         print(f"WM to Devolution Module failed with return code {p3.returncode}")
-        print(f"Error:\n{stderr3.decode('utf-8')}\n{stdout3.decode('utf-8')}")
+        print(f"Error:\n{stderr3.decode('utf-8')}\n")
         sys.exit(1)
 
     with open(devolution_text_file_path, 'w') as file:

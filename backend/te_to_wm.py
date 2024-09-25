@@ -291,7 +291,7 @@ def extract_assets(te, prov=False, verbose=False):
     for entity in te["entities"]:
         if get_obj_str(entity["type"]) == "Asset":
             asset_name = ", ".join(entity["texts"])
-            asset_name = remove_surplus_assets(asset_name.lower())
+            # asset_name = remove_surplus_assets(asset_name.lower()) ## this feature is ignored for now
             asset_id = entity["id"]
             if verbose:
                 print(
@@ -445,9 +445,11 @@ def infer_directives(
                     benefactor_id = event["Beneficiary"]
                     condition_id = event["Condition"] if "Condition" in event else None
                     executor_id = event["Executor"] if "Executor" in event else None
+                    
                     beneficiary_fetched, b_name = fetch_objects(
                         beneficairies, benefactor_id, used
                     )
+
                     asset_fetched, a_name = fetch_objects(assets, asset_id, used)
                     condition_fetched, c_name = fetch_objects(
                         conditions, condition_id, used
@@ -456,7 +458,12 @@ def infer_directives(
                     serialized_text = serialize_directive(
                         d_id, a_name, b_name, c_name, e_name
                     )
-
+                    if not (beneficiary_fetched ):
+                        print(f'... error fetching beneficiaries of bequest event with id: {d_id}')
+                        continue
+                    if not (asset_fetched ):
+                        print(f'... error fetching assets of bequest event with id: {d_id}')
+                        continue
                     ## creating bequeath directive
                     bequeath_directive = WMDirectiveBequeath(
                         beneficiaries=beneficiary_fetched,
@@ -475,7 +482,7 @@ def infer_directives(
 
                     directives.append(bequeath_directive)
         except:
-            print("error processing a bequeath event")
+            print("... error processing a bequeath event.")
             pass 
     return directives
 
