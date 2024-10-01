@@ -12,8 +12,8 @@
             "email": "",
             "phone": "",
             "address": "",
-            "spouse_id": 2,
-            "alive": "true",
+            "spouse_id": 49,
+            "alive": "false",
             "assets": [
                 {
                     "name": "Family Home",
@@ -35,6 +35,65 @@
                 5,
                 6
             ]
+        },
+
+        {
+            "id": 49,
+            "first_name": "Athalene",
+            "last_name": "",
+            "full_name": "Athalene Arwood",
+            "age": 49,
+            "date_of_birth": "1974-02-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 12,
+            "alive": "true",
+            "assets": [
+
+                {
+                    "name": "Hona Accord",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "id": 19,
+            "first_name": "CLAY",
+            "last_name": "",
+            "full_name": "Clayton F. Bentley",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [7]
         },
         {
             "id": 1,

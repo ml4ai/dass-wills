@@ -94,8 +94,12 @@ def main():
     if not os.path.isfile(devolution_script):
         print(f"Error: The module 'Will Model Devulution' does not exist.")
         sys.exit(1)
-    if os.path.abspath(input_file) != os.path.abspath(te_input_path):
+    
+    try:
         shutil.copy(input_file, te_input_path)
+    except shutil.SameFileError:
+        pass
+        
 
     cmd_te = ['python3', te_script]
     print("... Will Text to TE Module processing.\n")
@@ -114,16 +118,16 @@ def main():
         sys.exit(1)
     
 
-    will_text_extraction_json= os.path.splitext(input_file)[0] + '.json'
+    will_text_extraction_json= os.path.splitext(os.path.basename(input_file))[0] + '.json'
+    
     output_will_text_extraction_json = os.path.abspath(os.path.join(base_dir, '..','frontend', 
     'text2extractions','output', will_text_extraction_json))
-    if os.path.abspath(input_file) != os.path.abspath(te_input_path):
-        shutil.copy(output_will_text_extraction_json, output_path)
+    shutil.copy(output_will_text_extraction_json, output_path)
     
     te_json_path= os.path.abspath(os.path.join(output_path,will_text_extraction_json))
     print(f"Text Extraction Json file saved successfully:\n- {te_json_path}")
 
-    wm_obj = os.path.splitext(input_file)[0] + '.obj'
+    wm_obj = os.path.splitext(os.path.basename(input_file))[0] + '.obj'
     wm_obj_path = os.path.abspath(os.path.join(output_path,wm_obj))
     cmd_te_to_wm = ['python3', te_to_wm_script,'-t',te_json_path,'-o',wm_obj_path]
     print("... TE to WM Module processing.\n")
@@ -142,7 +146,7 @@ def main():
         sys.exit(1)
     print(f"Will Model file saved successfully:\n- {wm_obj_path}")
 
-    devolution_text_file = os.path.splitext(input_file)[0] + '.devolution.txt'
+    devolution_text_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.txt'
     devolution_text_file_path = os.path.abspath(os.path.join(output_path,devolution_text_file))
     cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path]
     print("... WM to Devolution Module processing.\n")

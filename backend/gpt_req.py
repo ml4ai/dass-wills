@@ -10,6 +10,7 @@ def query_llm(prompt, model="chatgpt-4o-latest"):
             "content": prompt,
         }],
         model=model,
+        temperature=0.05
     )
     
     request_id = response.headers.get('x-request-id')
