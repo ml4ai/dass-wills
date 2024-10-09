@@ -1,0 +1,47 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 49,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "Tennessee",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "house and lot",
+                    "type": "Property"
+                },
+                {
+                    "name": "all contents of Person-1's house",
+                    "type": "Property"
+                },
+                {
+                    "name": "automobile",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 20,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        }
+    ]
+}

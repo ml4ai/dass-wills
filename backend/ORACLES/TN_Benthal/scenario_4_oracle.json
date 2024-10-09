@@ -1,0 +1,163 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 82,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "Tennessee",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "Person-1's homeplace with dwelling house, including all furnishings and contents",
+                    "type": "Property",
+                    "Location": "Address-2"
+                },
+                {
+                    "name": "automobile",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "all the rest and residue of my property, including but not limited to, any certificates of deposit that Person-1 owns at his/her death",
+                    "type": "Mixed"
+                }
+            ],
+            "children_ids": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 45,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ]
+        },
+        {
+            "id": 3,
+            "first_name": "Person-9",
+            "last_name": "",
+            "full_name": "Person-9",
+            "age": 42,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 4,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 29,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 5,
+            "first_name": "Person-4",
+            "last_name": "",
+            "full_name": "Person-4",
+            "age": 27,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 6,
+            "first_name": "Person-5",
+            "last_name": "",
+            "full_name": "Person-5",
+            "age": 23,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 7,
+            "first_name": "Person-6",
+            "last_name": "",
+            "full_name": "Person-6",
+            "age": 22,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 8,
+            "first_name": "Person-7",
+            "last_name": "",
+            "full_name": "Person-7",
+            "age": 20,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 9,
+            "first_name": "Person-8",
+            "last_name": "",
+            "full_name": "Person-8",
+            "age": 19,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [],
+            "children_ids": []
+        }
+    ]
+}

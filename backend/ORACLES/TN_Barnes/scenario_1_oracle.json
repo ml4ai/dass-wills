@@ -1,0 +1,122 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 78,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "Tennessee",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "all Person-1's property, real personal and mixed, of whatever kind and nature and wheresoever situate",
+                    "type": "Mixed"
+                }
+            ],
+            "children_ids": [
+                2,
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 52,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": [
+                7
+            ]
+        },
+        {
+            "id": 3,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 50,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 4,
+            "first_name": "Person-4",
+            "last_name": "",
+            "full_name": "Person-4",
+            "age": 48,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 5,
+            "first_name": "Person-5",
+            "last_name": "",
+            "full_name": "Person-5",
+            "age": 45,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 6,
+            "first_name": "Person-6",
+            "last_name": "",
+            "full_name": "Person-6",
+            "age": 40,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 7,
+            "first_name": "Person-7",
+            "last_name": "",
+            "full_name": "Person-7",
+            "age": 22,
+            "date_of_birth": "0000-00-00",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [],
+            "children_ids": []
+        }
+    ]
+}

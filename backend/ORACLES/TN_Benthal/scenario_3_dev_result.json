@@ -1,0 +1,56 @@
+[
+    {
+        "Beneficiary_1": "Person-3",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-4",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-5",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-6",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-7",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-8",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-9",
+        "Proportion": 100,
+        "Asset": ["all the rest and residue of my property, including but not limited to, any certificates of deposit that Person-1 owns at his/her death"],
+        "Requirement": null
+    },
+    {
+        "Beneficiary_1": "Person-10",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": "through custodian"
+    },
+    {
+        "Beneficiary_1": "Person-11",
+        "Proportion": 12.5,
+        "Asset": ["Person-1's homeplace with dwelling house, including all furnishings and contents", "automobile"],
+        "Requirement": "through custodian"
+    }
+]
