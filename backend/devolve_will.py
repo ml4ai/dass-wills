@@ -36,7 +36,7 @@ def cmd_line_invocation():
         "-d",
         "--path-to-database",
         type=str,
-        default="ORACLES/people_db.json",
+        default="ORACLES/TN_Chism(1994,2001)/scenario_4_oracle.json",
         required=False,
         help="Input path to the people's database.",
     )

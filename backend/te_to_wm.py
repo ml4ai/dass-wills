@@ -499,7 +499,7 @@ def find_person_by_dob_and_name(dob, full_name):
     their date of birth (DOB) and full name.
     """
     ## default path, replace later with dynamic path
-    json_file_path = "ORACLES/people_db.json"
+    json_file_path = "ORACLES/TN_Chism(1994,2001)/scenario_4_oracle.json"
     peoples_obj = load_json_object(json_file_path)
 
     for person in peoples_obj:

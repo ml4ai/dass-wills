@@ -10,7 +10,7 @@
             "email": "",
             "phone": "",
             "address": "Tennessee",
-            "spouse_id": 3,
+            "spouse_id": null,
             "alive": "false",
             "assets": [
                 {
@@ -30,9 +30,9 @@
         },
         {
             "id": 2,
-            "first_name": "Person-2",
+            "first_name": "Person-2 of Address2",
             "last_name": "",
-            "full_name": "Person-2",
+            "full_name": "Person-2 of Address2",
             "age": 20,
             "date_of_birth": "0000-00-00",
             "email": "",
@@ -45,16 +45,16 @@
         },
         {
             "id": 3,
-            "first_name": "Person-3",
+            "first_name": "Person-2",
             "last_name": "",
-            "full_name": "Person-3",
-            "age": 53,
+            "full_name": "Person-2",
+            "age": 20,
             "date_of_birth": "0000-00-00",
             "email": "",
             "phone": "",
             "address": "",
-            "spouse_id": 1,
-            "alive": "true",
+            "spouse_id": null,
+            "alive": "false",
             "assets": [],
             "children_ids": []
         }
