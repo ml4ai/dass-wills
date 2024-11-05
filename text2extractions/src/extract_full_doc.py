@@ -58,9 +58,9 @@ class BequestEvent(BaseModel):
     id: str
     type: str  # Should be "Bequest"
     Testator: str
-    Executor: str
-    Beneficiary: str  # References the ID of a Beneficiary
-    Asset: str        # References the ID of an Asset
+    Executor: List[str]
+    Beneficiary: List[str]  # References the ID of a Beneficiary
+    Asset: List[str]        # References the ID of an Asset
     Condition: Optional[List[str]] = None  # References the ID of condition relevant to this bequest event
 
 
