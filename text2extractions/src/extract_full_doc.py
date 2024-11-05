@@ -1,0 +1,152 @@
+import os, json
+from pydantic import BaseModel
+from typing import List, Dict, Optional
+from openai import OpenAI
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)  # for exponential backoff
+
+full_prompt = """You are given the text of a legal will and testament. Extract information about the will and its components using the structured JSON format provided. Each field is mandatory, and the output should be structured precisely according to the schema.
+
+### Requirements:
+1. **Testator’s name**: The name of the person who wrote and signed the will.
+2. **Date of Will**: The date the will was created.
+3. **Entities**: Include unique IDs (`e1`, `e2`, etc.) for the following entities:
+   - **Testator**: The person who wrote and signed the will
+   - **Executor**: The individual appointed to execute the will's instructions 
+   - **Assets**: Items or properties owned by the testator, described with their type and value (if available).
+   - **Beneficiaries**: Individuals or entities designated to receive assets or properties.
+   - **Conditions**: Conditions relevant to bequest event, such as "If beneficiary predeceases testator, transfer to X" or shares like "50%", "1/6", etc.
+4. **Events**: Include unique IDs (`v1`, `v2`, etc.) for the following events:
+   - **Bequest Events**: Event in which a testator bequeaths his/her assets to beneficiaries.
+5. Use IDs to maintain clarity. Each entity should be assigned a unique ID (e.g., `e1`, `e2`) and referenced in events using these IDs.
+"""
+
+
+class Testator(BaseModel):
+    id: str
+    name: str
+    state_of_residence: Optional[str] = None
+
+
+class Executor(BaseModel):
+    id: str
+    name: str
+    relationship_to_testator: Optional[str] = None
+    waived_bond: bool
+
+
+class Asset(BaseModel):
+    id: str
+    description: str
+    type: str
+
+
+class Beneficiary(BaseModel):
+    id: str
+    name: str
+    relationship_to_testator: Optional[str] = None
+
+
+class Condition(BaseModel):
+    id: str
+    text: str  # Conditions like "If beneficiary predeceases testator, transfer to X" or shares like "50%", "1/6", etc.
+
+class BequestEvent(BaseModel):
+    id: str
+    type: str  # Should be "Bequest"
+    Testator: str
+    Executor: str
+    Beneficiary: str  # References the ID of a Beneficiary
+    Asset: str        # References the ID of an Asset
+    Condition: Optional[List[str]] = None  # References the ID of condition relevant to this bequest event
+
+
+class Entities(BaseModel):
+    testator: Testator
+    executor: List[Executor]
+    beneficiary: List[Beneficiary]
+    asset: List[Asset]
+    condition: List[Condition]
+
+
+class Extractions(BaseModel):
+    entities: List[Entities]
+    events: List[BequestEvent]
+
+
+class Will(BaseModel):
+    testator_name: str
+    date_of_will: str
+    extractions: Extractions
+
+
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
+def extract_from_full_doc(prompt, target_text, client):
+    completion = client.beta.chat.completions.parse(
+        model="gpt-4o-2024-08-06",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": target_text},
+        ],
+        response_format=Will,
+        temperature=0,
+        max_tokens=16384,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    extraction = completion.choices[0].message.parsed
+    return extraction
+
+
+def export_to_json(json_object, file_path):
+    with open(file_path, 'w') as json_file:
+        json_file.write(json_object.json(indent=4))
+
+
+def read_and_tokenize(file_path):
+    try:
+        # Read the content of the file
+        with open(file_path, 'r', encoding='utf-8') as file:
+            text = file.read()
+        # Tokenize the text into sentences
+        sentences = sent_tokenize(text)
+        return sentences
+    except FileNotFoundError:
+        print(f"The file '{file_path}' does not exist.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def main(prompt):
+    # The below paths should be adjusted to reflect the actual paths to the inputs and outputs
+    input_dir = "../dass-wills/text2extractions/input"
+    output_dir = "../dass-wills/text2extractions/output"
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    # prompt the user for their api key
+    key = input("Please enter your openai api key: ")
+    client = OpenAI(api_key=key)
+
+    # Process each .txt file in the input directory
+    for filename in os.listdir(input_dir):
+        if filename.endswith(".txt"):
+            input_path = os.path.join(input_dir, filename)
+            output_filename = os.path.splitext(filename)[0] + '.json'
+            output_path = os.path.join(output_dir, output_filename)
+
+            # Read and tokenize input file
+            with open(input_path, 'r', encoding='utf-8') as file:
+                target_text = file.read()
+
+            extraction = extract_from_full_doc(prompt, target_text, client)
+            export_to_json(extraction, output_path)
+            print(f"Extraction completed for {filename}")
+
+
+if __name__ == "__main__":
+    main(full_prompt)
