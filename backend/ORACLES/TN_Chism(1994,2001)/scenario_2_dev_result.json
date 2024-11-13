@@ -1,8 +1,0 @@
-[
-    {
-        "Beneficiary_1": "Person-2",
-        "Proportion": 100,
-        "Asset": ["house and lot", "all contents of Person-1's house", "automobile"],
-        "Requirement": "through custodian"
-    }
-]
