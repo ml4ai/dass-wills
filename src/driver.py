@@ -146,9 +146,9 @@ def main():
         sys.exit(1)
     print(f"Will Model file saved successfully:\n- {wm_obj_path}")
 
-    devolution_text_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.txt'
-    devolution_text_file_path = os.path.abspath(os.path.join(output_path,devolution_text_file))
-    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path]
+    devolution_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.json'
+    devolution_file_path = os.path.abspath(os.path.join(output_path,devolution_file))
+    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path]
     print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
     for stdout_line in iter(p3.stdout.readline, b''):
@@ -163,12 +163,7 @@ def main():
         print(f"WM to Devolution Module failed with return code {p3.returncode}")
         print(f"Error:\n{stderr3.decode('utf-8')}\n")
         sys.exit(1)
-
-    with open(devolution_text_file_path, 'w') as file:
-        file.write(stdout3.decode('utf-8'))
     
-    print(f"Will devolution file saved successfully:\n- {devolution_text_file_path}")
-
 
 if __name__ == "__main__":
     main()
