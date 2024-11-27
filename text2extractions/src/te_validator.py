@@ -109,9 +109,9 @@ def run_evaluation(te_directory, text_directory, output_directory, report_file):
 
 # Main function to run the script
 if __name__ == "__main__":
-    te_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/output/full_text_ID"  # Replace with your TE output directory path
-    text_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/input/full_text_ID"  # Replace with your original text directory path
-    output_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/evaluation_ID"  # Replace with your desired output directory path
+    te_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/output/full_text_TN3"  # Replace with your TE output directory path
+    text_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/input/full_text_TN2"  # Replace with your original text directory path
+    output_directory = "/Users/alicekwak/repos/dass-wills/text2extractions/evaluation_TN3"  # Replace with your desired output directory path
     report_file = os.path.join(output_directory, "evaluation_summary.csv")  # Path for the CSV report
 
     # Ensure output directory exists
