@@ -2,11 +2,11 @@ import json
 from collections import defaultdict
 from sklearn.metrics import precision_score, recall_score, f1_score
 
-# Load the JSON files
-with open('/Users/alicekwak/repos/dass-wills/examples/example1/scenario1.gold.json', 'r') as gold_file:
+# Load the JSON files -- switch to the actual paths before running the code
+with open('../repos/dass-wills/examples/example1/scenario1.gold.json', 'r') as gold_file:
     gold_data = json.load(gold_file)
 
-with open('/Users/alicekwak/repos/dass-wills/examples/example1/will.devolution.json', 'r') as result_file:
+with open('../repos/dass-wills/examples/example1/will.devolution.json', 'r') as result_file:
     result_data = json.load(result_file)
 
 def normalize_devolution(data):
