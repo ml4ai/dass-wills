@@ -1,0 +1,86 @@
+{
+    "testator_name": "LEO ARWOOD",
+    "date_of_will": "6 day of January, 1986",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "LEO ARWOOD"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "Athalene Arwood"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "E. F. Bentley, Jr."
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "Athalene Arwood"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "Clayton F. Bentley"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e6",
+                        "description": "all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e7",
+                        "text": "if Athalene Arwood survives LEO ARWOOD"
+                    },
+                    {
+                        "id": "e8",
+                        "text": "Should Athalene Arwood not survive LEO ARWOOD, or should they die at the same time, or as a result of a common disaster"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e6"
+                ],
+                "Condition": [
+                    "e7"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e6"
+                ],
+                "Condition": [
+                    "e8"
+                ]
+            }
+        ]
+    }
+}

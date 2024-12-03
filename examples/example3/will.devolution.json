@@ -1,0 +1,38 @@
+{
+    "v1": {
+        "My House": {
+            "Person-2": 0.16667,
+            "Person-3": 0.16667,
+            "Person-4": 0.16667,
+            "Person-6": 0.16667,
+            "Person-5 (through custodian)": 0.16667,
+            "Person-7 (through custodian)": 0.16667
+        },
+        "Family Home": {
+            "Person-2": 0.16667,
+            "Person-3": 0.16667,
+            "Person-4": 0.16667,
+            "Person-6": 0.16667,
+            "Person-5 (through custodian)": 0.16667,
+            "Person-7 (through custodian)": 0.16667
+        },
+        "Toyota Camry": {
+            "Person-2": 0.16667,
+            "Person-3": 0.16667,
+            "Person-4": 0.16667,
+            "Person-6": 0.16667,
+            "Person-5 (through custodian)": 0.16667,
+            "Person-7 (through custodian)": 0.16667
+        },
+        "Savings Account": {
+            "Person-2": 0.16667,
+            "Person-3": 0.16667,
+            "Person-4": 0.16667,
+            "Person-6": 0.16667,
+            "Person-5 (through custodian)": 0.16667,
+            "Person-7 (through custodian)": 0.16667
+        },
+        "rule_applied_id": 1,
+        "rule_applied_text": "- equally"
+    }
+}

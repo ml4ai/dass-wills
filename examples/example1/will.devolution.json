@@ -1,0 +1,10 @@
+{
+    "v1": {
+        "My House": {
+            "Person-2": 0.6,
+            "Person-3": 0.2
+        },
+        "rule_applied_id": 3,
+        "rule_applied_text": "- by a certain proportion to each person"
+    }
+}
