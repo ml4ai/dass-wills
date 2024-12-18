@@ -39,6 +39,13 @@ Will Model object, and Will Devolution text file.",
         required=True,
         help="OPEN AI API KEy.\n",
     )
+    parser.add_argument(
+        "-d",
+        "--db-oracle",
+        type=str,
+        required=False,
+        help="Specify the Path to ORACLE.\n",
+    )
     args = parser.parse_args()
 
     return args
@@ -60,13 +67,17 @@ def main():
     args = cmd_line_invocation()
     input_file = args.input_text_file
     output_path= args.output_path
+    oracle=args.db_oracle
     key = args.key
 
     # Paths check
     if not os.path.isfile(input_file):
         print(f"Error: The input file '{input_file}' does not exist.")
         sys.exit(1)
-
+    if oracle:
+        if not os.path.isfile(oracle):
+            print(f"Error: The oracle file '{input_foracleile}' does not exist.")
+            sys.exit(1)
     if not os.path.isdir(output_path):
         print(f"The output directory '{output_path}' does not exist. Creating it now.")
         os.makedirs(output_path) 
@@ -149,6 +160,8 @@ def main():
     devolution_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.json'
     devolution_file_path = os.path.abspath(os.path.join(output_path,devolution_file))
     cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path]
+    if oracle:
+        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle]
     print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
     for stdout_line in iter(p3.stdout.readline, b''):

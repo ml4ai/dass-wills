@@ -1,49 +1,29 @@
 {
-    "testator_name": "Person-1",
-    "date_of_will": "1994-04-11",
+    "testator_name": "[Person-1]",
+    "date_of_will": "11 day of April, 1994",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Person-1",
-                    "state_of_residence": "Tennessee"
+                    "name": "[Person-1]"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Person-2",
-                        "relationship_to_testator": "Niece",
-                        "waived_bond": true
+                        "name": "[Person-2]"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "Person-2",
-                        "relationship_to_testator": "Niece"
+                        "name": "[Person-2]"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e4",
-                        "description": "House and lot",
-                        "type": "Real Estate"
-                    },
-                    {
-                        "id": "e5",
-                        "description": "Contents of house",
-                        "type": "Personal Property"
-                    },
-                    {
-                        "id": "e6",
-                        "description": "Automobile",
-                        "type": "Personal Property"
-                    },
-                    {
-                        "id": "e7",
-                        "description": "Any other property owned",
-                        "type": "Mixed"
+                        "description": "all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated, including but not limited to my house and lot, all contents of my house, any automobile I have at the time of my death, and any other property I own"
                     }
                 ],
                 "condition": []
@@ -61,10 +41,7 @@
                     "e3"
                 ],
                 "Asset": [
-                    "e4",
-                    "e5",
-                    "e6",
-                    "e7"
+                    "e4"
                 ],
                 "Condition": []
             }

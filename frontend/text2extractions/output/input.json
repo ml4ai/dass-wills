@@ -1,51 +1,47 @@
 {
-    "testator_name": "Leo Arwood",
-    "date_of_will": "1986-01-06",
+    "testator_name": "LEO ARWOOD",
+    "date_of_will": "6 day of January, 1986",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Leo Arwood",
-                    "state_of_residence": "Tennessee"
+                    "name": "LEO ARWOOD"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Athalene Arwood",
-                        "relationship_to_testator": "Wife",
-                        "waived_bond": true
+                        "name": "Athalene Arwood"
                     },
                     {
                         "id": "e3",
-                        "name": "E. F. Bentley, Jr.",
-                        "relationship_to_testator": "Friend",
-                        "waived_bond": true
+                        "name": "E. F. Bentley, Jr."
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e4",
-                        "name": "Athalene Arwood",
-                        "relationship_to_testator": "Wife"
+                        "name": "Athalene Arwood"
                     },
                     {
                         "id": "e5",
-                        "name": "Clayton F. Bentley",
-                        "relationship_to_testator": "Son of E. F. Bentley, Jr."
+                        "name": "Clayton F. Bentley"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e6",
-                        "description": "All property, real, personal and mixed",
-                        "type": "Property"
+                        "description": "all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
                     }
                 ],
                 "condition": [
                     {
                         "id": "e7",
-                        "text": "If Athalene Arwood does not survive Leo Arwood or they die at the same time or as a result of a common disaster"
+                        "text": "if Athalene Arwood survives LEO ARWOOD"
+                    },
+                    {
+                        "id": "e8",
+                        "text": "Should Athalene Arwood not survive LEO ARWOOD, or should they die at the same time, or as a result of a common disaster"
                     }
                 ]
             }
@@ -64,14 +60,16 @@
                 "Asset": [
                     "e6"
                 ],
-                "Condition": []
+                "Condition": [
+                    "e7"
+                ]
             },
             {
                 "id": "v2",
                 "type": "Bequest",
                 "Testator": "e1",
                 "Executor": [
-                    "e3"
+                    "e2"
                 ],
                 "Beneficiary": [
                     "e5"
@@ -80,7 +78,7 @@
                     "e6"
                 ],
                 "Condition": [
-                    "e7"
+                    "e8"
                 ]
             }
         ]

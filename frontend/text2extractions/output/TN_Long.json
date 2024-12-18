@@ -1,50 +1,47 @@
 {
     "testator_name": "[Person-1]",
-    "date_of_will": "2001-01-15",
+    "date_of_will": "15th day of January, 2001",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "[Person-1]",
-                    "state_of_residence": "Tennessee"
+                    "name": "[Person-1]"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "[Person-4]",
-                        "relationship_to_testator": "Attorney at Law",
-                        "waived_bond": true
+                        "name": "[Person-4]"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "[Person-2]",
-                        "relationship_to_testator": "Child"
+                        "name": "[Person-2]"
                     },
                     {
                         "id": "e4",
-                        "name": "[Person-3]",
-                        "relationship_to_testator": "Child"
+                        "name": "[Person-3]"
                     },
                     {
                         "id": "e5",
-                        "name": "[Organization-1]",
-                        "relationship_to_testator": "None"
+                        "name": "[Organization-1]"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e6",
-                        "description": "All property, real, personal and mixed",
-                        "type": "Mixed"
+                        "description": "all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
                     }
                 ],
                 "condition": [
                     {
                         "id": "e7",
-                        "text": "If no living heirs at the time of death, bequeath all property to [Organization-1]"
+                        "text": "per stirpes"
+                    },
+                    {
+                        "id": "e8",
+                        "text": "In the event I have no living heirs at the time of my death"
                     }
                 ]
             }
@@ -64,7 +61,9 @@
                 "Asset": [
                     "e6"
                 ],
-                "Condition": []
+                "Condition": [
+                    "e7"
+                ]
             },
             {
                 "id": "v2",
@@ -80,7 +79,7 @@
                     "e6"
                 ],
                 "Condition": [
-                    "e7"
+                    "e8"
                 ]
             }
         ]
