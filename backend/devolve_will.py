@@ -300,28 +300,23 @@ def find_assets(directive,testator):
     output_assets=[]
 
     if len(assets_directive) == 1:
-        llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Evaluate whether the asset name "{assets_directive[0].name.lower()}" means ALL the rest of property ?'
-        query_ans=''
-        while (query_ans not in ['yes','no']):
-            query_ans=query_llm(llm_query)
-        if (query_ans =='yes'):
+        llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the asset name "{assets_directive[0].name.lower()}" means ALL the rest of property ?'
+        query_ans=query_llm_rule(llm_query,Boolean)
+        if query_ans:
             for asset_t in testator['assets']:
                 output_assets.append(asset_t)
             return output_assets
     for asset in assets_directive:
         match=False
         for asset_t in testator['assets']:
-            llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Evaluate whether the asset name "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
-            query_ans=''
-            while (query_ans not in ['yes','no']):
-                query_ans=query_llm(llm_query)
-            if (query_ans =='yes'):
+            llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the asset name "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
+            query_ans=query_llm_rule(llm_query,Boolean)
+            if query_ans:
                 output_assets.append(asset_t)
                 match=True
                 break
         if not match:
-            ## comment this out later
-            
+            ## comment this out later 
             random_asset=copy.deepcopy(asset_t)
             random_asset['name']=', '.join([asset.name for asset in assets_directive])
             if random_asset not in output_assets:

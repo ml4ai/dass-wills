@@ -1,32 +1,37 @@
 {
-    "testator_name": "[Person-1]",
-    "date_of_will": "17 day of Sept, 1999",
+    "testator_name": "Person-1",
+    "date_of_will": "",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "[Person-1]"
+                    "name": "Person-1"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "[Person-2]"
+                        "name": "Person-5"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "[Person-2]"
+                        "name": "Person-2"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e4",
-                        "description": "all of my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+                        "description": "my house"
                     }
                 ],
-                "condition": []
+                "condition": [
+                    {
+                        "id": "e5",
+                        "text": "if Person-2's age is greater than 19"
+                    }
+                ]
             }
         ],
         "events": [
@@ -43,7 +48,9 @@
                 "Asset": [
                     "e4"
                 ],
-                "Condition": []
+                "Condition": [
+                    "e5"
+                ]
             }
         ]
     }
