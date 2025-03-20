@@ -6,6 +6,9 @@ from collections import Counter
 class RuleID (BaseModel):
     id: int
 
+class Boolean (BaseModel):
+    ans: bool
+
 class Division(BaseModel):
     person_name: str
     asset_name: str
