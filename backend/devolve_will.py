@@ -133,8 +133,10 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
     for person in db['people']:
         if person['id'] in testator['children_ids']:
             children.append(person['full_name'])
-    identifier, evals, rule_text = process_rule(directive.serialized_text, assets, testator, beneficiares_to_sent,children)
+    identifiers, evals, rule_text = process_rule(directive.serialized_text, assets, testator, beneficiares_to_sent,children)
+    identifier = identifiers[0]
     division = defaultdict(dict)
+    print(evals)
     if identifier in [0,1]:
         assert (beneficiaries)  # beneficiares are available
         assert (assets) # assets to bequeath are available
@@ -210,31 +212,44 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                     if person_y['alive']=='true':
                         print(f'\n... Directive cannot be executed because {person_x} is still alive.\n')
                         return {}
+        if div_criteria:
 
-        for (_, asset_n, share) in div_criteria:
-            match = False
+            for (_, asset_n, share) in div_criteria:
+                match = False
+                for asset in assets:
+                    if asset['name'] == asset_n:
+                        match = True
+                if not match:
+                    return {}
+
+            for person, asset_name, share in div_criteria:
+                # Convert share to a percentage if necessary
+                f_share = float(share)
+                if f_share > 1:
+                    f_share /= 100
+                
+                for person_real in beneficiaries:
+                    if person == person_real['full_name']:
+                        if person_real['alive'] != 'true':
+                            print(f'Person {person_real["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to their children.')
+                            divide_by_stirpes(person_real, db['people'],  shares, asset_name, f_share)
+                        else:
+                            division[asset_name][person] = f_share
+                        break  
+
+        else:
             for asset in assets:
-                if asset['name'] == asset_n:
-                    match = True
-            if not match:
-                return {}
+                asset_dict = defaultdict(int)
+                asset_name = asset['name']
+                for person in beneficiaries:
+                    equal_division = round(1/len(beneficiaries),5)
+                    if person['alive']!='true':
+                        print(f'Person {person["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to thier children.')
+                        divide_by_stirpes(person,db['people'],shares,asset_name, equal_division)
+                        continue
+                    asset_dict[person['full_name']]=equal_division
+                    division[asset_name].update(asset_dict)
 
-        for person, asset_name, share in div_criteria:
-            # Convert share to a percentage if necessary
-            f_share = float(share)
-            if f_share > 1:
-                f_share /= 100
-            
-            for person_real in beneficiaries:
-                if person == person_real['full_name']:
-                    if person_real['alive'] != 'true':
-                        print(f'Person {person_real["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to their children.')
-                        divide_by_stirpes(person_real, db['people'],  shares, asset_name, f_share)
-                    else:
-                        division[asset_name][person] = f_share
-                    break  
-
-        
         for (person,share,asset_name) in shares:
             division[asset_name][person]=share
 
@@ -254,29 +269,43 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                         return {}
 
         
-        for (_, asset_n, share) in div_criteria:
-            match = False
-            for asset in assets:
-                if asset['name'] == asset_n:
-                    match = True
-            if not match:
-                return {}
-
-        for person, asset_name, share in div_criteria:
-            # Convert share to a percentage if necessary
-            f_share = float(share)
-            if f_share > 1:
-                f_share /= 100
+        if div_criteria:
             
-            for person_real in beneficiaries:
-                if person == person_real['full_name']:
-                    if person_real['alive'] != 'true':
-                        print(f'Person {person_real["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to their children.')
-                        divide_by_stirpes(person_real, db['people'],  shares, asset_name, f_share)
-                    else:
-                        division[asset_name][person] = f_share
-                    break  
+            for (_, asset_n, share) in div_criteria:
+                match = False
+                for asset in assets:
+                    if asset['name'] == asset_n:
+                        match = True
+                if not match:
+                    return {}
 
+            for person, asset_name, share in div_criteria:
+                # Convert share to a percentage if necessary
+                f_share = float(share)
+                if f_share > 1:
+                    f_share /= 100
+                
+                for person_real in beneficiaries:
+                    if person == person_real['full_name']:
+                        if person_real['alive'] != 'true':
+                            print(f'Person {person_real["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to their children.')
+                            divide_by_stirpes(person_real, db['people'],  shares, asset_name, f_share)
+                        else:
+                            division[asset_name][person] = f_share
+                        break  
+
+        else:
+            for asset in assets:
+                asset_dict = defaultdict(int)
+                asset_name = asset['name']
+                for person in beneficiaries:
+                    equal_division = round(1/len(beneficiaries),5)
+                    if person['alive']!='true':
+                        print(f'Person {person["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to thier children.')
+                        divide_by_stirpes(person,db['people'],shares,asset_name, equal_division)
+                        continue
+                    asset_dict[person['full_name']]=equal_division
+                    division[asset_name].update(asset_dict)
         
         for (person,share,asset_name) in shares:
             division[asset_name][person]=share
@@ -292,7 +321,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                 division[asset][f"{person} (through custodian)"] = div_person_value
 
 
-    return division,identifier, rule_text
+    return division,identifiers, rule_text
 
 def validate_will(will):
     """Validate the hash of will."""
@@ -327,8 +356,8 @@ def find_assets(directive,testator):
     output_assets=[]
 
     if len(assets_directive) == 1:
-        llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the asset name "{assets_directive[0].name.lower()}" means ALL the rest of property ?'
-        query_ans=query_llm_rule(llm_query,Boolean)
+        llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the provided asset name "{assets_directive[0].name.lower()}" means ALL or All the Rest of testator assets or Everything of Testator assets ?'
+        query_ans=query_llm_formatted(llm_query,Boolean)
         if query_ans.ans:
             for asset_t in testator['assets']:
                 output_assets.append(asset_t)
@@ -337,7 +366,7 @@ def find_assets(directive,testator):
         match=False
         for asset_t in testator['assets']:
             llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the asset name "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
-            query_ans=query_llm_rule(llm_query,Boolean)
+            query_ans=query_llm_formatted(llm_query,Boolean)
             if query_ans.ans:
                 output_assets.append(asset_t)
                 match=True
@@ -376,7 +405,7 @@ def execute_directive(directive, assets, beneficiaries,testator,db,available_ass
 
     beneficiary_names = ', '.join([str(b['full_name']) for b in beneficiaries])
     try:
-        asset_division, id,rule_text = validate_and_evaluate_conditions(directive,assets,beneficiaries,db,testator)
+        asset_division, ids,rule_text = validate_and_evaluate_conditions(directive,assets,beneficiaries,db,testator)
     except:
         return {}
     stub_text=''
@@ -399,8 +428,8 @@ def execute_directive(directive, assets, beneficiaries,testator,db,available_ass
         return {}
     div = {}
     div [str(directive._id)]=asset_division
-    div[str(directive._id)]['rule_applied_id']=id
-    div[str(directive._id)]['rule_applied_text']= rule_text.strip().split('\n')[0]
+    div[str(directive._id)]['rules_applied_ids']=ids
+    div[str(directive._id)]['rules_applied_text']= rule_text
 
     return div
 
