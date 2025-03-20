@@ -3,13 +3,14 @@
 import argparse
 import sys
 import pickle
+from collections import defaultdict
 from hashlib import sha256
 import re
 from ORACLES.generate_tree import *
 from schemas.model.wm.wm_will_model import WMWillModel
 import copy
 import ast
-from gpt_req import query_llm
+from gpt_req import *
 
 ################################################################################
 #                                                                              #
@@ -40,6 +41,14 @@ def cmd_line_invocation():
         required=False,
         help="Input path to the people's database.",
     )
+    parser.add_argument(
+        "-o",
+        "--save-output-json",
+        type=str,
+        required=False,
+        help="Output path to the save the asset division json.",
+    )
+
 
     # to-do: use testator ID for will's location
     # parser.add_argument('-t', '--testator', type=str,
@@ -72,6 +81,12 @@ def load_json_obj(path):
     f.close()
     return obj
 
+def save_json_obj(obj, path):
+    """Save the given dict object to a JSON file."""
+    with open(path, "w") as f:
+        json.dump(obj, f, indent=4)
+        print(f"... Successfully saved JSON object to file {path}.")
+
 
 def parse_llm_dict(dict_text):
     try:
@@ -97,12 +112,11 @@ def find_benficiariers(directive, db):
     for person in beneficiaries:
         len_b=len(output_beneficiaries)
         found=False
-        for text in person.source_text:
-            cleaned_name = re.sub(pattern_clean_name, '', text)
-            if cleaned_name in people_dict:
-                output_beneficiaries.append(people_dict[cleaned_name])
-                found=True
-                break
+        cleaned_name = re.sub(pattern_clean_name, '', person.name)
+        if cleaned_name in people_dict:
+            output_beneficiaries.append(people_dict[cleaned_name])
+            found=True
+            # break
         if not found:
             print(f"Error. Beneficiary {cleaned_name} not found in db. Exiting the system ... ")
             sys.exit(1)
@@ -113,170 +127,144 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
     """Find and validate the conditions of each directive.
     Return divison of assets to each party involved"""
 
-    
-    rules_text="""Rules abstraction:
-        Division: 
-
-            - by stirpes
-            (id = 0)
-            requirements:
-                - people involved   
-                - condition identifier 
-                - family tree
-                - divisible assets (boolean)
-                - alive status of all persons involved in the directives
-
-            - equally
-            (id = 1)
-            requirements:
-                - people involved   
-                - condition identifier
-                - divisible assets (boolean)
-
-            - equally (minus people who are not alive)
-            (id = 2)
-            requirements:
-                - people involved   
-                - condition identifier
-                - divisible assets (boolean)
-                - alive status of all persons involved in the directives
-
-            - by a certain proportion to each person
-            (id = 3)
-            requirements:
-                - people involved   
-                - condition identifier
-                - proportions
-                - divisible assets (boolean)
-
-            - by a certain proportion to each person (minus people who are not alive)
-            (id = 4)
-            requirements:
-                - people involved   
-                - condition identifier
-                - proportions
-                - divisible assets (boolean)
-                - alive status of all persons involved in the directives
-
-
-        If-else:
-            - if person a is not alive, transfer assets to person b
-            (id = 5)
-            requirements:
-                - people involved   
-                - condition identifier
-                - alive status of persons a and b
-
-            - if nobody is alive to bequeath, transfer assets as per state's law (default: transfer to state)
-            requirements:
-            (id = 6)
-                - condition identifier
-                - people involved   
-                - alive status of all persons involved in the directives
-                - state's law
-
-        Bequeath whatever's left:
-            (id = 7)
-            - give all assets to one person
-            requirements:
-                - people involved   
-                - condition identifier
-                - state of all assets of testator
-            
-            - give all assets to multiple people
-            (id = 8)
-            requirements:
-                - people involved   
-                - condition identifier
-                - state of all assets of testator
-                - alive status of all persons involved in the directives
-
-            - give (all assets - assets bequeath in previous directives) to one person
-            (id = 9)
-            requirements:
-                - people involved   
-                - condition identifier
-                - state of all assets of testator
-            
-            - give all assets (in a certain location) to one person
-            (id = 10)
-                requirements:
-                - people involved   
-                - condition identifier
-                - state of all assets of testator in certain locations
-    """
-    
-    """  Requirements (union):
-    - people involved   
-    - state of all assets of testator in certain locations
-    - state of all assets of testator
-    - alive status of all persons involved in the directives
-    - divisible assets (boolean)
-    - state's default law
-    - condition identifier
-    """
-    # an identifier is helpful in identifying a general rule/kind given a specfic directive (text)
-
-    # for example:
-    # Give all assets in a certain location to one person could be written as:
-    # T hereby declare that all of my assets in Area 57 be transferred to person X after my death.
-    # I bequeath my property that I own near Nevade in Area 57 to my son.
-    # After my demise, I request person Y to transfer my house in Nevada to person X, who is my son, in case he survives me.
-
-    # if identifier_x:
-    #    if region == {certainState}:  ## e.g., AZ, TN, NY
-    #       assert (requirements)
-    #       evaluate conditions and division
-    #       return division of assets to each party involved
     print(f"Processing Directive: {directive.serialized_text}")
-    identifier= directive._identifier if hasattr(directive, '_identifier')  else 'division.equally' 
-    example_output="""{'Rule': 'equally', 'Assets': { 'AssetX': 'Proportions': {'PersonX': 0.5, 'PersonY': 0.5}}}"""
-    llm_directive_evaluation='Based on the provided rules and abstractions, available assets and beneficiaries, evaluate whether the given directive can be executed given the conditions (i.e., CHECK things like whether the someone is alive, age, etc). Return ONLY a "yes" if it is a yes, otherwise give a reason why the directive cannot be executed but not a simple "no". Directive: {directive_text}. Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Rules: '+rules_text
-    llm_division_evaluation = 'Based on the provided rules and abstractions, available assets and beneficiaries, process the given directive text. Identify the name of the Rule to be applied and calculate the proportion share of each party involved. Allocate ONLY from the available assets. Return ONLY and ONLY a python dictionary as plain text. The example output is: {example_output}. Assets: {a}. Beneficiaries: {b}. Directive: {directive_text}. Testaor: {t}. Rules: '+rules_text
-    valid_query = llm_directive_evaluation.format(directive_text=directive.serialized_text,a=assets,b=beneficiaries,t=testator )
-    valid_query_reason = llm_directive_evaluation.format(directive_text=directive.serialized_text,a=assets,t=testator,b= beneficiaries)
-    division={}
-    dict_directive={}
-    query_ans=''
-    query_ans=query_llm(valid_query)
-    if (query_ans.lower() != 'yes'):
-        print(query_ans)
-        return None
-    while dict_directive=={}:
-        llm_query_dir=llm_division_evaluation.format(directive_text=directive.serialized_text,example_output=example_output,a=assets,b= beneficiaries,t= testator)
-        llm_query_output= query_llm(llm_query_dir)
-        # print(llm_query_output)
-        dict_directive = parse_llm_dict(llm_query_output)
-    
+    beneficiares_to_sent = [person['full_name'] for person in beneficiaries]
+    children = []
+    for person in db['people']:
+        if person['id'] in testator['children_ids']:
+            children.append(person['full_name'])
+    identifier, evals, rule_text = process_rule(directive.serialized_text, assets, testator, beneficiares_to_sent,children)
+    division = defaultdict(dict)
+    if identifier in [0,1]:
+        assert (beneficiaries)  # beneficiares are available
+        assert (assets) # assets to bequeath are available
+        shares = []
+        for asset in assets:
+            asset_dict = defaultdict(int)
+            asset_name = asset['name']
+            for person in beneficiaries:
+                equal_division = round(1/len(beneficiaries),5)
+                if person['alive']!='true':
+                    print(f'Person {person["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to thier children.')
+                    divide_by_stirpes(person,db['people'],shares,asset_name, equal_division)
+                    continue
+                asset_dict[person['full_name']]=equal_division
+                division[asset_name].update(asset_dict)
+        for (person,share,asset_name) in shares:
+            division[asset_name][person]=share
 
-    # if identifier=='division.equally': 
-    #     if region=='AZ':
-    #         assert (beneficiaries)  # beneficiares are available
-    #         assert (assets) # assets to bequeath are available
-    #         assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
-    #         for asset in assets:
-    #             for person in beneficiaries:
-    #                 if person['full_name'] not in division:
-    #                     division[person['full_name']]={'assets':[]}
-    #                 asset_to_bequeath={'asset':asset['name'],
-    #                 'share':1/len(beneficiaries)} # equal distribution
-    #                 division[person['full_name']]['assets'].append(asset_to_bequeath)
+    # elif identifier==2:
+    #     assert (beneficiaries)
+    #     assert (assets)
+    #     stirped_beneficiares = []
+    #     for person in beneficiaries:
+    #         if not person["alive"]=='true':
+    #             stirped_beneficiares.append(person["full_name"])
+    #     # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
+    #     unalive_people = evals[1]
+    #     people_db = db ['people']
+    #     for person_x in unalive_people:
+    #         for person_y in people_db:
+    #             if person_x ==person_y['full_name']:
+    #                 if person_y['alive']=='true':
+    #                     print(f'\n... Directive cannot be executed because {person_x} is still alive.\n')
+    #                     return {}
+    #     new_beneficiares = []
+    #     for person in beneficiaries:
+    #         for person_x in unalive_people:
+    #             if person_x ==person['full_name']:
+    #                 continue
+    #             else:
+    #                 new_beneficiares.append(person)
 
-    #     elif identifier=='division.proporton': 
-    #         if region=='AZ':
-    #             assert (beneficiaries)  # beneficiares are available
-    #             assert (assets) # assets to bequeath are available
-    #             assert (all([person['alive']=='true' for person in beneficiaries])) # all beneficiares are alive
-    #             for asset in assets:
-    #                 for person in beneficiaries:
-    #                     if person['full_name'] not in division:
-    #                         division[person['full_name']]={'assets':[]}
-    #                     share=directive.shares[person['full_name']]
-    #                     asset_to_bequeath={'asset':asset['name'],
-    #                     'share':share} # equal distribution
-    #                     division[person['full_name']]['assets'].append(asset_to_bequeath)
+    #     for asset in assets:
+    #         asset_dict = defaultdict(int)
+    #         asset_name = asset['name']
+    #         for person in new_beneficiares:
+    #             equal_division = round(1/len(new_beneficiares),5)
+    #             asset_dict[person['full_name']]=equal_division
+    #             division[asset_name].update(asset_dict)
+    elif identifier  == 3:
+        assert (beneficiaries)  # beneficiares are available
+        assert (assets) # assets to bequeath are available
+        # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
+        # ensuring the shares, beneficiares, and assets are valid
+        shares = []
+        for (benef, _, share) in evals:
+            match = False
+            for person in beneficiaries:
+                if person['full_name']==benef:
 
-    return dict_directive
+                    match = True
+            if not match:
+                
+                return {}
+        for (_, asset_n, share) in evals:
+            match = False
+            for asset in assets:
+                if asset['name'] == asset_n:
+                    match = True
+            if not match:
+                return {}
+        for person, asset_name, share in evals:
+            
+            # Convert share to a percentage if necessary
+            f_share = float(share)
+            if f_share > 1:
+                f_share /= 100
+            
+            for person_real in beneficiaries:
+                if person == person_real['full_name']:
+                    if person_real['alive'] != 'true':
+                        print(f'Person {person_real["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to their children.')
+                        divide_by_stirpes(person_real, db['people'],  shares, asset_name, f_share)
+                    else:
+                        division[asset_name][person] = f_share
+                    break  
+
+        # Update the division with any remaining shares
+        for person, share, asset_name in shares:
+            division[asset_name][person] = share
+
+
+    elif identifier==5:
+        assert (beneficiaries)
+        assert (assets)
+        # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
+        unalive_people = evals[1]
+        people_db = db ['people']
+        shares = []
+        for person_x in unalive_people:
+            for person_y in people_db:
+                if person_x ==person_y['full_name']:
+                    if person_y['alive']=='true':
+                        print(f'\n... Directive cannot be executed because {person_x} is still alive.\n')
+                        return {}
+
+        for asset in assets:
+            asset_dict = defaultdict(int)
+            asset_name = asset['name']
+            for person in beneficiaries:
+                if person['alive']!='true':
+                    print(f'Person {person["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to thier children.')
+                    divide_by_stirpes(person,db['people'],shares,asset_name, equal_division)
+                    continue
+                equal_division = round(1/len(beneficiaries),2)
+                asset_dict[person['full_name']]=equal_division
+                division[asset_name].update(asset_dict)
+        for (person,share,asset_name) in shares:
+            division[asset_name][person]=share
+    for asset, asset_people in division.items():
+        people_div = list(asset_people.keys())        
+        for person in people_div:
+            div_person_value = float(asset_people[person])
+            real_person = next((p for p in db['people'] if p['full_name'] == person), None)
+            if real_person and int(real_person['age']) < 18:
+                del division[asset][person]
+                division[asset][f"{person} (through custodian)"] = div_person_value
+
+
+    return division,identifier, rule_text
 
 def validate_will(will):
     """Validate the hash of will."""
@@ -291,19 +279,17 @@ def validate_will(will):
         print("... [STUB] error: will validation failed due to invalid hash.")
         # sys.exit(1)
 
-def find_testator(directive, db,alive_test=False): ## set alive_test to true for realistic checking
+def find_testator(will_obj, db,alive_test=False): ## set alive_test to true for realistic checking
     """Find and validate the assets of the testator from the db."""
     pattern_clean_name = r'[^\w\s.]'
     people_dict = {re.sub(pattern_clean_name, '', person["full_name"]): person for person in db["people"]}
-    testaor=directive.testator
-
-    for text in testaor.source_text:
-        cleaned_name = re.sub(pattern_clean_name, '', text)
-        if cleaned_name in people_dict:
-            if alive_test: ## mat
-                if people_dict[cleaned_name]['alive']=='true':
-                        print("... error: testator still alive. Cannot proceed further.")
-            return people_dict[cleaned_name]
+    testaor=will_obj.testator
+    cleaned_name = re.sub(pattern_clean_name, '', testaor.name)
+    if cleaned_name in people_dict:
+        if alive_test: ## mat
+            if people_dict[cleaned_name]['alive']=='true':
+                    print("... error: testator still alive. Cannot proceed further.")
+        return people_dict[cleaned_name]
     print("... error: Could not find testator.")
     sys.exit(1)
 
@@ -313,7 +299,7 @@ def find_assets(directive,testator):
     output_assets=[]
 
     if len(assets_directive) == 1:
-        llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Tell whether the asset name "{assets_directive[0].name.lower()}" means all the rest of property ?'
+        llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Evaluate whether the asset name "{assets_directive[0].name.lower()}" means ALL the rest of property ?'
         query_ans=''
         while (query_ans not in ['yes','no']):
             query_ans=query_llm(llm_query)
@@ -324,7 +310,7 @@ def find_assets(directive,testator):
     for asset in assets_directive:
         match=False
         for asset_t in testator['assets']:
-            llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Tell whether the asset name "{asset.name.lower()}" matches with the following asset: {asset_t} ?'
+            llm_query=f'Give a boolean answer yes or no ONLY in lowercase. Evaluate whether the asset name "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
             query_ans=''
             while (query_ans not in ['yes','no']):
                 query_ans=query_llm(llm_query)
@@ -366,15 +352,20 @@ def execute_directive(directive, assets, beneficiaries,testator,db,available_ass
     """To-do: link real life oracle here."""
 
     beneficiary_names = ', '.join([str(b['full_name']) for b in beneficiaries])
-    asset_division = validate_and_evaluate_conditions(directive,assets,beneficiaries,db,testator)
+    try:
+        asset_division, id,rule_text = validate_and_evaluate_conditions(directive,assets,beneficiaries,db,testator)
+    except:
+        return {}
     stub_text=''
     valid=True
+    
     if asset_division:
-        for asset_name, asset_details in asset_division['Assets'].items():
+        for asset_name, asset_details in asset_division.items():
             stub_text+=f"\nAsset: {asset_name}\n"
-            for person, proportion in asset_details['Proportions'].items():
+            for person, proportion in asset_details.items():
                 available_assets[asset_name]['allocation']+=proportion
-                if available_assets[asset_name]['allocation']>1:
+                available_assets[asset_name]['allocation'] = round(available_assets[asset_name]['allocation'],2)
+                if available_assets[asset_name]['allocation']>1.02: ## the allocation might exceed by a bit
                     valid=False
                     break
                 stub_text+=f"... [STUB] {person} is transferred {proportion * 100}% of the asset.\n"
@@ -382,18 +373,28 @@ def execute_directive(directive, assets, beneficiaries,testator,db,available_ass
         print(stub_text)
     else:
         print("The directive cannot be executed because one or more assets are already allocated.")
+        return {}
+    div = {}
+    div [str(directive._id)]=asset_division
+    div[str(directive._id)]['rule_applied_id']=id
+    div[str(directive._id)]['rule_applied_text']= rule_text.strip().split('\n')[0]
 
-def divide_by_stirpes(beneficiaries, current_percentage=100):
-    """Calculate the stirpes of asset as per the
-    number of beneficiaries."""
+    return div
 
-    for beneficiary in beneficiaries["children"]:
-        stirped_percentage = current_percentage / len(beneficiaries["children"])
-        if beneficiary["alive"] == "true":
-            beneficiary["asset_percentage"] = stirped_percentage
-        else:
-            beneficiary["asset_percentage"] = 0
-            divide_by_stirpes(beneficiary, stirped_percentage)
+def divide_by_stirpes(root_beneficiary, people_db, shares, asset_name, current_percentage=1):
+    """
+    Calculate the stirpes of an asset according to the number of beneficiaries.
+    """
+    children_ids = root_beneficiary.get("children_ids", [])
+    stirped_percentage = current_percentage / len(children_ids) if children_ids else 0
+
+    for b_id in children_ids:
+        person = next((p for p in people_db if p['id'] == b_id), None)
+        if person:
+            if person["alive"] == "true":
+                shares.append((person["full_name"], stirped_percentage,asset_name))
+            else:
+                divide_by_stirpes(person, people_db, shares, asset_name,stirped_percentage)
 
 
 ################################################################################
@@ -409,6 +410,7 @@ def main():
     args = cmd_line_invocation()
     path_to_will = args.path_to_will
     db_path = args.path_to_database
+    output_json_path = args.save_output_json
     will_object = load_will(path_to_will)
     db = load_json_obj(db_path)
     
@@ -436,9 +438,16 @@ def main():
     # execute directives
     for asset in available_assets:
        available_assets[asset]['allocation']=0
-    for a, b, d in validated_directives:
-        execute_directive(d, a, b,testator, db,available_assets)
+    divison_global = {}
 
+    for a, b, d in validated_directives:
+        div = execute_directive(d, a, b,testator, db,available_assets)
+        divison_global.update(div)
+    print("... Overall Division of Assets:")
+    pprint.pprint(divison_global)
+
+    if output_json_path:
+        save_json_obj(divison_global, output_json_path)
 
 if __name__ == "__main__":
     main()

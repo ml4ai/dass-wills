@@ -6,7 +6,7 @@
             "id": 12,
             "first_name": "LEO",
             "last_name": "",
-            "full_name": "LEO ARWOOD",
+            "full_name": "Leo Arwood",
             "age": 49,
             "date_of_birth": "1974-01-26",
             "email": "",
@@ -109,6 +109,11 @@
             "alive": "true",
             "assets": [
                 {
+                    "name": "My House",
+                    "type": "Property",
+                    "Location":"Tupperware Corporation of Halls, Tennessee"
+                },
+                {
                     "name": "Family Home",
                     "type": "Property",
                     "Location":"Tupperware Corporation of Halls, Tennessee"
@@ -134,8 +139,8 @@
             "first_name": "Person-2",
             "last_name": "",
             "full_name": "Person-2",
-            "age": 14,
-            "date_of_birth": "2009-11-29",
+            "age": 19,
+            "date_of_birth": "",
             "email": "",
             "phone": "",
             "address": "",
@@ -158,8 +163,8 @@
             "first_name": "Person-3",
             "last_name": "",
             "full_name": "Person-3",
-            "age": 15,
-            "date_of_birth": "2008-07-16",
+            "age": 20,
+            "date_of_birth": "",
             "email": "",
             "phone": "",
             "address": "",

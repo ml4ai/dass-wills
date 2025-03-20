@@ -1,0 +1,13 @@
+{
+    "v1": {
+        "My House": {
+            "Person-2": 0.6
+        }
+    },
+    "v2": {
+        "My House": {
+            "Person-3": 0.2,
+            "Person-4": 0.2
+        }
+    }
+}

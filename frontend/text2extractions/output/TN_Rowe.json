@@ -1,0 +1,108 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "21st day of July, 1993",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-4]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-3]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e5",
+                        "description": "household furnishings and contents"
+                    },
+                    {
+                        "id": "e6",
+                        "description": "house and lot"
+                    },
+                    {
+                        "id": "e7",
+                        "description": "all the rest and residue of my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e8",
+                        "text": "equally"
+                    },
+                    {
+                        "id": "e9",
+                        "text": "without bond"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4"
+                ],
+                "Asset": [
+                    "e5"
+                ],
+                "Condition": [
+                    "e8"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4"
+                ],
+                "Asset": [
+                    "e6"
+                ],
+                "Condition": [
+                    "e8"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": []
+            }
+        ]
+    }
+}

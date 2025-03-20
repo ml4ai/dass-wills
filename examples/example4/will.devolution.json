@@ -1,0 +1,15 @@
+{
+    "v1": {
+        "Family Home": {
+            "Athalene Arwood": 1.0
+        },
+        "Toyota Camry": {
+            "Athalene Arwood": 1.0
+        },
+        "Savings Account": {
+            "Athalene Arwood": 1.0
+        },
+        "rule_applied_id": 5,
+        "rule_applied_text": "- if persons (a and or b) is not alive, transfer assets to another party/person"
+    }
+}

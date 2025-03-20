@@ -1,0 +1,50 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "5th day of December, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e4",
+                        "description": "all my property of every kind and nature, including but not limited to my home & Lots #9 and #10 of [Address-2], as conveyed to me by deeds recorded in Deed Book 64, page 393, and Deed Book 52, page 53, Register's Office, Lauderdale County, all household contents, my two vehicles, a 1982 Ford LTD and a 1973 Ford truck, all being situate at my address at [Address-1]"
+                    }
+                ],
+                "condition": []
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e4"
+                ],
+                "Condition": []
+            }
+        ]
+    }
+}

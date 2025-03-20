@@ -11,6 +11,17 @@ import shutil, subprocess
 #                                                                              #
 ################################################################################
 
+def remove_contents(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.remove(file_path)  # remove file or link
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)  # remove directory and all its contents
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
+
 
 def cmd_line_invocation():
     desc_text = """This is an end to end system that extracts the Will text extractions json, 
@@ -39,6 +50,13 @@ Will Model object, and Will Devolution text file.",
         required=True,
         help="OPEN AI API KEy.\n",
     )
+    parser.add_argument(
+        "-d",
+        "--db-oracle",
+        type=str,
+        required=False,
+        help="Specify the Path to ORACLE.\n",
+    )
     args = parser.parse_args()
 
     return args
@@ -60,13 +78,17 @@ def main():
     args = cmd_line_invocation()
     input_file = args.input_text_file
     output_path= args.output_path
+    oracle=args.db_oracle
     key = args.key
 
     # Paths check
     if not os.path.isfile(input_file):
         print(f"Error: The input file '{input_file}' does not exist.")
         sys.exit(1)
-
+    if oracle:
+        if not os.path.isfile(oracle):
+            print(f"Error: The oracle file '{input_foracleile}' does not exist.")
+            sys.exit(1)
     if not os.path.isdir(output_path):
         print(f"The output directory '{output_path}' does not exist. Creating it now.")
         os.makedirs(output_path) 
@@ -94,13 +116,14 @@ def main():
     if not os.path.isfile(devolution_script):
         print(f"Error: The module 'Will Model Devulution' does not exist.")
         sys.exit(1)
-    
+    remove_contents(te_input_path)
+
     try:
         shutil.copy(input_file, te_input_path)
     except shutil.SameFileError:
         pass
         
-
+    
     cmd_te = ['python3', te_script]
     print("... Will Text to TE Module processing.\n")
     p1 = subprocess.Popen(cmd_te, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =te_base_path,env=env)
@@ -146,9 +169,11 @@ def main():
         sys.exit(1)
     print(f"Will Model file saved successfully:\n- {wm_obj_path}")
 
-    devolution_text_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.txt'
-    devolution_text_file_path = os.path.abspath(os.path.join(output_path,devolution_text_file))
-    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path]
+    devolution_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.json'
+    devolution_file_path = os.path.abspath(os.path.join(output_path,devolution_file))
+    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path]
+    if oracle:
+        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle]
     print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
     for stdout_line in iter(p3.stdout.readline, b''):
@@ -163,12 +188,7 @@ def main():
         print(f"WM to Devolution Module failed with return code {p3.returncode}")
         print(f"Error:\n{stderr3.decode('utf-8')}\n")
         sys.exit(1)
-
-    with open(devolution_text_file_path, 'w') as file:
-        file.write(stdout3.decode('utf-8'))
     
-    print(f"Will devolution file saved successfully:\n- {devolution_text_file_path}")
-
 
 if __name__ == "__main__":
     main()
