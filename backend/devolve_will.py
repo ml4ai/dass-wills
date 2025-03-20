@@ -135,6 +135,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
             children.append(person['full_name'])
     identifier, evals, rule_text = process_rule(directive.serialized_text, assets, testator, beneficiares_to_sent,children)
     division = defaultdict(dict)
+
     if identifier in [0,1]:
         assert (beneficiaries)  # beneficiares are available
         assert (assets) # assets to bequeath are available
@@ -153,38 +154,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
         for (person,share,asset_name) in shares:
             division[asset_name][person]=share
 
-    # elif identifier==2:
-    #     assert (beneficiaries)
-    #     assert (assets)
-    #     stirped_beneficiares = []
-    #     for person in beneficiaries:
-    #         if not person["alive"]=='true':
-    #             stirped_beneficiares.append(person["full_name"])
-    #     # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
-    #     unalive_people = evals[1]
-    #     people_db = db ['people']
-    #     for person_x in unalive_people:
-    #         for person_y in people_db:
-    #             if person_x ==person_y['full_name']:
-    #                 if person_y['alive']=='true':
-    #                     print(f'\n... Directive cannot be executed because {person_x} is still alive.\n')
-    #                     return {}
-    #     new_beneficiares = []
-    #     for person in beneficiaries:
-    #         for person_x in unalive_people:
-    #             if person_x ==person['full_name']:
-    #                 continue
-    #             else:
-    #                 new_beneficiares.append(person)
-
-    #     for asset in assets:
-    #         asset_dict = defaultdict(int)
-    #         asset_name = asset['name']
-    #         for person in new_beneficiares:
-    #             equal_division = round(1/len(new_beneficiares),5)
-    #             asset_dict[person['full_name']]=equal_division
-    #             division[asset_name].update(asset_dict)
-    elif identifier  == 3:
+    elif identifier  == [3,6]:
         assert (beneficiaries)  # beneficiares are available
         assert (assets) # assets to bequeath are available
         # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
@@ -254,6 +224,37 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                 division[asset_name].update(asset_dict)
         for (person,share,asset_name) in shares:
             division[asset_name][person]=share
+
+
+    elif identifier==11:
+        assert (beneficiaries)
+        assert (assets)
+        # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
+        age_reqs_condition = evals[1]
+        people_db = db ['people']
+        shares = []
+        for person_x, age in age_reqs_condition:
+            for person_y in people_db:
+                if person_x ==person_y['full_name']:
+                    if person_y['age']<age:
+                        print(f'\n... Directive cannot be executed because {person_x} is still less than age: {age}.\n')
+                        return {}
+
+        for asset in assets:
+            asset_dict = defaultdict(int)
+            asset_name = asset['name']
+            for person in beneficiaries:
+                if person['alive']!='true':
+                    print(f'Person {person["full_name"]} not alive. Dividing asset: {asset_name} per stirpes to thier children.')
+                    divide_by_stirpes(person,db['people'],shares,asset_name, equal_division)
+                    continue
+                equal_division = round(1/len(beneficiaries),2)
+                asset_dict[person['full_name']]=equal_division
+                division[asset_name].update(asset_dict)
+        for (person,share,asset_name) in shares:
+            division[asset_name][person]=share
+
+
     for asset, asset_people in division.items():
         people_div = list(asset_people.keys())        
         for person in people_div:

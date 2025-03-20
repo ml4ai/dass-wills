@@ -1,6 +1,36 @@
 from openai import OpenAI
+from pydantic import BaseModel
+from collections import Counter
 
-rules_text_backup="""Rules abstraction:
+
+class RuleID (BaseModel):
+    id: int
+
+class Division(BaseModel):
+    person_name: str
+    asset_name: str
+    share: float
+
+class RuleOutputDivision(BaseModel):
+    division: list[Division]
+
+class AgeRequirement(BaseModel):
+    person_name: str
+    minimum_age: int
+
+class RuleOutput5(BaseModel):
+    division: list[Division]
+    unalive_people: list[str]
+
+class RuleOutput11(BaseModel):
+    division: list[Division]
+    age_reqs: list[AgeRequirement]
+
+class RuleOutputDivision(BaseModel):
+    division: list[Division]
+    
+
+rules_text_full_response="""Rules abstraction:
         Division: 
             - Per stirpes
             (id = 0)
@@ -9,9 +39,6 @@ rules_text_backup="""Rules abstraction:
                 - condition identifier 
                 - divisible assets (boolean)
                 - alive status of all persons involved in the directives
-            return:
-            - in this case return a list of children named in that directive [('person_x_name','person_y_name')]
-            example output: [('person_x_name', 'person_y_name)]
 
             - equally
             (id = 1)
@@ -19,22 +46,6 @@ rules_text_backup="""Rules abstraction:
                 - people involved   
                 - condition identifier
                 - divisible assets (boolean)
-            return:
-            - in this case return ONLY a list of  peoples in that directive [('person_x_name', 'person_y_name)]
-            example output: [('person_x_name', 'person_y_name)]
-            
-            - equally (minus people who are not alive)
-            (id = 2)
-            requirements:
-                - people involved   
-                - condition identifier
-                - divisible assets (boolean)
-                - alive status of all persons involved in the directives
-            return:
-            - in this case return ONLY a list of  peoples in that directive [('person_x_name', 'person_y_name)] 
-            return another list of tuples [('person_z_name'),('person_a_name'] for people who are supposed to be not alive for the directive conditions to be execute. 
-            There must be a person_name in the returned list. 
-            example output: [('person_x_name', 'person_y_name)] | [('person_z_name'),('person_a_name'] 
 
             - by a certain proportion to each person
             (id = 3)
@@ -46,7 +57,7 @@ rules_text_backup="""Rules abstraction:
             return:
             - in this case return ONLY a list of assets, parties, and shares in that directive [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share')].
             There must be a person_name, an asset name and a share (%) per tuple in the returned list.
-            example output: [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share'),('organization-name', 'asset_y','share')]
+            example output under attribute 'division': [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share'),('organization-name', 'asset_y','share')]
             Share will always be a float number.
 
         If-else:
@@ -59,7 +70,8 @@ rules_text_backup="""Rules abstraction:
             return:
             - in this case return ONLY a list of assets, parties, and shares in that directive [('person_x_name', 'asset_x','share'),('person_x_name', 'asset_y','share')].
             also, return another list of tuples[('person_x_name'),('person_y_name'] for people who are supposed to be not alive for the directive conditions to be execute. 
-            example output: [('person_x_name', 'asset_x','share'),('person_x_name', 'asset_y','share')] | [('person_x_name'),('person_y_name']
+            example output under attribute 'division': [('person_x_name', 'asset_x','share'),('person_x_name', 'asset_y','share')] 
+            for people who are supposed to be not alive under the attribute 'unalive_people': [('person_x_name'),('person_y_name']
             Share will always be a float number.
 
             - if nobody is alive to bequeath, transfer assets as per state's law (default: transfer to state)
@@ -72,33 +84,20 @@ rules_text_backup="""Rules abstraction:
             return:
             in this case return ONLY a list of assets, parties, and shares in that directive [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')].
             There must be a person_name, an asset name and a share (%) per tuple in the returned list.
-            example output: [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')]
+            example output under attribute 'division': [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')]
             Share will always be a float number.
-
-        Bequeath whatever's left:
-            - give all assets to multiple people. This assumes that the division is equal per asset.
-            (id = 7)
-            requirements:
-                - people involved   
-                - condition identifier
-                - state of all assets of testator
-                - alive status of all persons involved in the directives
-            return:
-            In this case return ONLY a list of assets, parties, and shares in that directive [('person_x_name', 'asset_x'),('person_y_name', 'asset_y')]. 
-            There must be a person_name and an asset name  per tuple in the returned list.
-            example output: [('person_x_name', 'person_y_name)]
-
 
         Agre-related Rules:
          - Execute the directive if someone is of appropriate age.
+         requirements:
          (id = 11)
             in this case return ONLY a list  of assets, parties, and shares in that directive [('person_x_name', 'asset_x'),('person_x_name', 'asset_y')]
-        and also return another tuple people who are supposed to have certain age for the directive conditions to be valid[('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ].
-         example output: [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share')] | [('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ]
+         and also return another tuple people who are supposed to have certain age for the directive conditions to be valid[('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ].
+         example output under attribute 'division': [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share')]
+        for people who are supposed to be of certain age under attribute 'age_reqs': [('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ] Note that minimum_age attribute is to filled with the number provided in the directive's CONDITION."""
 
-    """
 
-rules_text_2="""Rules abstraction:
+rules_text_id="""Rules abstraction:
         Division: 
             - Per stirpes
             (id = 0)
@@ -107,9 +106,6 @@ rules_text_2="""Rules abstraction:
                 - condition identifier 
                 - divisible assets (boolean)
                 - alive status of all persons involved in the directives
-            return:
-            - in this case return a list of children named in that directive [('person_x_name','person_y_name')]
-            example output: [('person_x_name', 'person_y_name)]
 
             - equally
             (id = 1)
@@ -117,9 +113,6 @@ rules_text_2="""Rules abstraction:
                 - people involved   
                 - condition identifier
                 - divisible assets (boolean)
-            return:
-            - in this case return ONLY a list of  peoples in that directive [('person_x_name', 'person_y_name)]
-            example output: [('person_x_name', 'person_y_name)]
 
             - by a certain proportion to each person
             (id = 3)
@@ -128,11 +121,6 @@ rules_text_2="""Rules abstraction:
                 - condition identifier
                 - proportions
                 - divisible assets (boolean)
-            return:
-            - in this case return ONLY a list of assets, parties, and shares in that directive [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share')].
-            There must be a person_name, an asset name and a share (%) per tuple in the returned list.
-            example output: [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share'),('organization-name', 'asset_y','share')]
-            Share will always be a float number.
 
         If-else:
             - if persons (a and or b) is not alive, transfer assets to another party/person
@@ -140,12 +128,7 @@ rules_text_2="""Rules abstraction:
             requirements:
                 - people involved   
                 - condition identifier
-                - alive status of persons a and b
-            return:
-            - in this case return ONLY a list of assets, parties, and shares in that directive [('person_x_name', 'asset_x','share'),('person_x_name', 'asset_y','share')].
-            also, return another list of tuples[('person_x_name'),('person_y_name'] for people who are supposed to be not alive for the directive conditions to be execute. 
-            example output: [('person_x_name', 'asset_x','share'),('person_x_name', 'asset_y','share')] | [('person_x_name'),('person_y_name']
-            Share will always be a float number.
+                - alive status of persons a, b, etc
 
             - if nobody is alive to bequeath, transfer assets as per state's law (default: transfer to state)
             requirements:
@@ -154,24 +137,18 @@ rules_text_2="""Rules abstraction:
                 - people involved   
                 - alive status of all persons involved in the directives
                 - state's law
-            return:
-            in this case return ONLY a list of assets, parties, and shares in that directive [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')].
-            There must be a person_name, an asset name and a share (%) per tuple in the returned list.
-            example output: [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')]
-            Share will always be a float number.
 
         Agre-related Rules:
          - Execute the directive if someone is of appropriate age.
          (id = 11)
-            in this case return ONLY a list  of assets, parties, and shares in that directive [('person_x_name', 'asset_x'),('person_x_name', 'asset_y')]
-        and also return another tuple people who are supposed to have certain age for the directive conditions to be valid[('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ].
-         example output: [('person_x_name', 'asset_x','share'),('person_y_name', 'asset_y','share')] | [('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ]
+         requirements:
+            - people involved 
+            - age inequality"""
 
-    """
 
-llm_directive_indentifier = 'Based on the provided rules, testator, available assets and beneficiaries, evaluate which rule will be applied (i.e., CHECK things like whether the someone is alive, age, etc). Return an id related with the rule. Return ONLY this Output Format: ID_NUMBER. Example output1: 1, Example output1: 2. Directive: {directive_text}. Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Rules: '+rules_text_2 
+llm_directive_indentifier = 'Based on the provided rules, testator, available assets and beneficiaries, evaluate which rule will be applied (i.e., CHECK things like whether the someone is alive, age, etc). Return an id related with the rule. Return ONLY this Output Format: ID. Example output1: ID: 1, Example output2: ID: 2. Directive: {directive_text}. Testaor name: {t}, Testator Assets: {a}, Beneficiaries of Directive: {b}.\n Rules: '+rules_text_id 
 
-llm_directive_indentifier_return_items = 'Based on the provided rule, testator, available assets and beneficiaries, evaluate the people, assets, and other things requested under the "return" tab. Return the items. Return ONLY the Example Output Format and no other text. Rule: {r}, Directive: {directive_text}. Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Testator children/heir: {children}' 
+llm_directive_return_items = 'Based on the provided rule, testator, available assets and beneficiaries, evaluate the people, assets, and other things requested under the "return" tab. Return the items. Return ONLY the Example Output Format and no other text. Rule: {r}, Directive: {directive_text}. Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Testator children/heir: {children}' 
 
 def fetch_rule (rules, id):
     split_rules = rules.split(f'id = {id}')
@@ -195,8 +172,8 @@ def fetch_rule(rules, rule_id):
 
 def handle_rule(id,directive_text, assets, testator, beneficiaries,children):
     """Fetch the rule and prepare the LLM directive based on the ID."""
-    rule = fetch_rule(rules_text_2, id)
-    llm_directive = llm_directive_indentifier_return_items.format(
+    rule = fetch_rule(rules_text_full_response, id).strip()
+    llm_directive = llm_directive_return_items.format(
         directive_text=directive_text,
         a=assets, t=testator, b=beneficiaries, r=rule, children=children
     )
@@ -204,32 +181,65 @@ def handle_rule(id,directive_text, assets, testator, beneficiaries,children):
 
 def process_query_response(id, query_ans):
     """Process the response from the LLM query based on the ID."""
-    if id in [2, 5, 11]:
-        l1, l2 = query_ans.split('|')
-        return [eval(l1), eval(l2)]
-    else:
-        return eval(query_ans)
+    if id in [3, 6]:
+        divisions = []
+        for div in query_ans.division:
+            tuple_div = (div.person_name,div.asset_name,div.share)
+            divisions.append(tuple_div)
+        return divisions
+    elif id == 5:
+        divisions = []
+        unalive_people = query_ans.unalive_people
+        for div in query_ans.division:
+            tuple_div = (div.person_name,div.asset_name,div.share)
+            divisions.append(tuple_div)
 
+        return divisions, unalive_people
+    elif id == 11:
+        divisions = []
+        age_reqs = []
+        for div in query_ans.division:
+            tuple_div = (div.person_name,div.asset_name,div.share)
+            divisions.append(tuple_div)
+        for div in query_ans.age_reqs:
 
-def process_id(string_answer,directive_text, assets, testator, beneficiaries,children):
-    id = None
-    iters = 0
-    while not id:
-        iters+=1
+            tuple_age = (div.person_name,div.minimum_age)
+            age_reqs.append(tuple_age)
+
+        return divisions, age_reqs
+
+    return None
+
+def process_format(id):
+    format= None
+    if id  in [0,1]:
+        pass
+    elif id in [3,6]:
+        format =RuleOutputDivision
+    elif id == 5:
+        format = RuleOutput5
+    elif id == 11:
+        format = RuleOutput11
+
+    return format
+
+    
+def process_id(id_ans, directive_text, assets, testator, beneficiaries, children,n=5):
+
+    for _ in range(n):
         try:
-            id = int(string_answer)
-            # Prepare and send the LLM query
-            llm_directive, rule = handle_rule(id,directive_text, assets, testator, beneficiaries,children)
-            query_ans = query_llm(llm_directive)
+            id = id_ans
+            llm_directive, rule = handle_rule(id, directive_text, assets, testator, beneficiaries, children)
+            fmt = process_format(id)
+            if not fmt:
+                return id, [], rule
+            query_ans = query_llm_rule(llm_directive, fmt)
             result = process_query_response(id, query_ans)
             return id, result, rule
         except Exception as e:
             print(f"Error: {e}")
-            print(string_answer )
             print("... error querying LLM: trying again.")
-            if iters==10:
-                sys.exit(1)
-    return id, [], rule
+    sys.exit(1)
 
 def query_llm(prompt, model="gpt-4o-2024-08-06"):
     client = OpenAI()
@@ -250,10 +260,42 @@ def query_llm(prompt, model="gpt-4o-2024-08-06"):
     return message_content
 
 
+
+
+def query_llm_rule(prompt, response_type=RuleOutputDivision, model="gpt-4o-2024-08-06"):
+    client = OpenAI()
+    
+    response = client.beta.chat.completions.parse(
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        model=model,
+        temperature=0.001,
+        response_format=response_type
+    )
+    
+    message_content = response.choices[0].message.parsed
+    return message_content
+
+def query_id_multiple_times (prompt, n):
+    id_answers = []
+    for _ in range(n):
+        try:
+            query_ans=query_llm_rule(prompt,RuleID)
+            id_answers.append(query_ans.id)
+        except Exception as e:
+            pass
+    counts = Counter(id_answers)
+    return max(counts, key=counts.get)
+
+
 def process_rule(directive_text, assets, testator, beneficiaries,children):
 
     llm_directive_indentifier_with_attributes = llm_directive_indentifier.format(directive_text=directive_text,a=assets,t=testator,b= beneficiaries)
-    query_ans=query_llm(llm_directive_indentifier_with_attributes)
+    query_ans=query_id_multiple_times(llm_directive_indentifier_with_attributes,5)
     identifier, evals, rule = process_id(query_ans, directive_text, assets, testator, beneficiaries,children)
 
     return identifier, evals, rule
