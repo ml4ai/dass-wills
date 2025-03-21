@@ -1,52 +1,45 @@
 {
     "testator_name": "Person-1",
-    "date_of_will": "1994-04-11",
+    "date_of_will": "/",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Person-1",
-                    "state_of_residence": "Tennessee"
+                    "name": "Person-1"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Person-2",
-                        "relationship_to_testator": "Niece",
-                        "waived_bond": true
+                        "name": "Person-5"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "Person-2",
-                        "relationship_to_testator": "Niece"
+                        "name": "Person-2"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "Person-3"
                     }
                 ],
                 "asset": [
                     {
-                        "id": "e4",
-                        "description": "House and lot",
-                        "type": "Real Estate"
-                    },
-                    {
                         "id": "e5",
-                        "description": "Contents of house",
-                        "type": "Personal Property"
-                    },
+                        "description": "my house"
+                    }
+                ],
+                "condition": [
                     {
                         "id": "e6",
-                        "description": "Automobile",
-                        "type": "Personal Property"
+                        "text": "60%"
                     },
                     {
                         "id": "e7",
-                        "description": "Any other property owned",
-                        "type": "Mixed"
+                        "text": "40%"
                     }
-                ],
-                "condition": []
+                ]
             }
         ],
         "events": [
@@ -58,15 +51,16 @@
                     "e2"
                 ],
                 "Beneficiary": [
-                    "e3"
+                    "e3",
+                    "e4"
                 ],
                 "Asset": [
-                    "e4",
-                    "e5",
+                    "e5"
+                ],
+                "Condition": [
                     "e6",
                     "e7"
-                ],
-                "Condition": []
+                ]
             }
         ]
     }

@@ -1,49 +1,43 @@
 {
     "testator_name": "Person-1",
-    "date_of_will": "Not specified",
+    "date_of_will": "",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Person-1",
-                    "state_of_residence": "Not specified"
+                    "name": "Person-1"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Person-5",
-                        "relationship_to_testator": "Not specified",
-                        "waived_bond": false
+                        "name": "Person-5"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "Person-2",
-                        "relationship_to_testator": "Not specified"
+                        "name": "Person-2"
                     },
                     {
                         "id": "e4",
-                        "name": "Person-3",
-                        "relationship_to_testator": "Not specified"
+                        "name": "Person-3"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e5",
-                        "description": "house",
-                        "type": "Real Estate"
+                        "description": "my house"
                     }
                 ],
                 "condition": [
                     {
                         "id": "e6",
-                        "text": "60% to Person-2"
+                        "text": "60%"
                     },
                     {
                         "id": "e7",
-                        "text": "40% to Person-3"
+                        "text": "40%"
                     }
                 ]
             }
@@ -57,29 +51,14 @@
                     "e2"
                 ],
                 "Beneficiary": [
-                    "e3"
-                ],
-                "Asset": [
-                    "e5"
-                ],
-                "Condition": [
-                    "e6"
-                ]
-            },
-            {
-                "id": "v2",
-                "type": "Bequest",
-                "Testator": "e1",
-                "Executor": [
-                    "e2"
-                ],
-                "Beneficiary": [
+                    "e3",
                     "e4"
                 ],
                 "Asset": [
                     "e5"
                 ],
                 "Condition": [
+                    "e6",
                     "e7"
                 ]
             }
