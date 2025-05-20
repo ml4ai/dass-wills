@@ -157,7 +157,7 @@ rule_id_to_text= {
 3: "Allocating a certain proportion to each person",
 5: "If a person(s) is not alive, transfer assets to another person(s)",
 6: "If nobody is alive to bequeath, transfer assets as per state Law",
-11: "Execute the directive if someone is of appropriate age."
+11: "Execute the directive if someone is of appropriate age.",
 }
 
 rule_id_to_return_text= {
@@ -166,15 +166,17 @@ rule_id_to_return_text= {
 3: "Allocating a certain proportion to each person. Return: in this case return ONLY a list of assets, parties, and shares in that directive under 'division' attribute [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')]. There must be a person_name, an asset name and a share (%) per tuple in the returned list. Example output under attribute 'division': [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')] Share will always be a float number.",
 5: "If a person(s) is not alive, transfer assets to another person(s). Return: Return a list of tuples[('person_x_name'),('person_y_name'] for people who are supposed to be not alive for the directive conditions to be execute. example output for people who are supposed to be not alive under the attribute 'unalive_people': [('person_x_name'),('person_y_name']",
 6: "If nobody is alive to bequeath, transfer assets as per state Law. Return: in this case return ONLY a list of assets, parties, and shares in that directive under 'division' attribute [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')]. There must be a person_name, an asset name and a share (%) per tuple in the returned list. Example output under attribute 'division': [('state_x', 'asset_x','share'),('person_x_name', 'asset_y','share')] Share will always be a float number.",
-11: "Execute the directive if someone is of appropriate age. Return: Return a tuple of people who are supposed to have certain age for the directive conditions to be valid[('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ]. example output for people who are supposed to be of certain age under attribute 'age_reqs': [('person_x_name', 'minimum_age = num1' ),('person_y_name', 'minimum_age = num2') ] Note that minimum_age attribute is to filled with the number provided in the directive's CONDITION."
+11: "Execute the directive if someone is of appropriate age. Return: Return a tuple of people who are supposed to have certain age for the directive conditions to be valid[('person_x_name', 'age >= num1' ),('person_y_name', 'age >= num2') ]. example output for people who are supposed to be of certain age under attribute 'age_reqs': [('person_x_name', 'minimum_age = num1' ),('person_y_name', 'minimum_age = num2') ] Note that minimum_age attribute is to filled with the number provided in the directive's CONDITION.",
+
 }
 
 
-llm_directive_indentifier = 'Based on the provided rules, testator, available assets and beneficiaries, evaluate which rule will be applied (i.e., CHECK things like whether the someone is alive, age, etc). Return an id related with the rule. IMPORTANT: If multiple rules apply to the given situation, the RULE with HIGHER ID takes precendence only IF HIGHER ID RULES are APPLICABLE. Return ONLY this Output Format: ID. Example output1: ID: 1, Example output2: ID: 2. Directive: {directive_text}. Testaor name: {t}, Testator Assets: {a}, Beneficiaries of Directive: {b}.\n Rules: '+rules_text_id 
+llm_directive_indentifier = 'Based on the provided rules and directive evaluate which rule will be applied (i.e., CHECK DIRECTLY THE DIRECTIVE CONDITIONS TO EVALUATE WHICH RULE WILL BE APPLIED). Return an id related with the rule. IMPORTANT: If multiple rules apply to the given situation, the RULE with HIGHER ID takes precendence only IF HIGHER ID RULE is APPLICABLE. Return ONLY this Output Format: ID. Example output1: ID: 1, Example output2: ID: 2. Directive: {directive_text}.\n Rules: '+rules_text_id 
 
 llm_directive_sub_indentifier = 'Based on the provided rules, testator, directive, available assets and beneficiaries, evaluate which sub rule of Division will be applied (i.e., CHECK any division criteria in the conditions specified, etc). Return an id related with the rule. Return ONLY this Output Format: ID. Example output1: ID: 1, Example output2: ID: 2. Directive: {directive_text}. Testaor name: {t}, Testator Assets: {a}, Beneficiaries of Directive: {b}.\n Sub Rules: '+sub_rules 
 
-llm_directive_return_items = 'Based on the provided rule, testator, available assets and beneficiaries, evaluate the people, assets, and other things requested under the "return" tab. Return the items. Return ONLY the Example Output Format and no other text. Rule: {r}, Directive: {directive_text}. Testator Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Testator children/heir: {children}' 
+llm_directive_return_items = 'Based on the provided rule, directive, testator, available assets and beneficiaries, evaluate the people, assets, and other things requested under the "return" tab. Return the items.  For Asset Division, return Assets ONLY from heading "Testator Assets." Return ONLY the Example Output Format and no other text. Rule: {r}, Directive: {directive_text}. Testator Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Testator children/heir: {children}' 
+# llm_directive_return_items = 'Based on the provided rule, and directive, evaluate the beneficiaries, assets, and other things requested under the "return" tab. Return the items. Return ONLY the Example Output Format and no other text. Rule: {r}, Directive: {directive_text}. Testator Assets: {a}. Beneficiaries: {b}. Testaor: {t}. Testator children/heir: {children}' 
 
 
 def fetch_rule(rule_id):
@@ -263,7 +265,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
 
 def process_format(id):
     format= None
-    if id  in [0,1]:
+    if id  in [0,1,13]:
         pass
     elif id in [3,6]:
         format =RuleOutputDivision
@@ -286,7 +288,8 @@ def process_id(id_ans, directive_text, assets, testator, beneficiaries, children
             rule_id_text = fetch_rules(ids)
             if not fmt:
                 return ids, [], rule_id_text
-            query_ans = query_llm_formatted(llm_directive, fmt)
+            # query_ans = query_llm_formatted(llm_directive, fmt)
+            query_ans= query_format_multiple_times (llm_directive,fmt,id)
             result = process_query_response(id, query_ans,directive_text, assets, testator, beneficiaries, children,ids)
             rule_id_text = fetch_rules(ids)
             return ids, result, rule_id_text
@@ -304,7 +307,7 @@ def query_llm(prompt, model="gpt-4o-2024-08-06"):
             "content": prompt,
         }],
         model=model,
-        temperature=0.001
+        temperature=0.7
     )
     
     request_id = response.headers.get('x-request-id')
@@ -325,12 +328,50 @@ def query_llm_formatted(prompt, response_type=RuleOutputDivision, model="gpt-4o-
             }
         ],
         model=model,
-        temperature=0.001,
+        temperature=0.7,
         response_format=response_type
     )
     
     message_content = response.choices[0].message.parsed
     return message_content
+
+def query_format_multiple_times (prompt,fmt,id,n=10):
+    answers = []
+    answers_formatted = []
+    
+    for _ in range(n):
+        try:
+            query_ans = query_llm_formatted(prompt, fmt)
+            output_str = str(query_ans)          
+            answers.append(output_str)           # Store string in answers
+            answers_formatted.append(query_ans)  # Store raw/structured in answers_formatted
+        except Exception as e:
+            pass
+    
+    counter = Counter(answers)
+    common_items = counter.most_common()
+    
+    if not common_items:
+        return None
+    
+    most_common_str, freq = common_items[0]
+    index = answers.index(most_common_str)
+    # print("Raw string answers:", answers)
+    if len(common_items) < 2:
+        return answers_formatted[index]
+    else:
+        second_most_common_str, second_freq = common_items[1]
+        index_2 = answers.index(second_most_common_str)
+        if id in [3,6] and len(answers_formatted[index].division) == 0:
+            index = index_2
+        elif id == 5 and len(answers_formatted[index].unalive_people) ==0:
+            index = index_2
+        elif id == 11 and len(answers_formatted[index].age_reqs) ==0:
+            index = index_2
+
+    
+    return answers_formatted[index]
+
 
 def query_id_multiple_times (prompt, n=7):
     id_answers = []
@@ -341,13 +382,12 @@ def query_id_multiple_times (prompt, n=7):
         except Exception as e:
             pass
     counts = Counter(id_answers)
-    print(counts)
     return max(counts, key=counts.get)
 
 
 def process_rule(directive_text, assets, testator, beneficiaries,children):
 
-    llm_directive_indentifier_with_attributes = llm_directive_indentifier.format(directive_text=directive_text,a=assets,t=testator,b= beneficiaries)
+    llm_directive_indentifier_with_attributes = llm_directive_indentifier.format(directive_text=directive_text)
     query_ans=query_id_multiple_times(llm_directive_indentifier_with_attributes)
     identifier, evals, rule = process_id(query_ans, directive_text, assets, testator, beneficiaries,children)
 

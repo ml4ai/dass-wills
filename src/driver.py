@@ -4,6 +4,9 @@ End to end system to extract will model and output devolution items """
 import argparse
 import sys, os
 import shutil, subprocess
+import random
+from datetime import datetime
+
 
 ################################################################################
 #                                                                              #
@@ -99,9 +102,20 @@ def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     ## Front End Script Paths
     te_script =  os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'src', 'main.py'))
-    te_input_path = os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'input'))
+    now = datetime.now()
+    timestamp = now.strftime("%Y%m%d_%H%M%S") + f"{now.microsecond // 1000:03d}"  # adds milliseconds (zero-padded to 3 digits)
+    suffix1 = random.randint(1, 6000)
+    suffix2 = random.randint(1, 9999)
+    suffix = f"{timestamp}_{suffix1}_{suffix2}"
+
+    # Construct the full path with randomized name
+    te_input_path = os.path.abspath(os.path.join(base_dir, '..', 'frontend', 'text2extractions', f'input_{suffix}'))
+    te_output_path = os.path.abspath(os.path.join(base_dir, '..', 'frontend', 'text2extractions', f'output_{suffix}'))
     te_base_path = os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'src'))
     
+    os.makedirs(te_input_path, exist_ok=True)
+    os.makedirs(te_output_path, exist_ok=True)
+
     ## Backend Script Paths
     backend_base_path = os.path.abspath(os.path.join(base_dir, '..','backend'))
     te_to_wm_script = os.path.abspath(os.path.join(base_dir, '..','backend', 'te_to_wm.py'))
@@ -124,7 +138,7 @@ def main():
         pass
         
     
-    cmd_te = ['python3', te_script]
+    cmd_te = ['python3', te_script, '-i', te_input_path, '-o', te_output_path]
     print("... Will Text to TE Module processing.\n")
     p1 = subprocess.Popen(cmd_te, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =te_base_path,env=env)
     for stdout_line in iter(p1.stdout.readline, b''):
@@ -143,8 +157,7 @@ def main():
 
     will_text_extraction_json= os.path.splitext(os.path.basename(input_file))[0] + '.json'
     
-    output_will_text_extraction_json = os.path.abspath(os.path.join(base_dir, '..','frontend', 
-    'text2extractions','output', will_text_extraction_json))
+    output_will_text_extraction_json = os.path.abspath(os.path.join(te_output_path, will_text_extraction_json))
     shutil.copy(output_will_text_extraction_json, output_path)
     
     te_json_path= os.path.abspath(os.path.join(output_path,will_text_extraction_json))

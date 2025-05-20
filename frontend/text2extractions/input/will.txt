@@ -1,4 +1,0 @@
-I, Person-1, hereby declare this to be my Last Will and Testament, revoking all previous wills.
-I appoint Person-5 as the Executor of this Will. 
-I leave ownership of my house as follows: to Person-2
-with the following condition: if Person-2's age is greater than 19

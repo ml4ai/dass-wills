@@ -107,21 +107,24 @@ def find_benficiariers(directive, db):
     # remove special characters except period
     pattern_clean_name = r'[^\w\s.]'
     beneficiaries = directive._beneficiaries
-    people_dict = {re.sub(pattern_clean_name, '', person["full_name"]): person for person in db["people"]}
+    # print(directive)
+    # print(beneficiaries)
+    people_dict = {re.sub(pattern_clean_name, '', person["full_name"]).replace('-',''): person for person in db["people"]}
     output_beneficiaries=[]
     for person in beneficiaries:
         len_b=len(output_beneficiaries)
         found=False
-        cleaned_name = re.sub(pattern_clean_name, '', person.name)
+        cleaned_name = re.sub(pattern_clean_name, '', person.name).replace('-','')
         if cleaned_name in people_dict:
             output_beneficiaries.append(people_dict[cleaned_name])
             found=True
             # break
         if not found:
-            print(f"Error. Beneficiary {cleaned_name} not found in db. Exiting the system ... ")
-            sys.exit(1)
+            print(f"Error. Beneficiary {cleaned_name} not found in db ... ")
+            return None, False
 
-    return output_beneficiaries
+
+    return output_beneficiaries, True
 
 def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testator,region='AZ'):
     """Find and validate the conditions of each directive.
@@ -136,7 +139,6 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
     identifiers, evals, rule_text = process_rule(directive.serialized_text, assets, testator, beneficiares_to_sent,children)
     identifier = identifiers[0]
     division = defaultdict(dict)
-    print(evals)
     if identifier in [0,1]:
         assert (beneficiaries)  # beneficiares are available
         assert (assets) # assets to bequeath are available
@@ -155,7 +157,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
         for (person,share,asset_name) in shares:
             division[asset_name][person]=share
 
-    elif identifier  == [3,6]:
+    elif identifier  in [3,6]:
         assert (beneficiaries)  # beneficiares are available
         assert (assets) # assets to bequeath are available
         # assert (all([person["alive"]=='true' for person in beneficiaries])) # all beneficiares are alive
@@ -168,7 +170,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
 
                     match = True
             if not match:
-                
+                print(f'No match of Beneficiary {benefs}')
                 return {}
         for (_, asset_n, share) in evals:
             match = False
@@ -176,12 +178,13 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                 if asset['name'] == asset_n:
                     match = True
             if not match:
+                print(f'No match of asset {asset_n}')
                 return {}
         for person, asset_name, share in evals:
             
             # Convert share to a percentage if necessary
             f_share = float(share)
-            if f_share > 1:
+            if f_share :
                 f_share /= 100
             
             for person_real in beneficiaries:
@@ -192,7 +195,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
                     else:
                         division[asset_name][person] = f_share
                     break  
-
+        print(division)
         # Update the division with any remaining shares
         for person, share, asset_name in shares:
             division[asset_name][person] = share
@@ -225,7 +228,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
             for person, asset_name, share in div_criteria:
                 # Convert share to a percentage if necessary
                 f_share = float(share)
-                if f_share > 1:
+                if f_share :
                     f_share /= 100
                 
                 for person_real in beneficiaries:
@@ -282,7 +285,7 @@ def validate_and_evaluate_conditions(directive, assets,beneficiaries, db,testato
             for person, asset_name, share in div_criteria:
                 # Convert share to a percentage if necessary
                 f_share = float(share)
-                if f_share > 1:
+                if f_share:
                     f_share /= 100
                 
                 for person_real in beneficiaries:
@@ -350,88 +353,117 @@ def find_testator(will_obj, db,alive_test=False): ## set alive_test to true for 
     print("... error: Could not find testator.")
     sys.exit(1)
 
-def find_assets(directive,testator):
-    """Find and validate the assets of the testator from the db."""
-    assets_directive=directive._assets
-    output_assets=[]
+def find_assets(directive, testator, available_assets):
+    """Find and validate the assets of the testator from the db.
+    Supports 'all' and 'all the rest' logic with available_assets."""
+    
+    assets_directive = directive._assets
+    output_assets = []
 
     if len(assets_directive) == 1:
-        llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the provided asset name "{assets_directive[0].name.lower()}" means ALL or All the Rest of testator assets or Everything of Testator assets ?'
-        query_ans=query_llm_formatted(llm_query,Boolean)
+        asset_name = assets_directive[0].name.lower()
+
+        # Check if it's "all" or "all the rest"
+        llm_query = (
+            f'Give a boolean answer TRUE or FALSE under ans attribute. '
+            f'Evaluate whether the provided asset name "{asset_name}" means ALL or All the Rest of testator assets or Everything of Testator assets ?'
+        )
+        query_ans = query_llm_formatted(llm_query, Boolean)
+        
         if query_ans.ans:
             for asset_t in testator['assets']:
-                output_assets.append(asset_t)
-            return output_assets
+                name = asset_t['name']
+                # Include only unallocated or partially allocated assets
+                if name not in available_assets or available_assets[name]['allocation'] < 1.0:
+                    output_assets.append(asset_t)
+            if not output_assets:
+                return output_assets, False
+            return output_assets, True
+
+    # Fallback: match individual assets
     for asset in assets_directive:
-        match=False
+        match = False
         for asset_t in testator['assets']:
-            llm_query=f'Give a boolean answer TRUE or FALSE under ans attribute. Evaluate whether the asset name "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
-            query_ans=query_llm_formatted(llm_query,Boolean)
+            asset_name = asset_t['name']
+            # Skip if already fully allocated
+            if asset_name in available_assets and available_assets[asset_name]['allocation'] >= 1.0:
+                continue
+
+            llm_query = (
+                f'Give a boolean answer TRUE or FALSE under ans attribute. '
+                f'Evaluate whether any of the assets listed in "{asset.name.lower()}" matches with the following asset (it does not have to be exact spelling match): {asset_t} ?'
+            )
+            query_ans = query_llm_formatted(llm_query, Boolean)
             if query_ans.ans:
                 output_assets.append(asset_t)
-                match=True
-                break
+                match = True
+                
+
         if not match:
-            ## comment this out later 
-            random_asset=copy.deepcopy(asset_t)
-            random_asset['name']=', '.join([asset.name for asset in assets_directive])
+            # Handle unmatched asset accordingly
+            random_asset = copy.deepcopy(asset_t)
+            random_asset['name'] = ', '.join([asset.name for asset in assets_directive])
             if random_asset not in output_assets:
                 output_assets.append(random_asset)
             print(f"... error: Could not find testator's asset/s {random_asset['name']} from database. Continuing for now ...")
-            # sys.exit(1)
-    return output_assets
+            return output_assets, False
+    return output_assets, True
 
-def validate_directive(directive,testator,db):
-    """Validate the given directive using the condition in will."""
-    """To-do: add better validation."""
-    beneficiaries=find_benficiariers(directive, db)
-    print(f"... Successfully validated beneficiaries of directive {directive._id}.")
-    assets=find_assets(directive, testator)
-    print(f"... Successfully validated assets of directive {directive._id}.")
-    conditions=directive.conditions
-    ## to-do add code to validate conditions
+def validate_directive(directive, testator, db, available_assets):
+    beneficiaries, cond_1 = find_benficiariers(directive, db)
+    assets, cond_2 = find_assets(directive, testator, available_assets)
+    if not (cond_1 and cond_2):
+        print("Validation Check failed.")
+        return False, assets, beneficiaries
+    else:
+        return True, assets, beneficiaries
 
-    return True, assets, beneficiaries
 
 ################################################################################
 #                                                                              #
 #                              Execution Code                                  #
 #                                                                              #
 ################################################################################
-def execute_directive(directive, assets, beneficiaries,testator,db,available_assets):
+
+def execute_directive(directive, assets, beneficiaries, testator, db, available_assets):
     """Execute the directive by transferring
     the asset to the corresponding entity."""
-    """To-do: link real life oracle here."""
 
-    beneficiary_names = ', '.join([str(b['full_name']) for b in beneficiaries])
     try:
-        asset_division, ids,rule_text = validate_and_evaluate_conditions(directive,assets,beneficiaries,db,testator)
+        asset_division, ids, rule_text = validate_and_evaluate_conditions(directive, assets, beneficiaries, db, testator)
     except:
         return {}
-    stub_text=''
-    valid=True
-    
+
+    result = {}
+    valid = True
+
     if asset_division:
         for asset_name, asset_details in asset_division.items():
-            stub_text+=f"\nAsset: {asset_name}\n"
+            if '$' in asset_name:
+                continue
+
+            if asset_name not in result:
+                result[asset_name] = {'beneficiaries': {}}
+
             for person, proportion in asset_details.items():
-                available_assets[asset_name]['allocation']+=proportion
-                available_assets[asset_name]['allocation'] = round(available_assets[asset_name]['allocation'],2)
-                if available_assets[asset_name]['allocation']>1.02: ## the allocation might exceed by a bit
-                    valid=False
+                available_assets[asset_name]['allocation'] += proportion
+                available_assets[asset_name]['allocation'] = round(available_assets[asset_name]['allocation'], 4)
+
+                if available_assets[asset_name]['allocation'] > 1.02:
+                    valid = False
                     break
-                stub_text+=f"... [STUB] {person} is transferred {proportion * 100}% of the asset.\n"
-    if valid:
-        print(stub_text)
-    else:
+
+                result[asset_name]['beneficiaries'][person] = {
+                    'share': round(proportion, 4),
+                    'rules_applied_text': rule_text,
+                    'rules_id': ids
+                }
+
+    if not valid:
         print("The directive cannot be executed because one or more assets are already allocated.")
         return {}
-    div = {}
-    div [str(directive._id)]=asset_division
-    div[str(directive._id)]['rules_applied_ids']=ids
-    div[str(directive._id)]['rules_applied_text']= rule_text
 
-    return div
+    return result
 
 def divide_by_stirpes(root_beneficiary, people_db, shares, asset_name, current_percentage=1):
     """
@@ -473,33 +505,41 @@ def main():
     testator=find_testator(will_object,db)
     print(f"... Successfully validated testator: {testator['full_name']}.")
 
-    validated_directives = []
-    available_assets={}
+    available_assets = {}
+    division_global = {}
+
     for directive in will_object._directives:
-        validation, assets,beneficiaries=validate_directive(directive,testator, db)
-        if validation:
-            validated_directives.append((assets,beneficiaries,directive))
-            for asset in assets:
-                if asset['name'] not in available_assets:
-                    asset_c=asset.copy()
-                    available_assets[asset_c['name']]=asset_c
-    if len(validated_directives) == 0:
-        print("No directives to execute.")
+        validation, assets, beneficiaries = validate_directive(directive, testator, db, available_assets)
+        if not validation:
+            continue
+
+        for asset in assets:
+            name = asset['name']
+            if name not in available_assets:
+                asset_c = asset.copy()
+                asset_c['allocation'] = 0
+                available_assets[name] = asset_c
+
+        #  Execute directive immediately (allocates into available_assets)
+        div = execute_directive(directive, assets, beneficiaries, testator, db, available_assets)
+
+        # Merge result into output json
+        for asset_name, info in div.items():
+            if asset_name not in division_global:
+                division_global[asset_name] = {'beneficiaries': {}}
+            for person, details in info['beneficiaries'].items():
+                division_global[asset_name]['beneficiaries'][person] = details
+
+
+    if not division_global:
+        print("No directives could be executed due to allocation conflicts.")
         sys.exit(0)
 
-    # execute directives
-    for asset in available_assets:
-       available_assets[asset]['allocation']=0
-    divison_global = {}
-
-    for a, b, d in validated_directives:
-        div = execute_directive(d, a, b,testator, db,available_assets)
-        divison_global.update(div)
     print("... Overall Division of Assets:")
-    pprint.pprint(divison_global)
+    pprint.pprint(division_global)
 
     if output_json_path:
-        save_json_obj(divison_global, output_json_path)
+        save_json_obj(division_global, output_json_path)
 
 if __name__ == "__main__":
     main()
