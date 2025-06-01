@@ -2,6 +2,8 @@ from openai import OpenAI
 from pydantic import BaseModel
 from collections import Counter
 
+
+BASE_TEMP = 0.3
 ## Defining Output Objects
 
 class RuleID (BaseModel):
@@ -209,7 +211,7 @@ def handle_rule(id,directive_text, assets, testator, beneficiaries,children):
     )
     return llm_directive, rule
 
-def process_query_response(id, query_ans,directive_text, assets, testator, beneficiaries, children, ids):
+def process_query_response(id, query_ans,directive_text, assets, testator, beneficiaries, children, ids,model):
     """Process the response from the LLM query based on the ID."""
     if id in [3, 6]:
         divisions = []
@@ -222,7 +224,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
         unalive_people = query_ans.unalive_people
 
         llm_directive_division = handle_division_rule(directive_text, assets, testator, beneficiaries, children)
-        division_id = query_id_multiple_times(llm_directive_division)
+        division_id = query_id_multiple_times(llm_directive_division,model)
         ids.append(division_id)
         if division_id == 1:
             return divisions, unalive_people
@@ -231,7 +233,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
 
             llm_directive, rule = handle_rule(division_id, directive_text, assets, testator, beneficiaries, children)
             fmt = process_format(division_id)
-            query_ans = query_llm_formatted(llm_directive, fmt)
+            query_ans = query_llm_formatted(llm_directive, fmt,model)
             for div in query_ans.division:
                 tuple_div = (div.person_name,div.asset_name,div.share)
                 divisions.append(tuple_div)
@@ -246,7 +248,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
             age_reqs.append(tuple_age)
 
         llm_directive_division = handle_division_rule(directive_text, assets, testator, beneficiaries, children)
-        division_id = query_id_multiple_times(llm_directive_division,5)
+        division_id = query_id_multiple_times(llm_directive_division,model)
         ids.append(division_id)
         if division_id == 1:
             return divisions, age_reqs
@@ -254,7 +256,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
 
             llm_directive, rule = handle_rule(division_id, directive_text, assets, testator, beneficiaries, children)
             fmt = process_format(division_id)
-            query_ans = query_llm_formatted(llm_directive, fmt)
+            query_ans = query_llm_formatted(llm_directive, fmt,model)
             for div in query_ans.division:
                 tuple_div = (div.person_name,div.asset_name,div.share)
                 divisions.append(tuple_div)
@@ -265,7 +267,7 @@ def process_query_response(id, query_ans,directive_text, assets, testator, benef
 
 def process_format(id):
     format= None
-    if id  in [0,1,13]:
+    if id  in [0,1]:
         pass
     elif id in [3,6]:
         format =RuleOutputDivision
@@ -276,9 +278,8 @@ def process_format(id):
     return format
 
     
-def process_id(id_ans, directive_text, assets, testator, beneficiaries, children,n=5):
+def process_id(id_ans, directive_text, assets, testator, beneficiaries, children,model,n=10):
 
-    
     ids = [id_ans]
     for _ in range(n):
         try:
@@ -289,8 +290,8 @@ def process_id(id_ans, directive_text, assets, testator, beneficiaries, children
             if not fmt:
                 return ids, [], rule_id_text
             # query_ans = query_llm_formatted(llm_directive, fmt)
-            query_ans= query_format_multiple_times (llm_directive,fmt,id)
-            result = process_query_response(id, query_ans,directive_text, assets, testator, beneficiaries, children,ids)
+            query_ans= query_format_multiple_times (llm_directive,fmt,id,model)
+            result = process_query_response(id, query_ans,directive_text, assets, testator, beneficiaries, children,ids,model)
             rule_id_text = fetch_rules(ids)
             return ids, result, rule_id_text
         except Exception as e:
@@ -298,28 +299,10 @@ def process_id(id_ans, directive_text, assets, testator, beneficiaries, children
             print("... error querying LLM: trying again.")
     sys.exit(1)
 
-def query_llm(prompt, model="gpt-4o-2024-08-06"):
-    client = OpenAI()
-    
-    response = client.chat.completions.with_raw_response.create(
-        messages=[{
-            "role": "user",
-            "content": prompt,
-        }],
-        model=model,
-        temperature=0.7
-    )
-    
-    request_id = response.headers.get('x-request-id')
-    completion = response.parse()
-    message_content = completion.choices[0].message.content
-    
-    return message_content
 
-
-def query_llm_formatted(prompt, response_type=RuleOutputDivision, model="gpt-4o-2024-08-06"):
+def query_llm_formatted(prompt, response_type=RuleOutputDivision, model='gpt-4o-2024-08-06'):
+    global BASE_TEMP
     client = OpenAI()
-    
     response = client.beta.chat.completions.parse(
         messages=[
             {
@@ -328,20 +311,20 @@ def query_llm_formatted(prompt, response_type=RuleOutputDivision, model="gpt-4o-
             }
         ],
         model=model,
-        temperature=0.7,
+        temperature=BASE_TEMP,
         response_format=response_type
     )
     
     message_content = response.choices[0].message.parsed
     return message_content
 
-def query_format_multiple_times (prompt,fmt,id,n=10):
+def query_format_multiple_times (prompt,fmt,id,model,n=10):
     answers = []
     answers_formatted = []
     
     for _ in range(n):
         try:
-            query_ans = query_llm_formatted(prompt, fmt)
+            query_ans = query_llm_formatted(prompt, fmt,model)
             output_str = str(query_ans)          
             answers.append(output_str)           # Store string in answers
             answers_formatted.append(query_ans)  # Store raw/structured in answers_formatted
@@ -373,11 +356,11 @@ def query_format_multiple_times (prompt,fmt,id,n=10):
     return answers_formatted[index]
 
 
-def query_id_multiple_times (prompt, n=7):
+def query_id_multiple_times (prompt,model, n=10):
     id_answers = []
     for _ in range(n):
         try:
-            query_ans=query_llm_formatted(prompt,RuleID)
+            query_ans=query_llm_formatted(prompt,RuleID,model)
             id_answers.append(query_ans.id)
         except Exception as e:
             pass
@@ -385,10 +368,10 @@ def query_id_multiple_times (prompt, n=7):
     return max(counts, key=counts.get)
 
 
-def process_rule(directive_text, assets, testator, beneficiaries,children):
+def process_rule(directive_text, assets, testator, beneficiaries,children,model_name):
 
     llm_directive_indentifier_with_attributes = llm_directive_indentifier.format(directive_text=directive_text)
-    query_ans=query_id_multiple_times(llm_directive_indentifier_with_attributes)
-    identifier, evals, rule = process_id(query_ans, directive_text, assets, testator, beneficiaries,children)
+    query_ans=query_id_multiple_times(llm_directive_indentifier_with_attributes,model_name)
+    identifier, evals, rule = process_id(query_ans, directive_text, assets, testator, beneficiaries,children,model_name)
 
     return identifier, evals, rule

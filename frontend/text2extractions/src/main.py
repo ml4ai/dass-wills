@@ -306,9 +306,9 @@ class Will(BaseModel):
 
 
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
-def extract_from_full_doc(prompt, target_text, client):
+def extract_from_full_doc(prompt, target_text, client,model_name="gpt-4o-2024-08-06"):
     completion = client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+        model=model_name,
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": target_text},
@@ -348,10 +348,12 @@ def main(prompt):
     parser = argparse.ArgumentParser(description="Extract data from .txt files and output JSON.")
     parser.add_argument("-i", "--input_dir", required=True, type=str, help="Path to the input directory containing .txt files")
     parser.add_argument("-o", "--output_dir", required=True, type=str, help="Path to the output directory for .json files")
+    parser.add_argument("-m", "--model", type=str, help="Frontend Model")
     args = parser.parse_args()
 
     input_dir = args.input_dir
     output_dir = args.output_dir
+    model_name = args.model
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -371,8 +373,10 @@ def main(prompt):
 
             with open(input_path, 'r', encoding='utf-8') as file:
                 target_text = file.read()
-
-            extraction = extract_from_full_doc(prompt, target_text, client)
+            if model_name:
+                extraction = extract_from_full_doc(prompt, target_text, client,model_name)
+            else:
+                extraction = extract_from_full_doc(prompt, target_text, client)
             export_to_json(extraction, output_path)
             print(f"Extraction completed for {filename}")
 

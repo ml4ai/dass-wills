@@ -8,6 +8,12 @@ import random
 from datetime import datetime
 
 
+### DEFINE FRONT_END AND BACKEND_MODELS
+
+FRONTEND_MODEL = "gpt-4o-2024-08-06"
+BACKEND_MODEL = "gpt-4o-2024-08-06"
+ 
+
 ################################################################################
 #                                                                              #
 #                                  UTILITIES                                   #
@@ -113,6 +119,7 @@ def main():
     te_output_path = os.path.abspath(os.path.join(base_dir, '..', 'frontend', 'text2extractions', f'output_{suffix}'))
     te_base_path = os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'src'))
     
+    
     os.makedirs(te_input_path, exist_ok=True)
     os.makedirs(te_output_path, exist_ok=True)
 
@@ -138,7 +145,7 @@ def main():
         pass
         
     
-    cmd_te = ['python3', te_script, '-i', te_input_path, '-o', te_output_path]
+    cmd_te = ['python3', te_script, '-i', te_input_path, '-o', te_output_path,'-m',FRONTEND_MODEL]
     print("... Will Text to TE Module processing.\n")
     p1 = subprocess.Popen(cmd_te, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =te_base_path,env=env)
     for stdout_line in iter(p1.stdout.readline, b''):
@@ -184,9 +191,9 @@ def main():
 
     devolution_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.json'
     devolution_file_path = os.path.abspath(os.path.join(output_path,devolution_file))
-    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path]
+    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-m',BACKEND_MODEL]
     if oracle:
-        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle]
+        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle,'-m',BACKEND_MODEL]
     print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
     for stdout_line in iter(p3.stdout.readline, b''):
