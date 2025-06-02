@@ -1,0 +1,26 @@
+{
+    "Savings Account": {
+        "beneficiaries": {
+            "Person-2": 0.5,
+            "Person-3": 0.5
+        },
+        "rules_id": [
+            0
+        ],
+        "rules_applied_text": [
+            "Allocation Per stirpes"
+        ]
+    },
+    "House": {
+        "beneficiaries": {
+            "Person-2": 0.5,
+            "Person-3": 0.5
+        },
+        "rules_id": [
+            0
+        ],
+        "rules_applied_text": [
+            "Allocation Per stirpes"
+        ]
+    }
+}

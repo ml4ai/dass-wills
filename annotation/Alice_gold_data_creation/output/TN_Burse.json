@@ -1,0 +1,56 @@
+{
+    "asset": {
+        "2021 Toyota Camry": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Profit sharing in the Tupperware Corporation of Halls": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Money in the Lauderdale County Bank of Halls": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "House": {
+            "beneficiaries": {
+                "Person-3": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        }
+    }
+}

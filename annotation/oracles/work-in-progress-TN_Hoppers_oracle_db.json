@@ -1,0 +1,87 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": "",
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "furniture",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "appliances",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "personal effects",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "condominium",
+                    "type": "Property",
+                    "Location": "Tennessee"
+                }
+            ],
+            "children_ids": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 21,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": "",
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "PlayStation 5",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 3,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 20,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": "",
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "2022 Nissan Altima",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        }
+    ]
+}

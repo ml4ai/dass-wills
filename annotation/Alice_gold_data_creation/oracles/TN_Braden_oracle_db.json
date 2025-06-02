@@ -1,0 +1,61 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": "",
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "my home & Lots #9 and #10 of [Address-2]",
+                    "type": "Property",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "all household contents",
+                    "type": "Property",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "my two vehicles, a 1982 Ford LTD and a 1973 Ford truck",
+                    "type": "Vehicle",
+                    "Location": "Tennessee"
+                }
+            ],
+            "children_ids": [
+                2
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 21,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": "",
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "PlayStation 5",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        }
+    ]
+}

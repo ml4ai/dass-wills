@@ -1,0 +1,184 @@
+{
+    "people": [
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 2,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "House",
+                    "type": "Property",
+                    "Location": "Tennessee"
+                }
+            ],
+            "children_ids": [
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 21,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 1,
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "PlayStation 5",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 3,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 20,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 4,
+            "first_name": "Person-4",
+            "last_name": "",
+            "full_name": "Person-4",
+            "age": 23,
+            "alive": "true",
+            "date_of_birth": "2000-07-15",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Rental Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Honda Civic",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Stock Portfolio",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 5,
+            "first_name": "Person-5",
+            "last_name": "",
+            "full_name": "Person-5",
+            "age": 10,
+            "date_of_birth": "2017-07-30",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Smartphone",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 6,
+            "first_name": "Person-6",
+            "last_name": "",
+            "full_name": "Person-6",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                7
+            ]
+        },
+        {
+            "id": 7,
+            "first_name": "Person-7",
+            "last_name": "",
+            "full_name": "Person-7",
+            "age": 13,
+            "date_of_birth": "2011-12-27",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Gaming PC",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        }
+    ]
+}

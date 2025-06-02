@@ -1,0 +1,235 @@
+{
+    "asset": {
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-6": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-4": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-7": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-5": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-8": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of twenty-five thousand dollars  ($25,000.00)": {
+            "beneficiaries": {
+                "Person-9": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "the sum of five thousand dollars  ($5,000.00)": {
+            "beneficiaries": {
+                "Person-11": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Rocking chair": {
+            "beneficiaries": {
+                "Person-4": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Table": {
+            "beneficiaries": {
+                "Person-5": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Television": {
+            "beneficiaries": {
+                "Person-6": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Bed": {
+            "beneficiaries": {
+                "Person-7": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "Couch": {
+            "beneficiaries": {
+                "Person-8": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "DVD player": {
+            "beneficiaries": {
+                "Person-9": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "diamond ring that formerly belonged to [Person-12]": {
+            "beneficiaries": {
+                "Person-3": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "wedding ring": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "diamond ring": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 1.0,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        },
+        "House": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 0.5,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                },
+                "Person-3": {
+                    "share": 0.5,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        }
+    }
+
+}

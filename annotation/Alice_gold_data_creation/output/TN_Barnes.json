@@ -1,0 +1,62 @@
+{
+    "asset": {
+        "House": {
+            "beneficiaries": {
+                "Person-2": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation"
+                    ]
+                },
+                "Person-3": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                },
+                "Person-4": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                },
+                "Person-5": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                },
+                "Person-6": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                },
+                "Person-7": {
+                    "share": 0.1666,
+                    "rules_ids": [
+                        "1", "3"
+                    ],
+                    "rules_applied_text": [
+                        "Equal Allocation", "Allocating a certain proportion to each person"
+                    ]
+                }
+            }
+        }
+    }
+}
