@@ -1,0 +1,10 @@
+{
+    "My House": {
+        "beneficiares": {"Person-4": 0.25,
+        "Person-5": 0.25,
+        "Person-3": 0.5
+        },
+        "rule_id": 0,
+        "rule_applied_text": "- Per stirpes"
+        }
+}

@@ -1,0 +1,153 @@
+
+# TODO
+#   (*) Figure out how to support Union type (e.g., OneOf) in OpenAPI
+
+openapi: 3.0.0
+
+info:
+  title: DASS Text Extractions Schema
+  description: |
+    OpenAPI-style specification of the Text Extractions Schema
+
+  contact:
+    name: Salena Torres Ashton and Clayton T. Morrison
+    email: claytonm@arizona.edu
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: "0.1.0"
+
+paths: {}
+
+components:
+
+  schemas:
+
+    TE_Object:
+      description: blee
+      properties:
+        comment:
+          type: string
+
+    TE_TextExtractions:
+      description: |
+        Root structure containing the Machine Reading/NLP text extractions.
+      allOf:
+        - $ref: "#/components/schemas/TE_Object"
+      required:
+        - date
+        - text
+      properties:
+        date:
+          description: |
+            The date of the creation or modification of the current WillModel
+          type: string
+          format: date
+        text:
+          description: |
+            The original raw text of the will.
+          type: string
+        entities:
+          description: |
+            The array of extracted entities
+          type: array
+          items:
+            $ref: "#/components/schemas/TE_Entity"
+        events:
+          description: |
+            The arry of extracted events
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/TE_Event"
+              - $ref: "#/components/schemas/TE_EventNomination"
+              - $ref: "#/components/schemas/TE_EventBequeath"
+        # eventNomination:
+        #   description: |
+        #     The array of extracted events for executor nomination
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/EventNomination"
+        # eventBequeath:
+        #   description: |
+        #     The array of extracted events for the Bequeath trigger
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/EventBequeath"
+
+    TE_Entity:
+      description: An extracted entity
+      allOf:
+        - $ref: "#/components/schemas/TE_Object"
+      properties:
+        id:
+          description: |
+            A string representing the identifier of the entity, using Soundex convention.
+            E.g., "A630_1" for the first intance of "Arwood"
+          type: string
+        texts:
+          description: |
+            Array of 1 or more strings representing the source text that is judged to refer to the entity
+          type: array
+          items:
+            type: string
+        type:
+          description: |
+            The DASS entity type
+          type: string
+
+    TE_Event:
+      description: An extracted event
+      allOf:
+        - $ref: "#/components/schemas/TE_Object"
+      properties:
+        id:
+          description: |
+            A string representing the identifier of the event.
+          type: string
+        type:
+          description: The type of the event.
+          type: string
+        TestatorDied:
+          description: Trigger label that was extracted from the NLP annotations
+          type: string
+          # arwood 4 text extraction calls this "PersonDied"
+
+    TE_EventNomination:
+      description: The testator names the executor
+      allOf:
+        - $ref: "#/components/schemas/TE_Event"
+      properties:
+        Testator:
+          description: A string representing the id of the Entity that is the Testator
+          type: string
+        Executor:
+          description: A string representing the id of the Entity that is the Executor
+          type: string
+
+    TE_EventBequeath:
+      description: A Bequeath event.
+      allOf:
+        - $ref: "#/components/schemas/TE_Event"
+      properties:
+        Testator:
+          description: A string representing the id of the Entity that is the Testator
+          type: string
+        Asset:
+          description: A string representing the id of the Entity that is the Asset being bequeathed
+          type: string
+        Benefactor:
+          description: A string representing the id of the Entity that is the Benefactor
+          type: string
+        BequestCondition:
+          description: A string that describes the condition of asset bequesting
+          type: string
+        # example from arwood extraction 3 "e2 survives e1"
+        AssetQuantifier:
+          description: A string that quantifies the amount Asset bequeathed in text
+          type: string
+        Distribution:
+          description: |
+            The method of Asset distribution specified in text, Issue or Per Stirpes
+          type: string
+

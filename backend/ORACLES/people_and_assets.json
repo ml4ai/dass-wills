@@ -1,0 +1,75 @@
+{
+  {
+    "id": 1,
+    "first_name": "Person1",
+    "last_name": "Person1",
+    "full_name": "Person1",
+    "age": 30,
+    "date_of_birth": "1992-05-15",
+    "email": "john.doe@example.com",
+    "phone": "+1-555-1234",
+    "address": "123 Main St, Cityville, USA",
+    "spouse_id": 2,
+    "assets": [
+      {
+        "name": "Main Residence",
+        "type": "House",
+        "address": "123 Main St, Cityville, USA"
+      },
+      {
+        "name": "Family Car",
+        "type": "Car",
+        "brand": "Toyota",
+        "model": "Camry",
+        "year": 2018
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "first_name": "Person1",
+    "last_name": "Person1",
+    "full_name": "Person1",
+    "age": 25,
+    "date_of_birth": "1997-11-22",
+    "email": "jane.smith@example.com",
+    "phone": "+1-555-5678",
+    "address": "456 Oak St, Townsville, USA",
+    "spouse_id": 1,
+    "assets": [
+      {
+        "name": "Family Home",
+        "type": "House",
+        "address": "456 Oak St, Townsville, USA"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "first_name": "Person1",
+    "last_name": "Person1",
+    "full_name": "Person1",
+    "age": 40,
+    "date_of_birth": "1982-08-07",
+    "email": "bob.johnson@example.com",
+    "phone": "+1-555-9012",
+    "address": "789 Pine St, Villageland, USA",
+    "children_ids": [
+      1,
+      2
+    ],
+    "assets": [
+      {
+        "name": "Family Estate",
+        "type": "House",
+        "address": "789 Pine St, Villageland, USA"
+      },
+      {
+        "name": "Vacant Land",
+        "type": "Land",
+        "location": "Villageland, USA",
+        "size": "5 acres"
+      }
+    ]
+  }
+}

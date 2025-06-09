@@ -1,0 +1,90 @@
+{
+    "A630_1": {
+        "surname": "Arwood",
+        "first_name": "Leo",
+        "birth_date": "24 September 1915",
+        "birth_place": ", of Lauderdale, Tennessee, USA",
+        "death_date": "26 August 2001",
+        "death_place": ", Lauderdale, Tennessee, USA",
+        "spouse_1": {
+            "name": "Athalene Porter Newman",
+            "id": "N550_1",
+            "children": "none"
+        },
+        "father": 
+            {   "name": "Eugene Arwood",
+                "id": "A630_2"
+            },
+        "mother":
+            {   "name": "Elvina Brown",
+                "id": "B650_1"
+            },
+        "siblings": [
+            {   "name": "six of them and listing one only",
+                "id": "A630_0"
+            },
+            {   "name": "Christine Arwood",
+                "id": "A630_3"
+            }
+        ]
+    },
+    "N550_1": {
+        "name": "Athalene Porter Newman",
+        "alt_id_1" : {
+            "alt_name_1": "Athalene Bentley",
+            "alt_id" : "alt_B534_1"
+        },
+        "alt_id_2" : {
+            "alt_name_2": "Athalene Arwood",
+            "alt_id" : "alt_A630_1"
+        },
+        "birth_date": "25 July 1913",
+        "birth_place": ", Lauderdale County, Tennessee, USA",
+        "death_date": "22 May 2004",
+        "birth_place": "Tiptonville, Lake, Tennessee, USA",
+        "spouse_1": {
+            "name": "Edgar Folk Bentley",
+            "id": "B534_1",
+            "children":
+                {   "name": "Edgar Folk Bentley",
+                    "id": "B534_2"
+                }
+        },
+        "spouse_2": {
+            "name": "Leo Arwood",
+            "id": "A630_1",
+            "children": "none"
+        }
+    },
+    "B534_2": {
+        "surname": "Bentley",
+        "first_name": "Edgar Folk",
+        "birth_date": "19 January 1938",
+        "birth_place": "Memphis, Shelby, Tennessee, USA",
+        "death_date": false,
+        "death_date_thirdParty": "24 June 2021", 
+        "death_place": false,
+        "death_place_thirdParty": "Jackson, Madison, Tennessee, USA",
+        "spouse_1": {
+            "name": "Charlotte",
+            "id": "U525_1",
+            "children": [
+              { "name" : "Debra Bentley",
+                "id" : "B534_3"},
+              { "name" : "Ray Bentley",
+                "id" : "B534_4"},
+              { "name" : "Clayton Bentley",
+                "id" : "B534_4"}
+            ]
+        },
+        "father": 
+            {   "name": "Edgar Folk Bentley",
+                "id": "A630_1"
+            },
+        "mother":
+            {   "name": "Athalena Newman",
+                "id": "N550_1"
+            },
+        "siblings": "none"
+    }
+}

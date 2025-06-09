@@ -1,0 +1,36 @@
+{
+  "text": "I, John Doe, bequeath all my tangible assets to Tom Doe",
+  "entities": [
+    {
+      "id": "e1",
+      "texts": [
+        "John Doe", "I", "my"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "tangible assets"
+      ],
+      "type": "Asset"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "Tom Doe"
+      ],
+      "type": "BeneficiaryNamed"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e2",
+      "AssetQuantifier": "All",
+      "Benefactor": "e3"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "text": "I, LEO ARWOOD, an adult resident citizen of Lauderdale County, Tennessee, being of sound and disposing mind, memory and understanding, do hereby make, declare and publish this instrument as my Last Will and Testament, expressly revoking any and all testamentary dispositions heretofore made by me.",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "I", "LEO ARWOOD", "an adult resident citizen of Lauderdale County, Tennessee", "my", "me"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "Lauderdale County"
+      ],
+      "type": "County"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "Tennessee"
+      ],
+      "type": "State"
+    },
+    {
+      "id": "e4",
+      "texts": [
+        "this instrument", "my Last Will and Testament"
+      ],
+      "type": "Will"
+    },
+    {
+      "id": "e5",
+      "texts": [
+        "testamentary dispositions heretofore made by me"
+      ],
+      "type": "Will"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "WillCreation",
+      "Testator": "e1",
+      "County": "e2",
+      "State": "e3",
+      "Will": "e5",
+      "WillCreationCondition": [
+        "adult", "being of sound and disposing mind, memory and understanding"
+      ]
+    },
+    {
+      "id": "v2",
+      "type": "Revocation",
+      "Testator": "e1",
+      "Will": "e5",
+      "WillQuantifier": "any and all",
+      "WillCreationCondition": [
+        "adult", "being of sound and disposing mind, memory and understanding"
+      ]
+    },
+    {
+      "id": "v3",
+      "type": "WillCreation",
+      "Testator": "e1",
+      "Will": "e5",
+      "WillCreationTime": [
+        "heretofore"
+      ]
+    }
+  ]
+}

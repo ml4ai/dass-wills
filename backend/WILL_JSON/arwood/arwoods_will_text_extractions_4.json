@@ -1,0 +1,54 @@
+{
+  "text": "Should my wife not survive me, or should we die at the same time, or as a result of a common disaster, then I will, devise and bequeath all my property to Clayton F. Bentley, son of E.F. Bentley, Jr., in fee simple.",
+  "entities": [
+    {
+      "id":  "e1",
+      "texts": [
+        "my", "me", "we", "I"
+      ],
+      "type": "Testator"
+    },
+    {
+      "id": "e2",
+      "texts": [
+        "my wife", "we"
+      ],
+      "type": "BeneficiaryNamed1"
+    },
+    {
+      "id": "e3",
+      "texts": [
+        "Clayton F. Bentley", "son of E.F. Bentley, Jr."
+      ],
+      "type": "BeneficiaryNamed2"
+    },
+    {
+      "id": "e4",
+      "texts": [
+        "my property"
+      ],
+      "type": "Asset"
+    }
+  ],
+  "events": [
+    {
+      "id": "v1",
+      "type": "Death",
+      "PersonDied": [
+        "e1", "e2"
+      ]
+    },
+    {
+      "id": "v2",
+      "type": "BequestAsset",
+      "Testator": "e1",
+      "Asset": "e4",
+      "AssetQuantifier": "all",
+      "BequestCondition": [
+        "e2 not survive e1", "e1 and e2 die at the same time", "e1 and e2 die as a result of a common disaster"
+      ],
+      "BequestDistributionMethod": "in fee simple",
+      "Benefactor": "e3"
+    }
+  ]
+}

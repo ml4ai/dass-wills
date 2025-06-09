@@ -1,0 +1,34 @@
+{
+    "text" : "I give, devise and bequeath all my property, real, personal and mixed, of whatever kind and nature and wheresoever situated, to my wife, Athalene Arwood, if she survives me. Should my wife not survive me, or should we die at the same time, or as a result of a common disaster, then I will, devise and bequeath all my property to Clayton F. Bentley, son of E.F. Bentley, Jr., in fee simple.",
+    "testator" : {
+	"name" : "Leo Arwood",
+	"id" : "A360_1"
+    },
+    "witnesses" : [
+	  {   "name" : "Gail Shelton",
+	    "id" : "S435_1"
+	  },
+	  {   "name" : "Lorie Barnett",
+	    "id" : "B653_1"
+	  }
+    ],
+    "date" : "6 January 1986",
+    "directives" : {
+	"$all_assets" : {
+	    "if" : "True",
+	    "then" : {
+            "if" : {
+                "beneficiary_avail" : true},
+                "beneficiary" : {
+		          "name" : "Athalene Arwood",
+		          "id" : "alt_A630_1"},
+            "else" : {
+                "beneficiary" : {
+		          "name" : "Clayton Bentley",
+		          "id" : "B534_4"}
+            }
+		}
+	    }
+	}
+}
+

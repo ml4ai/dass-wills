@@ -1,0 +1,314 @@
+{
+    
+    "people": [
+
+        {
+            "id": 12,
+            "first_name": "LEO",
+            "last_name": "",
+            "full_name": "Leo Arwood",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 49,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "Family Home",
+                    "type": "Property",
+                    "Location":"Tupperware Corporation of Halls, Tennessee"
+                },
+                {
+                    "name": "Toyota Camry",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+
+        {
+            "id": 49,
+            "first_name": "Athalene",
+            "last_name": "",
+            "full_name": "Athalene Arwood",
+            "age": 49,
+            "date_of_birth": "1974-02-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 12,
+            "alive": "true",
+            "assets": [
+
+                {
+                    "name": "Hona Accord",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "id": 19,
+            "first_name": "CLAY",
+            "last_name": "",
+            "full_name": "Clayton F. Bentley",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [7]
+        },
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 2,
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "My House",
+                    "type": "Property",
+                    "Location":"Tupperware Corporation of Halls, Tennessee"
+                },
+                {
+                    "name": "Family Home",
+                    "type": "Property",
+                    "Location":"Tupperware Corporation of Halls, Tennessee"
+                },
+                {
+                    "name": "Toyota Camry",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 19,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": 1,
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "PlayStation 5",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 3,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 20,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 4,
+            "first_name": "Person-4",
+            "last_name": "",
+            "full_name": "Person-4",
+            "age": 23,
+            "alive": "true",
+            "date_of_birth": "2000-07-15",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Rental Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Honda Civic",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Stock Portfolio",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [8]
+        },
+        {
+            "id": 5,
+            "first_name": "Person-5",
+            "last_name": "",
+            "full_name": "Person-5",
+            "age": 10,
+            "date_of_birth": "2017-07-30",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Smartphone",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 6,
+            "first_name": "Person-6",
+            "last_name": "",
+            "full_name": "Person-6",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [7]
+        },
+        {
+            "id": 7,
+            "first_name": "Person-7",
+            "last_name": "",
+            "full_name": "Person-7",
+            "age": 13,
+            "date_of_birth": "2011-12-27",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Gaming PC",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 8,
+            "first_name": "Person-8",
+            "last_name": "",
+            "full_name": "Person-8",
+            "age": 16,
+            "date_of_birth": "2008-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        }
+    ]
+}
