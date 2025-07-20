@@ -219,12 +219,12 @@ def self_consistent_summary(prompt, target_text, client, iterations=10, tie_brea
 
 def main(prompt, target_text):
     # The below paths should be adjusted to reflect the actual paths to the inputs, oracles, and outputs
-    input_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study"
-    oracle_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study/people_db.json"
-    sample_will_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/sample_will.txt"
-    example_oracle_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/example_oracle.json"
-    expected_output_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/example_expected_output.json"
-    output_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study/output_self_consistency"
+    input_dir = "../input"
+    oracle_dir = "../people_db.json"
+    sample_will_dir = "../dass-wills/baseline/resources/sample_will.txt"
+    example_oracle_dir = "../dass-wills/baseline/resources/example_oracle.json"
+    expected_output_dir = "../example_expected_output.json"
+    output_dir = "../output"
 
     os.makedirs(output_dir, exist_ok=True)
 
