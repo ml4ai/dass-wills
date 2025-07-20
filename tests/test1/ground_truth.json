@@ -1,0 +1,9 @@
+{
+    "My House": {
+        "beneficiares": {"Person-4": 0.6,
+        "Person-3": 0.4
+        },
+        "rule_id": 3,
+        "rule_applied_text": "- by a certain proportion to each person"
+        }
+    }

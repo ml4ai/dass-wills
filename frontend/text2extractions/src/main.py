@@ -724,9 +724,9 @@ class Will(BaseModel):
 
 
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
-def extract_from_full_doc(prompt, target_text, client):
+def extract_from_full_doc(prompt, target_text, client, model_name="gpt-4o-2024-08-06"):
     completion = client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+        model=model_name,
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": target_text},
@@ -762,35 +762,41 @@ def read_and_tokenize(file_path):
 
 
 def main(prompt):
-    # The below paths should be adjusted to reflect the actual paths to the inputs and outputs
-    input_dir = "/path/to/input"
-    output_dir = "/path/to/output"
+    # Argument parsing with short and long flags
+    parser = argparse.ArgumentParser(description="Extract data from .txt files and output JSON.")
+    parser.add_argument("-i", "--input_dir", required=True, type=str, help="Path to the input directory containing .txt files")
+    parser.add_argument("-o", "--output_dir", required=True, type=str, help="Path to the output directory for .json files")
+    parser.add_argument("-m", "--model", type=str, help="Frontend Model")
+    args = parser.parse_args()
+
+    input_dir = args.input_dir
+    output_dir = args.output_dir
+    model_name = args.model
 
     os.makedirs(output_dir, exist_ok=True)
 
-    # prompt the user for their api key
-    env_var_key = 'OPENAI_API_KEY'
-
     # Fetch the API key from the environment variable
+    env_var_key = 'OPENAI_API_KEY'
     api_key = os.getenv(env_var_key)
-    key = 'api_key'
+    if not api_key:
+        raise EnvironmentError(f"{env_var_key} not found in environment variables.")
+    
     client = OpenAI(api_key=api_key)
 
-    # Process each .txt file in the input directory
     for filename in os.listdir(input_dir):
         if filename.endswith(".txt"):
             input_path = os.path.join(input_dir, filename)
             output_filename = os.path.splitext(filename)[0] + '.json'
             output_path = os.path.join(output_dir, output_filename)
 
-            # Read and tokenize input file
             with open(input_path, 'r', encoding='utf-8') as file:
                 target_text = file.read()
-
-            extraction = extract_from_full_doc(prompt, target_text, client)
+            if model_name:
+                extraction = extract_from_full_doc(prompt, target_text, client, model_name)
+            else:
+                extraction = extract_from_full_doc(prompt, target_text, client)
             export_to_json(extraction, output_path)
             print(f"Extraction completed for {filename}")
 
-
 if __name__ == "__main__":
-    main(original_prompt)
+    main(full_prompt)

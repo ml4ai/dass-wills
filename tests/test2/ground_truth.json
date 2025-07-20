@@ -1,0 +1,9 @@
+{
+    "My House": {
+        "beneficiares": {"Person-4": 0.5,
+        "Person-3": 0.5
+        },
+        "rule_id": 1,
+        "rule_applied_text": "- equally"
+        }
+}

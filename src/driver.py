@@ -4,12 +4,32 @@ End to end system to extract will model and output devolution items """
 import argparse
 import sys, os
 import shutil, subprocess
+import random
+from datetime import datetime
+
+
+### DEFINE FRONT_END AND BACKEND_MODELS
+
+FRONTEND_MODEL = "gpt-4o-2024-08-06"
+BACKEND_MODEL = "gpt-4o-2024-08-06"
+ 
 
 ################################################################################
 #                                                                              #
 #                                  UTILITIES                                   #
 #                                                                              #
 ################################################################################
+
+def remove_contents(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.remove(file_path)  # remove file or link
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)  # remove directory and all its contents
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
 
 
 def cmd_line_invocation():
@@ -88,9 +108,21 @@ def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     ## Front End Script Paths
     te_script =  os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'src', 'main.py'))
-    te_input_path = os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'input'))
+    now = datetime.now()
+    timestamp = now.strftime("%Y%m%d_%H%M%S") + f"{now.microsecond // 1000:03d}"  # adds milliseconds (zero-padded to 3 digits)
+    suffix1 = random.randint(1, 6000)
+    suffix2 = random.randint(1, 9999)
+    suffix = f"{timestamp}_{suffix1}_{suffix2}"
+
+    # Construct the full path with randomized name
+    te_input_path = os.path.abspath(os.path.join(base_dir, '..', 'frontend', 'text2extractions', f'input_{suffix}'))
+    te_output_path = os.path.abspath(os.path.join(base_dir, '..', 'frontend', 'text2extractions', f'output_{suffix}'))
     te_base_path = os.path.abspath(os.path.join(base_dir, '..','frontend', 'text2extractions', 'src'))
     
+    
+    os.makedirs(te_input_path, exist_ok=True)
+    os.makedirs(te_output_path, exist_ok=True)
+
     ## Backend Script Paths
     backend_base_path = os.path.abspath(os.path.join(base_dir, '..','backend'))
     te_to_wm_script = os.path.abspath(os.path.join(base_dir, '..','backend', 'te_to_wm.py'))
@@ -105,14 +137,15 @@ def main():
     if not os.path.isfile(devolution_script):
         print(f"Error: The module 'Will Model Devulution' does not exist.")
         sys.exit(1)
-    
+    remove_contents(te_input_path)
+
     try:
         shutil.copy(input_file, te_input_path)
     except shutil.SameFileError:
         pass
         
-
-    cmd_te = ['python3', te_script]
+    
+    cmd_te = ['python3', te_script, '-i', te_input_path, '-o', te_output_path,'-m',FRONTEND_MODEL]
     print("... Will Text to TE Module processing.\n")
     p1 = subprocess.Popen(cmd_te, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =te_base_path,env=env)
     for stdout_line in iter(p1.stdout.readline, b''):
@@ -131,8 +164,7 @@ def main():
 
     will_text_extraction_json= os.path.splitext(os.path.basename(input_file))[0] + '.json'
     
-    output_will_text_extraction_json = os.path.abspath(os.path.join(base_dir, '..','frontend', 
-    'text2extractions','output', will_text_extraction_json))
+    output_will_text_extraction_json = os.path.abspath(os.path.join(te_output_path, will_text_extraction_json))
     shutil.copy(output_will_text_extraction_json, output_path)
     
     te_json_path= os.path.abspath(os.path.join(output_path,will_text_extraction_json))
@@ -159,9 +191,9 @@ def main():
 
     devolution_file = os.path.splitext(os.path.basename(input_file))[0] + '.devolution.json'
     devolution_file_path = os.path.abspath(os.path.join(output_path,devolution_file))
-    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path]
+    cmd_devolution = ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-m',BACKEND_MODEL]
     if oracle:
-        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle]
+        cmd_devolution= ['python3', devolution_script,'-p',wm_obj_path,'-o',devolution_file_path,'-d',oracle,'-m',BACKEND_MODEL]
     print("... WM to Devolution Module processing.\n")
     p3 = subprocess.Popen(cmd_devolution, stdout=subprocess.PIPE, stderr=subprocess.PIPE,cwd =backend_base_path,env=env)
     for stdout_line in iter(p3.stdout.readline, b''):

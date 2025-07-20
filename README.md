@@ -23,12 +23,12 @@ The script requires the following arguments:
 1. **Input File**: The path to the input will text file (required).
 2. **Output Path**: The directory where the output files should be saved (required).
 3. **OPENAI API KEY**: OPENAI API KEY for the modules usage (required).
-
+4. **ORACLE FILE**: Add PATH of ORACLE database containing testator and beneficiaries information.
 
 
 ### Example Usage:
 
 ```bash
-python3 src/driver.py -i input.txt -o outputp_path -k SOME_KEY
+python3 src/driver.py -i input.txt -o outputp_path -k OPENAI_KEY -d ORACLE_PATH
 ```
 
