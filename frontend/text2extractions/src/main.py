@@ -8,7 +8,7 @@ from tenacity import (
     wait_random_exponential,
 )  # for exponential backoff
 
-original_prompt = """You are given the text of a legal will and testament. Extract i
+original_prompt = """You are given the text of a legal will and testament. Extract information about the will and its components using the structured JSON format provided. Each field is mandatory, and the output should be structured precisely according to the schema. When extracting information, keep the original texts for the ease of retrieving provenance whenever possible. When there's no good information to be extracted, return None value.
 ### Requirements:
 1. **Testator’s name**: The name of the person who wrote and signed the will.
 2. **Date of Will**: The date the will was created.
@@ -581,8 +581,6 @@ You are given the text of a legal will and testament. Your task is to extract st
 
 ##  Example Will Text
 
-Last Will and Testament of [Person-1]  
-I, [Person-1], do make, publish and declare this to be my Last Will and Testament...  
 Last Will and Testament of [Person-1]  
 I, [Person-1], do make, publish and declare this to be my Last Will and Testament, hereby revoking all wills and codicils heretofore made by me.
 
