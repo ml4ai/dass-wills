@@ -1,5 +1,6 @@
 import os, json, re
-from pydantic import BaseModel
+import tiktoken
+from pydantic import BaseModel, ValidationError
 from typing import List, Dict, Optional
 from openai import OpenAI
 from tenacity import (
@@ -120,14 +121,18 @@ target_input = """
 """
 
 
+class BeneficiaryDetail(BaseModel):
+    share: float
+    rules_applied_text: List[str]
+    rules_id: List[int]
+
+
 class AssetDistribution(BaseModel):
-    beneficiaries: Dict[str, float]  # e.g., {"Person-2": 1.0}
-    rules_id: List[int]              # e.g., [5, 1]
-    rules_applied_text: List[str]    # e.g., ["If person(s) not alive...", "Equal Allocation"]
+    beneficiaries: Dict[str, BeneficiaryDetail]
 
 
 class WillSummary(BaseModel):
-    __root__: Dict[str, AssetDistribution]  # key = asset name (e.g., "My House")
+    __root__: Dict[str, AssetDistribution]
 
     class Config:
         schema_extra = {
@@ -137,18 +142,24 @@ class WillSummary(BaseModel):
                 "properties": {
                     "beneficiaries": {
                         "type": "object",
-                        "additionalProperties": {"type": "number"}
-                    },
-                    "rules_id": {
-                        "type": "array",
-                        "items": {"type": "integer"}
-                    },
-                    "rules_applied_text": {
-                        "type": "array",
-                        "items": {"type": "string"}
+                        "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                                "share": {"type": "number"},
+                                "rules_applied_text": {
+                                    "type": "array",
+                                    "items": {"type": "string"}
+                                },
+                                "rules_id": {
+                                    "type": "array",
+                                    "items": {"type": "integer"}
+                                }
+                            },
+                            "required": ["share", "rules_applied_text", "rules_id"]
+                        }
                     }
                 },
-                "required": ["beneficiaries", "rules_id", "rules_applied_text"]
+                "required": ["beneficiaries"]
             }
         }
 
@@ -180,9 +191,13 @@ def summary_generation(prompt, target_text, client):
     return json_str
 
 
-def export_to_json(json_object, file_path):
-    with open(file_path, 'w') as json_file:
-        json_file.write(json_object.json(indent=4))
+def export_to_json(json_object, output_path):
+    with open(output_path, "w") as json_file:
+        if json_object is None:
+            print("Warning: json_object is None. Saving empty JSON.")
+            json_file.write("{}")
+        else:
+            json_file.write(json_object.json(indent=4))
 
 
 def read_file(filepath):
@@ -192,6 +207,23 @@ def read_file(filepath):
     except Exception as e:
         print(f"[ERROR] Could not read file {filepath}: {e}")
         return ""
+
+
+def sanitize_shares(will_json):
+    for asset_name, asset in will_json.items():
+        beneficiaries = asset.get("beneficiaries", {})
+        if not isinstance(beneficiaries, dict):
+            print(f"Fixing non-dict beneficiaries for asset: {asset_name} -> {beneficiaries}")
+            asset["beneficiaries"] = {}
+            continue
+        for ben_name, ben in beneficiaries.items():
+            share = ben.get("share")
+            try:
+                ben["share"] = float(share)
+            except (TypeError, ValueError):
+                print(f"Skipping non-numeric share value: {share} (asset: {asset_name}, beneficiary: {ben_name})")
+                ben["share"] = None  # or 0.0
+    return will_json
 
 
 def self_consistent_summary(prompt, target_text, client, iterations=10, tie_breaking='first'):
@@ -214,63 +246,85 @@ def self_consistent_summary(prompt, target_text, client, iterations=10, tie_brea
     else:
         raise ValueError(f"Unknown tie_breaking strategy: {tie_breaking}")
 
-    return WillSummary.parse_raw(selected)
+    try:
+        parsed = json.loads(selected)
+        parsed = sanitize_shares(parsed)
+        return WillSummary.parse_obj(parsed)
 
+    except (json.JSONDecodeError, ValueError, ValidationError) as e:
+        print(f"Warning: Failed to parse WillSummary: {e}")
+        return None
+
+def count_tokens(text, model="gpt-4o"):
+    encoding = tiktoken.encoding_for_model(model)
+    return len(encoding.encode(text))
 
 def main(prompt, target_text):
-    # The below paths should be adjusted to reflect the actual paths to the inputs, oracles, and outputs
-    input_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study"
-    oracle_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study/people_db.json"
-    sample_will_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/sample_will.txt"
-    example_oracle_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/example_oracle.json"
-    expected_output_dir = "/Users/alicekwak/repos/dass-wills/baseline/resources/example_expected_output.json"
-    output_dir = "/Users/alicekwak/repos/dass-wills/baseline/for_pilot_study/output_self_consistency"
+    base_dir = "/Users/alicekwak/repos/dass-wills/baseline"
+    input_root = os.path.join(base_dir, "test")
+    sample_will_path = os.path.join(base_dir, "resources/sample_will.txt")
+    example_oracle_path = os.path.join(base_dir, "resources/example_oracle.json")
+    expected_output_path = os.path.join(base_dir, "resources/example_expected_output.json")
 
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Load supporting files
-    sample_will = read_file(sample_will_dir)
-    example_oracle = read_file(example_oracle_dir)
-    expected_output = read_file(expected_output_dir)
+    # Load static files
+    sample_will = read_file(sample_will_path)
+    example_oracle = read_file(example_oracle_path)
+    expected_output = read_file(expected_output_path)
     example_oracle_clean = json.dumps(example_oracle, indent=2).replace("{", "{{").replace("}", "}}")
     expected_output_clean = json.dumps(expected_output, indent=2).replace("{", "{{").replace("}", "}}")
-    oracle = read_file(oracle_dir)
-    oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
 
     # Fetch the API key from the environment variable
     key = 'API key'
     client = OpenAI(api_key=key)
 
-    # Process each .txt file in the input directory
-    for filename in os.listdir(input_dir):
-        if filename.endswith(".txt"):
-            input_path = os.path.join(input_dir, filename)
-            output_filename = os.path.splitext(filename)[0] + '.json'
-            output_path = os.path.join(output_dir, output_filename)
+    # Process each subdirectory in input_root
+    for subdir in os.listdir(input_root):
+        subdir_path = os.path.join(input_root, subdir)
+        print(subdir_path)
+        if not os.path.isdir(subdir_path):
+            continue
 
-            # Read and tokenize input file
-            with open(input_path, 'r', encoding='utf-8') as file:
-                will_text = file.read()
+        will_path = os.path.join(subdir_path, "will.txt")
+        oracle_path = os.path.join(subdir_path, "concise_people_db.json")
+        output_path = os.path.join(subdir_path, "concise_oracle_revised_baseline.json")
 
-            prompt = prompt.format(
-                sample_will=sample_will,
-                example_oracle=oracle_clean,
-                expected_output=expected_output_clean,
-            )
+        # Ensure required files exist
+        if not (os.path.exists(will_path) and os.path.exists(oracle_path)):
+            print(f"Skipping {subdir}: missing will.txt or people_db.json")
+            continue
 
-            target_text = target_text.format(
-                will_text=will_text,
-                oracle=oracle_clean,
-            )
+        # Read input files
+        with open(will_path, 'r', encoding='utf-8') as f:
+            will_text = f.read()
 
-            # without self-consistency
-            # extraction = summary_generation(prompt, target_text, client)
+        with open(oracle_path, 'r', encoding='utf-8') as f:
+            oracle = json.load(f)
+        oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
 
-            # with self-consistency
-            most_common = self_consistent_summary(prompt, target_text, client)
-            export_to_json(most_common, output_path)
-            print(f"Summary generation completed for {filename}")
+        # Format prompt and target
+        prompt_formatted = prompt.format(
+            sample_will=sample_will,
+            example_oracle=example_oracle_clean,
+            expected_output=expected_output_clean,
+        )
+
+        target_text_formatted = target_text.format(
+            will_text=will_text,
+            oracle=oracle_clean,
+        )
+
+        word_count = len(target_text_formatted.split())
+        token_count = count_tokens(target_text_formatted, model="gpt-4o")
+        print(f"Word count: {word_count}")
+        print(f"Token count: {token_count}")
+
+        # Run model inference
+        # most_common = self_consistent_summary(prompt_formatted, target_text_formatted, client)
+
+        # Save output
+        # export_to_json(most_common, output_path)
+        # print(f"Saved output for {subdir} at {output_path}")
 
 
 if __name__ == "__main__":
-    main(step_by_step_prompt, target_input)
+    main(basic_prompt, target_input)

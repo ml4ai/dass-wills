@@ -11,7 +11,7 @@ def exact_match(entity1, entity2):
     return entity1 == entity2
 
 def fuzzy_match(text1, text2, threshold=70):
-    return fuzz.token_set_ratio(text1, text2) >= threshold
+    return fuzz.ratio(text1, text2) >= threshold
 
 def extract_entities_by_type(entities, entity_type):
     """
@@ -23,50 +23,144 @@ def extract_entities_by_type(entities, entity_type):
             result.extend(entity[entity_type]) if isinstance(entity[entity_type], list) else result.append(entity[entity_type])
     return result
 
-def compare_entities(pred_entities, gold_entities, entity_type, fuzzy_threshold=70):
+def write_fuzzy_match_log(log_data, log_file):
+    """
+    Writes the fuzzy match log to a CSV file.
+    Each row contains: Entity Type, Predicted Entity, Gold Entity, Similarity Score.
+    """
+    file_exists = os.path.isfile(log_file)
+
+    with open(log_file, mode="a", newline="") as file:
+        writer = csv.writer(file)
+
+        # Write header if file doesn't exist
+        if not file_exists:
+            writer.writerow(["File Name", "Entity Type", "Predicted Entity", "Gold Entity", "Similarity Score"])
+
+        # Write log data
+        writer.writerows(log_data)
+
+def write_entity_error_log(log_data, log_file):
+    """
+    Writes False Positives (FP) and False Negatives (FN) for entities to a CSV file.
+    Each row contains: File Name, Entity Type, Error Type (FP/FN), Entity Text.
+    """
+    file_exists = os.path.isfile(log_file)
+
+    with open(log_file, mode="a", newline="") as file:
+        writer = csv.writer(file)
+
+        # Write header if file doesn't exist
+        if not file_exists:
+            writer.writerow(["File Name", "Entity Type", "Error Type", "Entity Text"])
+
+        # Write log data
+        writer.writerows(log_data)
+
+def compare_entities(pred_entities, gold_entities, entity_type, file_name, fuzzy_threshold=70, log_file="fuzzy_match_log.csv", entity_log_file="entity_error_log.csv"):
+    """
+    Compares predicted and gold entities for a specific entity type.
+    - Exact match for Testator, Executor, Beneficiary.
+    - Fuzzy match for Asset and Condition (best match selection).
+    - Logs False Positives (FP), False Negatives (FN), and fuzzy matches (excluding exact matches).
+    """
     tp = 0
     fp = 0
     fn = 0
+    fuzzy_match_log = []
+    entity_error_log = []
 
     # Extract entities of the specified type
     pred_list = extract_entities_by_type(pred_entities, entity_type)
     gold_list = extract_entities_by_type(gold_entities, entity_type)
 
-    matched_gold = set()
-    for pred_entity in pred_list:
-        matched = False
-        for i, gold_entity in enumerate(gold_list):
-            if i in matched_gold:
-                continue
-            if entity_type in ["testator", "executor", "beneficiary"]:
+    # Track matched indices
+    matched_gold = set()  # Stores matched gold entity indices
+    matched_pred = set()  # Stores matched predicted entity indices
+    potential_matches = []  # Store potential matches (pred_idx, gold_idx, similarity)
+
+    # First pass: Exact match for names (Testator, Executor, Beneficiary)
+    if entity_type in ["testator", "executor", "beneficiary"]:
+        for pred_idx, pred_entity in enumerate(pred_list):
+            for gold_idx, gold_entity in enumerate(gold_list):
+                if gold_idx in matched_gold:
+                    continue  # Skip already matched gold entities
+
                 if exact_match(pred_entity.get("name"), gold_entity.get("name")):
                     tp += 1
-                    matched_gold.add(i)
-                    matched = True
-                    break
-            elif entity_type == "asset":
-                if fuzzy_match(pred_entity.get("description"), gold_entity.get("description"), threshold=fuzzy_threshold):
-                    tp += 1
-                    matched_gold.add(i)
-                    matched = True
-                    break
-            elif entity_type == "condition":
-                if fuzzy_match(pred_entity.get("text"), gold_entity.get("text"), threshold=fuzzy_threshold):
-                    tp += 1
-                    matched_gold.add(i)
-                    matched = True
-                    break
-        if not matched:
+                    matched_gold.add(gold_idx)
+                    matched_pred.add(pred_idx)
+                    break  # Stop searching once a match is found
+
+    # Second pass: Fuzzy match for Asset and Condition (find best match)
+    elif entity_type in ["asset", "condition"]:
+        for pred_idx, pred_entity in enumerate(pred_list):
+            pred_text = pred_entity.get("description") or pred_entity.get("text")
+
+            for gold_idx, gold_entity in enumerate(gold_list):
+                if gold_idx in matched_gold:
+                    continue  # Skip already matched gold entities
+
+                gold_text = gold_entity.get("description") or gold_entity.get("text")
+                similarity = fuzz.ratio(pred_text, gold_text)
+
+                if similarity >= fuzzy_threshold:
+                    potential_matches.append((pred_idx, gold_idx, similarity))
+
+        # Sort matches by similarity (highest first)
+        potential_matches.sort(key=lambda x: x[2], reverse=True)
+
+        # Assign best matches
+        for pred_idx, gold_idx, similarity in potential_matches:
+            if pred_idx in matched_pred or gold_idx in matched_gold:
+                continue  # Skip already matched entities
+
+            tp += 1
+            matched_pred.add(pred_idx)
+            matched_gold.add(gold_idx)
+
+            # **Log only non-exact fuzzy matches**
+            if similarity < 100:  # ✅ Prevents logging exact matches
+                pred_text = pred_list[pred_idx].get("description") or pred_list[pred_idx].get("text")
+                gold_text = gold_list[gold_idx].get("description") or gold_list[gold_idx].get("text")
+                fuzzy_match_log.append([file_name, entity_type, pred_text, gold_text, similarity])
+
+    # False Positives: Unmatched predicted entities
+    for pred_idx, pred_entity in enumerate(pred_list):
+        if pred_idx not in matched_pred:
             fp += 1
+            entity_error_log.append([
+                file_name,  # ✅ Log file name
+                entity_type,
+                "FP",  # False Positive
+                pred_entity.get("name") or pred_entity.get("description") or pred_entity.get("text")
+            ])
 
-    fn += len(gold_list) - len(matched_gold)
+    # False Negatives: Unmatched gold entities
+    for gold_idx, gold_entity in enumerate(gold_list):
+        if gold_idx not in matched_gold:
+            fn += 1
+            entity_error_log.append([
+                file_name,  # ✅ Log file name
+                entity_type,
+                "FN",  # False Negative
+                gold_entity.get("name") or gold_entity.get("description") or gold_entity.get("text")
+            ])
 
+    # ✅ Write fuzzy match log (only fuzzy matches, not exact matches)
+    if fuzzy_match_log:
+        write_fuzzy_match_log(fuzzy_match_log, log_file)
+
+    # ✅ Write entity error log (FP/FN)
+    if entity_error_log:
+        write_entity_error_log(entity_error_log, entity_log_file)
+
+    # Compute Precision, Recall, and F1 Score
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0
 
     return tp, fp, fn, precision, recall, f1
-
 
 def find_entity_by_id(entities, entity_id):
     """
@@ -82,142 +176,352 @@ def find_entity_by_id(entities, entity_id):
                 return value
     return {}
 
-def map_entity_ids(pred_events, gold_events, pred_entities, gold_entities, fuzzy_threshold=70):
+
+def extract_entities(entities):
+    """Flattens the nested entity structure into a list of entity dictionaries."""
+    flat_entities = []
+    for entity_group in entities:
+        for category, items in entity_group.items():
+            if isinstance(items, list):
+                flat_entities.extend(items)
+            elif isinstance(items, dict):
+                flat_entities.append(items)
+    return flat_entities
+
+
+def map_entity_ids(pred_entities, gold_entities, fuzzy_threshold=70):
     """
-    Maps entity IDs between prediction and gold events using exact or fuzzy matching criteria.
+    Maps entity IDs from predicted to gold entities based on exact name matches (for people)
+    and best fuzzy matches (for assets and conditions).
+    Ensures all occurrences of a predicted entity ID are replaced with its mapped gold entity ID.
     """
-    mapping = {}
+    pred_entities = extract_entities(pred_entities)
+    gold_entities = extract_entities(gold_entities)
+    entity_mapping = {}
+    used_gold_ids = set()
 
-    def entity_match(gold_id, pred_id):
-        """
-        Matches entities based on type-specific criteria.
-        """
-        gold_entity = find_entity_by_id(gold_entities, gold_id)
-        pred_entity = find_entity_by_id(pred_entities, pred_id)
-        if not gold_entity or not pred_entity:
-            return False
+    for pred in pred_entities:
+        best_match_id = None
+        best_match_score = fuzzy_threshold  # Set threshold
 
-        # Exact match for testator, executor, and beneficiary
-        if "name" in gold_entity and "name" in pred_entity:
-            return gold_entity["name"] == pred_entity["name"]
+        for gold in gold_entities:
+            if gold["id"] in used_gold_ids:
+                continue  # Prevent duplicate mapping
 
-        # Fuzzy match for asset and condition
-        if "description" in gold_entity and "description" in pred_entity:
-            return fuzzy_match(gold_entity["description"], pred_entity["description"], threshold=fuzzy_threshold)
-        if "text" in gold_entity and "text" in pred_entity:
-            return fuzzy_match(gold_entity["text"], pred_entity["text"], threshold=fuzzy_threshold)
+            # Exact match for people entities
+            if "name" in pred and "name" in gold and pred["name"] == gold["name"]:
+                entity_mapping[pred["id"]] = gold["id"]
+                used_gold_ids.add(gold["id"])
+                best_match_id = gold["id"]
+                break  # Stop searching once an exact match is found
 
-        return False
+            # Fuzzy match for assets and conditions (description/text)
+            pred_value = pred.get("description") or pred.get("text")
+            gold_value = gold.get("description") or gold.get("text")
 
-    for gold_event in gold_events:
-        for pred_event in pred_events:
-            if gold_event["type"] != pred_event["type"]:
-                continue
+            if pred_value and gold_value:
+                match_score = fuzz.ratio(pred_value, gold_value)
+                if match_score > best_match_score:
+                    best_match_score = match_score
+                    best_match_id = gold["id"]
 
-            gold_entities_in_event = {field: gold_event[field] for field in gold_event if isinstance(gold_event[field], list)}
-            pred_entities_in_event = {field: pred_event[field] for field in pred_event if isinstance(pred_event[field], list)}
+        if best_match_id:
+            entity_mapping[pred["id"]] = best_match_id
+            used_gold_ids.add(best_match_id)
 
-            match = True
-            for field, gold_ids in gold_entities_in_event.items():
-                pred_ids = pred_entities_in_event.get(field, [])
-                matched_ids = set()
+    return entity_mapping
 
-                for gold_id in gold_ids:
-                    matched = False
-                    for pred_id in pred_ids:
-                        if pred_id in matched_ids:
-                            continue
-                        if entity_match(gold_id, pred_id):
-                            matched_ids.add(pred_id)
-                            matched = True
-                            break
-                    if not matched:
-                        match = False
-                        break
-                if not match:
-                    break
 
-            if match:
-                mapping[gold_event["id"]] = pred_event["id"]
+def resolve_entity_ids(entity_ids, entity_list):
+    """
+    Converts a list of entity IDs into their actual entity representations.
+    Ensures only valid entities are returned.
+    """
+    resolved_entities = []
+    entity_dict = {}  # Dictionary to store entity lookups by ID
 
-    return mapping
+    # Flatten the nested entity structure and build a lookup dictionary
+    for entity_group in entity_list:
+        for entity_type, entity_value in entity_group.items():
+            if isinstance(entity_value, list):
+                for item in entity_value:
+                    if "id" in item:
+                        entity_dict[item["id"]] = item  # Store entity by its ID
+            elif isinstance(entity_value, dict) and "id" in entity_value:
+                entity_dict[entity_value["id"]] = entity_value
+
+    # Lookup entities based on provided IDs
+    for entity_id in entity_ids:
+        if entity_id in entity_dict:
+            resolved_entities.append(entity_dict[entity_id])
+
+    return resolved_entities  # Return only found entities
+
+
+def extract_resolved_args(events, entities):
+    """
+    Extracts resolved arguments for events, replacing entity IDs with actual entity values (name, description, or text).
+    Ensures all occurrences of a predicted entity ID are mapped correctly and returns a dictionary per role.
+    """
+    event_args = {}  # Structure: {event_id: {"Executor": [...], "Beneficiary": [...], ...}}
+    entity_lookup = {}
+
+    # Create lookup dictionary for entity details
+    for entity_group in entities:
+        for entity_type, entity_list in entity_group.items():
+            if isinstance(entity_list, list):
+                for entity in entity_list:
+                    entity_lookup[entity["id"]] = entity
+            elif isinstance(entity_list, dict):
+                entity_lookup[entity_list["id"]] = entity_list
+
+    # Replace event entity IDs with resolved entity objects using mapping
+    for event in events:
+        event_id = event["id"]
+        event_args[event_id] = {role: [] for role in ["Testator", "Executor", "Beneficiary", "Asset", "Condition"]}
+
+        for role in ["Testator", "Executor", "Beneficiary", "Asset", "Condition"]:
+            if role in event and event[role]:
+                entity_ids = event[role] if isinstance(event[role], list) else [event[role]]
+
+                resolved_entities = []
+                for e_id in entity_ids:
+                    # Apply entity mapping
+                    entity_obj = entity_lookup.get(e_id, {"id": e_id})
+
+                    # Extract actual entity values instead of IDs
+                    resolved_value = entity_obj.get("name") or entity_obj.get("description") or entity_obj.get("text") or mapped_id
+
+                    # Debugging Step: Print each replacement
+                    print(f"🔄 Resolving {e_id} → {resolved_value}")
+
+                    resolved_entities.append(resolved_value)
+
+                event_args[event_id][role].extend(resolved_entities)
+
+    return event_args
+
+
+
+def pair_events(pred_event_args, gold_event_args, fuzzy_threshold=70):
+    """
+    Ensures one-to-one event pairing by assigning each gold event to the best-matching predicted event.
+    Uses similarity scores to prioritize assignments.
+    """
+    event_pairs = {}  # Stores final one-to-one event pairs {pred_id: gold_id}
+    used_gold_events = set()  # Track assigned gold events
+    used_pred_events = set()  # Track assigned predicted events
+
+    all_pred_ids = set(pred_event_args.keys())
+    all_gold_ids = set(gold_event_args.keys())
+
+    # Step 1: Compute similarity scores for all possible pairings
+    similarity_scores = []
+
+    for pred_id, pred_args in pred_event_args.items():
+        for gold_id, gold_args in gold_event_args.items():
+            exact_matches, fuzzy_matches = {}, {}
+
+            # Compare role-specific arguments
+            for role in ["Testator", "Executor", "Beneficiary", "Asset", "Condition"]:
+                pred_role_args = set(pred_args.get(role, []))
+                gold_role_args = set(gold_args.get(role, []))
+
+                # Compute exact matches
+                exact_matches[role] = pred_role_args & gold_role_args
+
+                # Remove exact matches before fuzzy comparison
+                remaining_pred = pred_role_args - exact_matches[role]
+                remaining_gold = gold_role_args - exact_matches[role]
+
+                # Compute fuzzy matches (assets & conditions)
+                fuzzy_matches[role] = {
+                    p for p in remaining_pred for g in remaining_gold if fuzz.ratio(p, g) >= fuzzy_threshold
+                }
+
+            # Calculate total similarity score
+            total_exact = sum(len(exact_matches[role]) for role in exact_matches)
+            total_fuzzy = sum(len(fuzzy_matches[role]) for role in fuzzy_matches)
+            total_score = total_exact + (0.5 * total_fuzzy)  # Fuzzy matches get half weight
+
+            similarity_scores.append((pred_id, gold_id, total_score))
+
+    # Step 2: Sort similarity scores in descending order (higher scores first)
+    similarity_scores.sort(key=lambda x: x[2], reverse=True)
+
+    # Step 3: Assign matches based on highest similarity, ensuring one-to-one matching
+    for pred_id, gold_id, score in similarity_scores:
+        if pred_id in used_pred_events or gold_id in used_gold_events:
+            continue  # Skip if either event is already paired
+
+        # Assign the best available match
+        event_pairs[pred_id] = gold_id
+        used_pred_events.add(pred_id)
+        used_gold_events.add(gold_id)
+
+    # Step 4: Handle unmatched predicted events as False Positives
+    for pred_id in all_pred_ids:
+        if pred_id not in event_pairs:
+            event_pairs[pred_id] = None  # Mark as unmatched FP
+
+    # Step 5: Handle unmatched gold events as False Negatives
+    unmatched_gold_events = all_gold_ids - used_gold_events
+    for gold_id in unmatched_gold_events:
+        event_pairs[gold_id] = None  # Mark as unmatched FN
+
+    return event_pairs
 
 
 def compare_events(pred_events, gold_events, pred_entities, gold_entities, fuzzy_threshold=70):
     """
-    Compares events between prediction and gold data, calculating precision, recall, and F1 score.
+    Compares predicted and gold events at both event and argument levels.
+
+    Event-Level:
+      - TP: A predicted event matches a gold event (Exact match: Testator, Executor, Beneficiary;
+            Fuzzy match: Asset, Condition; No extra arguments).
+      - FP: A predicted event that has no matching gold event.
+      - FN: A gold event that has no matching predicted event.
+
+    Argument-Level:
+      - TP: Correctly matched arguments.
+      - FP: Arguments in the predicted event but not in the gold event.
+      - FN: Arguments in the gold event but missing from the predicted event.
     """
-    tp = 0
-    fp = 0
-    fn = 0
+    global fuzzy_match
 
-    # Map entity IDs between prediction and gold events
-    mapping = map_entity_ids(pred_events, gold_events, pred_entities, gold_entities, fuzzy_threshold)
+    event_tp, event_fp, event_fn = 0, 0, 0
+    arg_tp, arg_fp, arg_fn = 0, 0, 0
 
-    print(f"Mapping of gold to predicted event IDs: {mapping}")
+    # Extract resolved arguments for events
+    gold_event_args = extract_resolved_args(gold_events, gold_entities)
+    pred_event_args = extract_resolved_args(pred_events, pred_entities)
 
-    # Track matched prediction IDs
-    matched_pred_ids = set()
+    # Track matched gold events
+    matched_events = set()
 
-    # Process gold events
-    for gold_event in gold_events:
-        gold_id = gold_event["id"]
-        if gold_id in mapping:
-            pred_event_id = mapping[gold_id]
-            pred_event = next((e for e in pred_events if e["id"] == pred_event_id), None)
-            if pred_event:
-                # Check if all fields match
-                all_fields_match = True
-                for field in gold_event:
-                    gold_field = gold_event[field]
-                    pred_field = pred_event[field]
+    for pred_id, pred_args in pred_event_args.items():
+        matched = False
+        for gold_id, gold_args in gold_event_args.items():
+            if gold_id in matched_events:
+                continue  # Skip if already matched
 
-                    if isinstance(gold_field, list):
-                        gold_entities_resolved = [find_entity_by_id(gold_entities, eid) for eid in gold_field]
-                        pred_entities_resolved = [find_entity_by_id(pred_entities, eid) for eid in pred_field]
-                        if sorted(gold_entities_resolved, key=lambda x: x.get("id", "")) != sorted(pred_entities_resolved, key=lambda x: x.get("id", "")):
-                            all_fields_match = False
-                            break
-                    elif isinstance(gold_field, str):
-                        if find_entity_by_id(gold_entities, gold_field) != find_entity_by_id(pred_entities, pred_field):
-                            all_fields_match = False
-                            break
+            # Exact match for Testator, Executor, Beneficiary
+            exact_match = all(
+                set(pred_args[role]) == set(gold_args[role])
+                for role in ["Testator", "Executor", "Beneficiary"]
+            )
 
-                if all_fields_match:
-                    matched_pred_ids.add(pred_event['id'])
-                    tp += 1
-                    print(f"True Positive: Gold Event {gold_id} matches Predicted Event {pred_event['id']}")
-                else:
-                    fn += 1
-                    print(f"False Negative: Gold Event {gold_id} does not match Predicted Event {pred_event['id']}")
-        else:
-            fn += 1
-            print(f"False Negative: Gold Event {gold_id} has no matching Predicted Event")
+            # Fuzzy match for Asset, Condition
+            fuzzy_match_result = all(
+                any(fuzzy_match(p, g, fuzzy_threshold) for p in pred_args[role] for g in gold_args[role])
+                if pred_args[role] and gold_args[role] else True
+                for role in ["Asset", "Condition"]
+            )
 
-    # Count false positives: unmatched predicted events
-    for pred_event in pred_events:
-        if pred_event["id"] not in matched_pred_ids:
-            fp += 1
-            print(f"False Positive: Predicted Event {pred_event['id']} has no matching Gold Event")
+            # Ensure no extra arguments
+            no_extra_args = all(
+                set(pred_args[role]) == set(gold_args[role])
+                for role in ["Testator", "Executor", "Beneficiary"]
+            ) and all(
+                len(pred_args[role]) == len(gold_args[role])
+                for role in ["Asset", "Condition"]
+            )
 
-    # Debugging final counts
-    print(f"Final Counts: TP={tp}, FP={fp}, FN={fn}")
+            # If event matches, mark it as TP
+            if exact_match and fuzzy_match_result and no_extra_args:
+                event_tp += 1
+                matched_events.add(gold_id)
+                matched = True
+                break  # Stop searching for a match
 
-    # Calculate precision, recall, and F1 score
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
-    f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0
+        if not matched:
+            event_fp += 1  # False positive event
 
-    return tp, fp, fn, precision, recall, f1
+    # Count False Negatives (Unmatched Gold Events)
+    event_fn = len(gold_event_args) - len(matched_events)
+
+    # Argument-Level Matching
+    false_positives = {}
+    false_negatives = {}
+
+    for pred_id, gold_id in pair_events(pred_event_args, gold_event_args, fuzzy_threshold).items():
+        if gold_id is None:
+            # False Positive: Predicted event exists, no corresponding gold event
+            arg_fp += sum(len(args) for args in pred_event_args.get(pred_id, {}).values())
+            false_positives[pred_id] = pred_event_args.get(pred_id, {})
+            continue
+
+        if pred_id is None:
+            # False Negative: Gold event exists, no corresponding prediction
+            arg_fn += sum(len(args) for args in gold_event_args.get(gold_id, {}).values())
+            false_negatives[gold_id] = gold_event_args.get(gold_id, {})
+            continue
+
+        # Compare arguments within matched events
+        pred_args = pred_event_args.get(pred_id, {})
+        gold_args = gold_event_args.get(gold_id, {})
+
+        for role in ["Testator", "Executor", "Beneficiary", "Asset", "Condition"]:
+            pred_role_args = set(pred_args.get(role, []))
+            gold_role_args = set(gold_args.get(role, []))
+
+            # True Positives (Only Exact Matches for Names)
+            exact_match_set = pred_role_args & gold_role_args
+
+            # Remove exact matches before fuzzy comparison
+            remaining_pred = pred_role_args - exact_match_set
+            remaining_gold = gold_role_args - exact_match_set
+
+            # Track fuzzy matches
+            matched_gold = set()
+            fuzzy_match_set = set()
+
+            if role in ["Asset", "Condition"]:  # ✅ Apply fuzzy matching ONLY to these roles
+                for p in remaining_pred:
+                    for g in remaining_gold:
+                        if fuzz.ratio(p, g) >= fuzzy_threshold:
+                            fuzzy_match_set.add(p)
+                            matched_gold.add(g)
+
+            # Calculate TP, FP, FN for arguments
+            arg_tp += len(exact_match_set) + len(fuzzy_match_set)
+
+            # **Ensure FN & FP are correctly counted**
+            unmatched_gold = gold_role_args - exact_match_set - matched_gold  # FN
+            unmatched_pred = pred_role_args - exact_match_set - fuzzy_match_set  # FP
+
+            if unmatched_gold:
+                arg_fn += len(unmatched_gold)
+                if gold_id not in false_negatives:
+                    false_negatives[gold_id] = {}
+                false_negatives[gold_id][role] = list(unmatched_gold)
+
+            if unmatched_pred:
+                arg_fp += len(unmatched_pred)
+                if pred_id not in false_positives:
+                    false_positives[pred_id] = {}
+                false_positives[pred_id][role] = list(unmatched_pred)
+
+    # Calculate Event-Level Scores
+    event_precision = event_tp / (event_tp + event_fp) if (event_tp + event_fp) > 0 else 0
+    event_recall = event_tp / (event_tp + event_fn) if (event_tp + event_fn) > 0 else 0
+    event_f1 = (2 * event_precision * event_recall / (event_precision + event_recall)) if (event_precision + event_recall) > 0 else 0
+
+    # Calculate Argument-Level Scores
+    arg_precision = arg_tp / (arg_tp + arg_fp) if (arg_tp + arg_fp) > 0 else 0
+    arg_recall = arg_tp / (arg_tp + arg_fn) if (arg_tp + arg_fn) > 0 else 0
+    arg_f1 = (2 * arg_precision * arg_recall / (arg_precision + arg_recall)) if (arg_precision + arg_recall) > 0 else 0
+
+    return event_tp, event_fp, event_fn, event_precision, event_recall, event_f1, arg_tp, arg_fp, arg_fn, arg_precision, arg_recall, arg_f1
 
 
-def calculate_total_entity_scores(pred_entities, gold_entities, fuzzy_threshold=70):
+def calculate_total_entity_scores(pred_entities, gold_entities, pred_file, fuzzy_threshold=70):
     total_tp = 0
     total_fp = 0
     total_fn = 0
 
     for entity_type in ["testator", "executor", "beneficiary", "asset", "condition"]:
-        tp, fp, fn, _, _, _ = compare_entities(pred_entities, gold_entities, entity_type, fuzzy_threshold)
+        tp, fp, fn, _, _, _ = compare_entities(pred_entities, gold_entities, entity_type, pred_file, fuzzy_threshold)
         total_tp += tp
         total_fp += fp
         total_fn += fn
@@ -251,12 +555,12 @@ def compare_files(pred_dir, gold_dir, output_csv, fuzzy_threshold=70):
 
                 # Calculate metrics for entities (iterate over all entity types)
                 entity_tp, entity_fp, entity_fn, entity_precision, entity_recall, entity_f1 = calculate_total_entity_scores(
-                    pred_entities, gold_entities, fuzzy_threshold=fuzzy_threshold
+                    pred_entities, gold_entities, pred_file, fuzzy_threshold=fuzzy_threshold
                 )
 
                 # Calculate metrics for events
-                event_tp, event_fp, event_fn, event_precision, event_recall, event_f1 = compare_events(
-                    pred_events, gold_events, pred_entities, gold_entities, fuzzy_threshold=fuzzy_threshold
+                event_tp, event_fp, event_fn, event_precision, event_recall, event_f1, arg_tp, arg_fp, arg_fn, arg_precision, arg_recall, arg_f1 = compare_events(
+                    pred_events, gold_events, pred_entities, gold_entities
                 )
 
                 # Append results
@@ -274,22 +578,27 @@ def compare_files(pred_dir, gold_dir, output_csv, fuzzy_threshold=70):
                     "event_fn": event_fn,
                     "event_precision": event_precision,
                     "event_recall": event_recall,
-                    "event_f1": event_f1
+                    "event_f1": event_f1,
+                    "arg_tp": arg_tp,
+                    "arg_fp": arg_fp,
+                    "arg_fn": arg_fn,
+                    "arg_precision": arg_precision,
+                    "arg_recall": arg_recall,
+                    "arg_f1": arg_f1
                 })
             else:
                 print(f"Gold file not found for {pred_file}")
 
     # Write results to CSV
     with open(output_csv, mode='w', newline='') as csvfile:
-        fieldnames = ["pred_file", "gold_file", "entity_tp", "entity_fp", "entity_fn", "entity_precision", "entity_recall", "entity_f1", "event_tp", "event_fp", "event_fn", "event_precision", "event_recall", "event_f1"]
+        fieldnames = ["pred_file", "gold_file", "entity_tp", "entity_fp", "entity_fn", "entity_precision", "entity_recall", "entity_f1", "event_tp", "event_fp", "event_fn", "event_precision", "event_recall", "event_f1", "arg_tp", "arg_fp", "arg_fn", "arg_precision", "arg_recall", "arg_f1"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
         writer.writeheader()
         writer.writerows(results)
 
 if __name__ == "__main__":
-    pred_dir = "../pred_dir"  # Replace with the actual path
-    gold_dir = "../gold_dir"  # Replace with the actual path
-    output_csv = "../comparison_results.csv"  # Replace with the desired output file name
+    pred_dir = "/Users/alicekwak/repos/dass-wills/text2extractions/output/full_text_TN"  # Replace with the actual path
+    gold_dir = "/Users/alicekwak/Desktop/UA_2024_Fall/RA/Dataset/Tennessee/human annotations/simplified-review"  # Replace with the actual path
+    output_csv = "/Users/alicekwak/Desktop/UA_2025_Spring/RA/comparison_results_0212.csv"  # Replace with the desired output file name
 
     compare_files(pred_dir, gold_dir, output_csv)
