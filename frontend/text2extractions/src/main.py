@@ -799,4 +799,4 @@ def main(prompt):
             print(f"Extraction completed for {filename}")
 
 if __name__ == "__main__":
-    main(full_prompt)
+    main(original_prompt)
