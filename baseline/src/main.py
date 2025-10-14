@@ -123,12 +123,21 @@ target_input = """
 
 class BeneficiaryDetail(BaseModel):
     share: float
+<<<<<<< Updated upstream
     rules_applied_text: List[str]
     rules_id: List[int]
 
 
 class AssetDistribution(BaseModel):
     beneficiaries: Dict[str, BeneficiaryDetail]
+=======
+    rules_id: List[str]
+    rules_applied_text: List[str]
+
+
+class AssetDistribution(BaseModel):
+    beneficiaries: Dict[str, BeneficiaryDetail]  # e.g., {"Person-2": BeneficiaryDetail(...)}
+>>>>>>> Stashed changes
 
 
 class WillSummary(BaseModel):
@@ -146,6 +155,7 @@ class WillSummary(BaseModel):
                             "type": "object",
                             "properties": {
                                 "share": {"type": "number"},
+<<<<<<< Updated upstream
                                 "rules_applied_text": {
                                     "type": "array",
                                     "items": {"type": "string"}
@@ -156,6 +166,18 @@ class WillSummary(BaseModel):
                                 }
                             },
                             "required": ["share", "rules_applied_text", "rules_id"]
+=======
+                                "rules_id": {
+                                    "type": "array",
+                                    "items": {"type": "string"}
+                                },
+                                "rules_applied_text": {
+                                    "type": "array",
+                                    "items": {"type": "string"}
+                                }
+                            },
+                            "required": ["share", "rules_id", "rules_applied_text"]
+>>>>>>> Stashed changes
                         }
                     }
                 },
@@ -259,17 +281,72 @@ def count_tokens(text, model="gpt-4o"):
     encoding = tiktoken.encoding_for_model(model)
     return len(encoding.encode(text))
 
-def main(prompt, target_text):
-    base_dir = "/Users/alicekwak/repos/dass-wills/baseline"
-    input_root = os.path.join(base_dir, "test")
-    sample_will_path = os.path.join(base_dir, "resources/sample_will.txt")
-    example_oracle_path = os.path.join(base_dir, "resources/example_oracle.json")
-    expected_output_path = os.path.join(base_dir, "resources/example_expected_output.json")
 
-    # Load static files
-    sample_will = read_file(sample_will_path)
-    example_oracle = read_file(example_oracle_path)
-    expected_output = read_file(expected_output_path)
+# def main(prompt, target_text):
+#     # The below paths should be adjusted to reflect the actual paths to the inputs, oracles, and outputs
+#     input_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed"
+#     oracle_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed/people_db.json"
+#     sample_will_dir = "../dass-wills/baseline/resources/sample_will.txt"
+#     example_oracle_dir = "../dass-wills/baseline/resources/example_oracle.json"
+#     expected_output_dir = "../example_expected_output.json"
+#     output_dir = "../output"
+#
+#     os.makedirs(output_dir, exist_ok=True)
+#
+#     # Load supporting files
+#     sample_will = read_file(sample_will_dir)
+#     example_oracle = read_file(example_oracle_dir)
+#     expected_output = read_file(expected_output_dir)
+#     example_oracle_clean = json.dumps(example_oracle, indent=2).replace("{", "{{").replace("}", "}}")
+#     expected_output_clean = json.dumps(expected_output, indent=2).replace("{", "{{").replace("}", "}}")
+#     oracle = read_file(oracle_dir)
+#     oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
+#
+#     # Fetch the API key from the environment variable
+#     key = 'OPEN_AI_KEY'
+#     client = OpenAI(api_key=key)
+#
+#     # Process each .txt file in the input directory
+#     for filename in os.listdir(input_dir):
+#         if filename.endswith(".txt"):
+#             input_path = os.path.join(input_dir, filename)
+#             output_filename = os.path.splitext(filename)[0] + '.json'
+#             output_path = os.path.join(output_dir, output_filename)
+#
+#             # Read and tokenize input file
+#             with open(input_path, 'r', encoding='utf-8') as file:
+#                 will_text = file.read()
+#
+#             prompt = prompt.format(
+#                 sample_will=sample_will,
+#                 example_oracle=example_oracle_clean,
+#                 expected_output=expected_output_clean,
+#             )
+#
+#             target_text = target_text.format(
+#                 will_text=will_text,
+#                 oracle=oracle_clean,
+#             )
+#
+#             # without self-consistency
+#             # extraction = summary_generation(prompt, target_text, client)
+#
+#             # with self-consistency
+#             most_common = self_consistent_summary(prompt, target_text, client)
+#             export_to_json(most_common, output_path)
+#             print(f"Summary generation completed for {filename}")
+
+
+# === MAIN FUNCTION ===
+def main(prompt_template, target_input_template, oracle_type="concise", iterations_per_case=4):
+    assert oracle_type in {"concise", "full"}, "oracle_type must be 'concise' or 'full'"
+
+    base_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed"
+
+    # Load sample/example files
+    sample_will = read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/sample_will.txt")
+    example_oracle = json.loads(read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/example_oracle.json"))
+    expected_output = json.loads(read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/example_expected_output.json"))
     example_oracle_clean = json.dumps(example_oracle, indent=2).replace("{", "{{").replace("}", "}}")
     expected_output_clean = json.dumps(expected_output, indent=2).replace("{", "{{").replace("}", "}}")
 
@@ -277,54 +354,44 @@ def main(prompt, target_text):
     key = 'API key'
     client = OpenAI(api_key=key)
 
-    # Process each subdirectory in input_root
-    for subdir in os.listdir(input_root):
-        subdir_path = os.path.join(input_root, subdir)
-        print(subdir_path)
-        if not os.path.isdir(subdir_path):
-            continue
+    for root, dirs, files in os.walk(base_dir):
+        if "will.txt" in files and f"{oracle_type}_people_db.json" in files:
+            will_path = os.path.join(root, "will.txt")
+            oracle_path = os.path.join(root, f"{oracle_type}_people_db.json")
 
-        will_path = os.path.join(subdir_path, "will.txt")
-        oracle_path = os.path.join(subdir_path, "concise_people_db.json")
-        output_path = os.path.join(subdir_path, "concise_oracle_revised_baseline.json")
+            will_text = read_file(will_path)
+            oracle = json.loads(read_file(oracle_path))
+            oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
 
-        # Ensure required files exist
-        if not (os.path.exists(will_path) and os.path.exists(oracle_path)):
-            print(f"Skipping {subdir}: missing will.txt or people_db.json")
-            continue
+            # Fill prompt
+            prompt = prompt_template.format(
+                sample_will=sample_will,
+                example_oracle=example_oracle_clean,
+                expected_output=expected_output_clean,
+            )
+            target_text = target_input_template.format(
+                will_text=will_text,
+                oracle=oracle_clean,
+            )
 
-        # Read input files
-        with open(will_path, 'r', encoding='utf-8') as f:
-            will_text = f.read()
+            subdir_name = os.path.basename(root).replace(" ", "").lower()  # sanitize
+            prefix = f"{oracle_type}_"
 
-        with open(oracle_path, 'r', encoding='utf-8') as f:
-            oracle = json.load(f)
-        oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
+            for i in range(1, iterations_per_case + 1):
+                output_filename = f"{prefix}{subdir_name}_{i}.json"
+                output_path = os.path.join(root, output_filename)
+                try:
+                    result = self_consistent_summary(prompt, target_text, client, iterations=1)
+                    export_to_json(result, output_path)
+                    print(f"[✓] {output_filename} saved in {root}")
+                except Exception as e:
+                    print(f"[ERROR] Failed on {subdir_name} iteration {i}: {e}")
+                    # Write an empty JSON object
+                    with open(output_path, 'w', encoding='utf-8') as f:
+                        json.dump({}, f, indent=4)
+                    print(f"[!] Empty file written: {output_filename}")
 
-        # Format prompt and target
-        prompt_formatted = prompt.format(
-            sample_will=sample_will,
-            example_oracle=example_oracle_clean,
-            expected_output=expected_output_clean,
-        )
-
-        target_text_formatted = target_text.format(
-            will_text=will_text,
-            oracle=oracle_clean,
-        )
-
-        word_count = len(target_text_formatted.split())
-        token_count = count_tokens(target_text_formatted, model="gpt-4o")
-        print(f"Word count: {word_count}")
-        print(f"Token count: {token_count}")
-
-        # Run model inference
-        # most_common = self_consistent_summary(prompt_formatted, target_text_formatted, client)
-
-        # Save output
-        # export_to_json(most_common, output_path)
-        # print(f"Saved output for {subdir} at {output_path}")
-
-
+# === ENTRY POINT ===
 if __name__ == "__main__":
-    main(basic_prompt, target_input)
+    # Options: "concise" or "full"
+    main(basic_prompt, target_input, oracle_type="full", iterations_per_case=5)
