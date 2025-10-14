@@ -1,0 +1,343 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "4th day of August, 2000",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-10]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-5] or [Person-6]'s heirs"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e11",
+                        "description": "$400.00 gold necklace, $1300.00 wedding ring set, $1200.00 loan that remained unpaid, Budweiser Horse and Wagon, Dog Picture, second $1000.00-$1500.00 wedding band set, Indian Carousel, Indian Head Bookends and jewelry box"
+                    },
+                    {
+                        "id": "e12",
+                        "description": "one porcelain piece, the large shed and contents, except for property stored there by [Person-6]"
+                    },
+                    {
+                        "id": "e13",
+                        "description": "John Deere mower, knife collection, car, house and property its on and all contents in said house"
+                    },
+                    {
+                        "id": "e14",
+                        "description": "one porcelain flower"
+                    },
+                    {
+                        "id": "e15",
+                        "description": "one wedding band"
+                    },
+                    {
+                        "id": "e16",
+                        "description": "the sum of $3000.00"
+                    },
+                    {
+                        "id": "e17",
+                        "description": "the balance of the funds in the Trust Account"
+                    },
+                    {
+                        "id": "e18",
+                        "description": "[Person-4]'s share"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "[Person-5]'s share"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "[Person-6]'s share"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "All the rest and remainder of my property, of whatever kind and nature and wheresoever situated"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e22",
+                        "text": "both sums to be paid first from the Trust funds"
+                    },
+                    {
+                        "id": "e23",
+                        "text": "1/4 to [Person-4]; 1/4 to [Person-5]; and 1/2 to [Person-6]"
+                    },
+                    {
+                        "id": "e24",
+                        "text": "Should for any reason [Person-4] predecease [Person-1]"
+                    },
+                    {
+                        "id": "e25",
+                        "text": "Should for any reason [Person-5] predecease [Person-1]"
+                    },
+                    {
+                        "id": "e26",
+                        "text": "Should for any reason [Person-6] predecease [Person-1]"
+                    },
+                    {
+                        "id": "e27",
+                        "text": "in equal shares"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e11"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e13"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e14"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e14"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e15"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": [
+                    "e22"
+                ]
+            },
+            {
+                "id": "v8",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": [
+                    "e22"
+                ]
+            },
+            {
+                "id": "v9",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4",
+                    "e5"
+                ],
+                "Asset": [
+                    "e17"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v10",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4",
+                    "e5",
+                    "e10"
+                ],
+                "Asset": [
+                    "e18"
+                ],
+                "Condition": [
+                    "e24"
+                ]
+            },
+            {
+                "id": "v11",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v12",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": [
+                    "e26"
+                ]
+            },
+            {
+                "id": "v13",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4",
+                    "e5"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": [
+                    "e27"
+                ]
+            }
+        ]
+    }
+}

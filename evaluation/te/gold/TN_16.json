@@ -1,0 +1,119 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "10th day of April, 1996",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-5]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-4]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e7",
+                        "description": "all of my property real, personal or mixed"
+                    },
+                    {
+                        "id": "e8",
+                        "description": "all the rest, residue and remainder of my property"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e9",
+                        "text": "If my husband and I should die simultaneously, or my husband predecease me"
+                    },
+                    {
+                        "id": "e10",
+                        "text": "equally, share and share alike"
+                    },
+                    {
+                        "id": "e11",
+                        "text": "If either or both of my children are under age 21 at the time of our death, I direct that [Person-5] be appointed Trustee and Guardian of all property bequeathed, given and devised to my children, that said property be held in trusts established by him for each child, and managed and used solely for the benefit of my children."
+                    },
+                    {
+                        "id": "e12",
+                        "text": "I direct that my Trustee pay to or on behalf of my children so much of the income and principal in such trusts as my Trustee in his sole and absolute discretion may determine is necessary for health, education and welfare or other needs of my children."
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e5",
+                    "e6"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": [
+                    "e9",
+                    "e10",
+                    "e11",
+                    "e12"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": []
+            }
+        ]
+    }
+}

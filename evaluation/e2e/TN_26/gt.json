@@ -3,24 +3,24 @@
     "beneficiaries": {
       "Person-2": {
         "share": 1.0,
-        "rules_applied_text": [
-          "Equal Allocation"
-        ],
         "rules_id": [
           1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
         ]
       }
     }
   },
-  "Savings Account": {
+  "One acre tract of land with dwelling": {
     "beneficiaries": {
       "Person-2": {
         "share": 1.0,
-        "rules_applied_text": [
-          "Equal Allocation"
-        ],
         "rules_id": [
           1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
         ]
       }
     }

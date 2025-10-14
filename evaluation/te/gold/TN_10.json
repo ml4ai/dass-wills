@@ -1,0 +1,393 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "20 day of December, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-18]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-19]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Organization-1]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Organization-2]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Organization-3]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e12",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e13",
+                        "name": "[Person-10]"
+                    },
+                    {
+                        "id": "e14",
+                        "name": "[Person-11]"
+                    },
+                    {
+                        "id": "e15",
+                        "name": "[Person-12]"
+                    },
+                    {
+                        "id": "e16",
+                        "name": "[Person-13]"
+                    },
+                    {
+                        "id": "e17",
+                        "name": "[Person-14]"
+                    },
+                    {
+                        "id": "e18",
+                        "name": "[Person-16]"
+                    },
+                    {
+                        "id": "e19",
+                        "name": "[Person-17]"
+                    },
+                    {
+                        "id": "e20",
+                        "name": "[Person-18]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e21",
+                        "description": "Certificate of Deposit No. [Number-1] in Union Planters Bank"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "$2,000.00"
+                    },
+                    {
+                        "id": "e23",
+                        "description": "$2,000.00"
+                    },
+                    {
+                        "id": "e24",
+                        "description": "$500.00"
+                    },
+                    {
+                        "id": "e25",
+                        "description": "$1,000.00"
+                    },
+                    {
+                        "id": "e26",
+                        "description": "$2,000.00"
+                    },
+                    {
+                        "id": "e27",
+                        "description": "$200.00"
+                    },
+                    {
+                        "id": "e28",
+                        "description": "$300.00"
+                    },
+                    {
+                        "id": "e29",
+                        "description": "$300.00"
+                    },
+                    {
+                        "id": "e30",
+                        "description": "$200.00"
+                    },
+                    {
+                        "id": "e31",
+                        "description": "$500.00"
+                    },
+                    {
+                        "id": "e32",
+                        "description": "$100.00"
+                    },
+                    {
+                        "id": "e33",
+                        "description": "house and lot"
+                    },
+                    {
+                        "id": "e34",
+                        "description": "all the rest, residue and remainder of my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e35",
+                        "text": "These three amounts are to be placed in perpetual funds with the earnings going to the upkeep of these cemeteries"
+                    },
+                    {
+                        "id": "e36",
+                        "text": "for [Person-5]'s college fund"
+                    },
+                    {
+                        "id": "e37",
+                        "text": "equally"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": [
+                    "e35"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e35"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e24"
+                ],
+                "Condition": [
+                    "e35"
+                ]
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e25"
+                ],
+                "Condition": [
+                    "e36"
+                ]
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9"
+                ],
+                "Asset": [
+                    "e26"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e27"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v8",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e11",
+                    "e12"
+                ],
+                "Asset": [
+                    "e28"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v9",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e13",
+                    "e14"
+                ],
+                "Asset": [
+                    "e29"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v10",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e15"
+                ],
+                "Asset": [
+                    "e30"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v11",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e16"
+                ],
+                "Asset": [
+                    "e31"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v12",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e17"
+                ],
+                "Asset": [
+                    "e32"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v13",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e18",
+                    "e19"
+                ],
+                "Asset": [
+                    "e33"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v14",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9",
+                    "e4",
+                    "e20"
+                ],
+                "Asset": [
+                    "e34"
+                ],
+                "Condition": [
+                    "e37"
+                ]
+            }
+        ]
+    }
+}

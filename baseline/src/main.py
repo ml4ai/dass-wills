@@ -258,7 +258,7 @@ def count_tokens(text, model="gpt-4o"):
     return len(encoding.encode(text))
 
 # === MAIN FUNCTION ===
-def main(prompt_template, target_input_template, oracle_type="concise", iterations_per_case=4):
+def main(prompt_template, target_input_template, oracle_type="concise", iterations_per_case=5):
     assert oracle_type in {"concise", "full"}, "oracle_type must be 'concise' or 'full'"
 
     base_dir = "Replace with the actual path"

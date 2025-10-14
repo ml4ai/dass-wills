@@ -1,0 +1,184 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "14th day of March, 1990",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-3] or [Person-4]'s issue who shall be living at [Person-1]'s death"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e8",
+                        "description": "all clothing, household goods, personal effects, and all other tangible personal property, not otherwise specifically bequeathed, owned by me at the time of my death"
+                    },
+                    {
+                        "id": "e9",
+                        "description": "farm located in Ripley, Tennessee, consisting of approximately 58-60 acres"
+                    },
+                    {
+                        "id": "e10",
+                        "description": "All the rest, residue and remainder of the property of the property which I may own at the time of my death, real, personal, and mixed, tangible and intangible, of whatsoever nature and wheresoever situated, including all property which I may acquire or become entitled to after the execution of this will, including all lapsed legacies and devises, and all life insurance payable to my estate"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e11",
+                        "text": "if [Person-2] should be living at the time of [Person-1]'s death"
+                    },
+                    {
+                        "id": "e12",
+                        "text": "If [Person-2] should not be living at [Person-1]'s death"
+                    },
+                    {
+                        "id": "e13",
+                        "text": "If [Person-2] should not survive [Person-1]"
+                    },
+                    {
+                        "id": "e14",
+                        "text": "in equal shares"
+                    },
+                    {
+                        "id": "e15",
+                        "text": "If either of [Person-3] and [Person-4] should not be living at [Person-1]'s death"
+                    },
+                    {
+                        "id": "e16",
+                        "text": "per stirpes"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e11"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e12"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e10"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e5",
+                    "e6"
+                ],
+                "Asset": [
+                    "e10"
+                ],
+                "Condition": [
+                    "e13",
+                    "e14"
+                ]
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e10"
+                ],
+                "Condition": [
+                    "e13",
+                    "e15",
+                    "e16"
+                ]
+            }
+        ]
+    }
+}

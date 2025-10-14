@@ -1,0 +1,354 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "4th day of April, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-3]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e6",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-7]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e12",
+                        "description": "my books, my horses (of any description); my egg collection, all my clocks the china cabinet located in the dining room along with all contents therein, and all gifts that he has given me over the years, including but not limited to the computer and desk and refrigerator"
+                    },
+                    {
+                        "id": "e13",
+                        "description": "my siamese cat, Sassy"
+                    },
+                    {
+                        "id": "e14",
+                        "description": "all my cat figurines and all my jewelry"
+                    },
+                    {
+                        "id": "e15",
+                        "description": "all outside yard equipment, the contents of my bank account at the Bank of Ripley, one-half(1/2) of the bank insurance, and all of my Vanguard IRA profit sharing"
+                    },
+                    {
+                        "id": "e16",
+                        "description": "the washer and dryer he gave to me"
+                    },
+                    {
+                        "id": "e17",
+                        "description": "the silver service promised to her years ago, along with the silver candlesticks"
+                    },
+                    {
+                        "id": "e18",
+                        "description": "my rock collection"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "one-half (1/2) of the bank insurance and my tool box and tools"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "my peacock collection, my humming birds, my sewing machine my jewelry armoire and all personal items (clothing, shoes coats etc.) which she may like"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "all gifts she has given me over the years including but not limited to the television, VCR and printer"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "furniture, pictures, knickknacks and any other property not heretofore bequeathed"
+                    },
+                    {
+                        "id": "e23",
+                        "description": "any unclaimed balance of these items"
+                    },
+                    {
+                        "id": "e24",
+                        "description": "rest, residue and remainder of my estate"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e25",
+                        "text": "one-half(1/2)"
+                    },
+                    {
+                        "id": "e26",
+                        "text": "before he decides to sell the collection, he realize that the large rock, an amethyst geode, is valued at $1,100.00 and the smaller rock, also an amethyst geode, is valued at $750.00"
+                    },
+                    {
+                        "id": "e27",
+                        "text": "choose in fair rotation"
+                    },
+                    {
+                        "id": "e28",
+                        "text": "equally"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e13"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e14"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e15"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e9"
+                ],
+                "Asset": [
+                    "e17"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e18"
+                ],
+                "Condition": [
+                    "e26"
+                ]
+            },
+            {
+                "id": "v8",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": [
+                    "e27"
+                ]
+            },
+            {
+                "id": "v9",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e11"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v10",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e11"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v11",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e8",
+                    "e10"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": [
+                    "e27"
+                ]
+            },
+            {
+                "id": "v12",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e11"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v13",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e8",
+                    "e10"
+                ],
+                "Asset": [
+                    "e24"
+                ],
+                "Condition": [
+                    "e28"
+                ]
+            }
+        ]
+    }
+}

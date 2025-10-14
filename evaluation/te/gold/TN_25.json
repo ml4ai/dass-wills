@@ -1,0 +1,312 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "2nd day of September 1998",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-10]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-11]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e12",
+                        "description": "ceramic bird picture and cast iron spoon and fork wall hangings, recliner, microwave and deep freezer"
+                    },
+                    {
+                        "id": "e13",
+                        "description": "\"Lords Supper picture\""
+                    },
+                    {
+                        "id": "e14",
+                        "description": "sling shot"
+                    },
+                    {
+                        "id": "e15",
+                        "description": "gold plated silverware"
+                    },
+                    {
+                        "id": "e16",
+                        "description": "one ceramic bird picture and all of my pots, pans and dishes"
+                    },
+                    {
+                        "id": "e17",
+                        "description": "dining room table, and the entire contents of the outside wooden shed"
+                    },
+                    {
+                        "id": "e18",
+                        "description": "lighthouse waterfall and the picture of my dog halo and his collar"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "walking cane and 22 calibur pistol"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "any cash at the time of death and any money in checking account"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "metal shed and all of its contents, along with everything else remaining in the house"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "house and GMC pick-up truck"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e23",
+                        "text": "no bequests be made until a suitable funeral is paid in full, and after all debts are paid"
+                    },
+                    {
+                        "id": "e24",
+                        "text": "After my house and truck have been sold, and all of my debts are paid"
+                    },
+                    {
+                        "id": "e25",
+                        "text": "to be divided equally among four children"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e13"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e14"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e15"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e17"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9"
+                ],
+                "Asset": [
+                    "e18"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v8",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v9",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v10",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v11",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e11",
+                    "e3",
+                    "e4",
+                    "e7"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": [
+                    "e23",
+                    "e24",
+                    "e25"
+                ]
+            }
+        ]
+    }
+}

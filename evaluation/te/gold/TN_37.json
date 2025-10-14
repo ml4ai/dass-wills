@@ -1,0 +1,174 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "13th day of October, 2000",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-9]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e5",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-10]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e12",
+                        "description": "all of my property of every kind, character and description, both real and personal"
+                    },
+                    {
+                        "id": "e13",
+                        "description": "proceeds from the sale of all my property"
+                    },
+                    {
+                        "id": "e14",
+                        "description": "monies from Promissory Note by [Person-7] and wife, [Person-8]"
+                    },
+                    {
+                        "id": "e15",
+                        "description": "monies from promissory note payable by [Person-10] and wife, [Person-11]"
+                    },
+                    {
+                        "id": "e16",
+                        "description": "all the rest, residue and remainder of my estate"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e17",
+                        "text": "if [Person-2] predeceases [Person-1] or should they die in a common accident or disaster"
+                    },
+                    {
+                        "id": "e18",
+                        "text": "equally"
+                    },
+                    {
+                        "id": "e19",
+                        "text": "if at the time of [Person-1]'s death, there is a Promissory Note still due and payable by [Person-7] and wife, [Person-8]"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e7",
+                    "e8",
+                    "e9"
+                ],
+                "Asset": [
+                    "e13"
+                ],
+                "Condition": [
+                    "e17",
+                    "e18"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e10",
+                    "e8",
+                    "e9"
+                ],
+                "Asset": [
+                    "e14"
+                ],
+                "Condition": [
+                    "e19",
+                    "e18"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e11",
+                    "e6",
+                    "e10",
+                    "e8",
+                    "e9"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": [
+                    "e18"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,212 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "February 15, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-5]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e7",
+                        "description": "home located at [Address-1], Gates, Tennessee, including all the household contents"
+                    },
+                    {
+                        "id": "e8",
+                        "description": "any automobile that [Person-1] might own at the time of [Person-1]'s demise"
+                    },
+                    {
+                        "id": "e9",
+                        "description": "royalties from any musical composition"
+                    },
+                    {
+                        "id": "e10",
+                        "description": "residue of [Person-1]'s estate"
+                    },
+                    {
+                        "id": "e11",
+                        "description": "[Person-2]'s devise"
+                    },
+                    {
+                        "id": "e12",
+                        "description": "[Person-3]'s devise"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e13",
+                        "text": "50% to [Person-3]"
+                    },
+                    {
+                        "id": "e14",
+                        "text": "25% to [Person-4]"
+                    },
+                    {
+                        "id": "e15",
+                        "text": "25% to [Person-2]"
+                    },
+                    {
+                        "id": "e16",
+                        "text": "equally to [Person-3] and [Person-2]"
+                    },
+                    {
+                        "id": "e17",
+                        "text": "In the event that [Person-2] should predecease [Person-1], his devise shall go to [Person-5]"
+                    },
+                    {
+                        "id": "e18",
+                        "text": "In the event that [Person-3] should predecease [Person-1]"
+                    },
+                    {
+                        "id": "e19",
+                        "text": "In the event that [Person-3] and [Person-2] should predecease [Person-1]"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4",
+                    "e5",
+                    "e3"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e13",
+                    "e14",
+                    "e15"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4",
+                    "e3"
+                ],
+                "Asset": [
+                    "e10"
+                ],
+                "Condition": [
+                    "e16"
+                ]
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e11"
+                ],
+                "Condition": [
+                    "e17"
+                ]
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": [
+                    "e18"
+                ]
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": [
+                    "e19"
+                ]
+            }
+        ]
+    }
+}

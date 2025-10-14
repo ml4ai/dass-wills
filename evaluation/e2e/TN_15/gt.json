@@ -1,0 +1,64 @@
+{
+  "House": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      },
+      "Person-3": {
+        "share": 0.25,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      },
+      "Person-4": {
+        "share": 0.25,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      }
+    }
+  },
+  "pictures": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      },
+      "Person-3": {
+        "share": 0.25,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      },
+      "Person-4": {
+        "share": 0.25,
+        "rules_applied_text": [
+          "Allocating a certain proportion to each person"
+        ],
+        "rules_id": [
+          3
+        ]
+      }
+    }
+  }
+}

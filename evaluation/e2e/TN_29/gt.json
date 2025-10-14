@@ -1,0 +1,68 @@
+{
+  "Household furnishings and contents": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      },
+      "Person-3": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "House": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      },
+      "Person-3": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "Lot": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      },
+      "Person-3": {
+        "share": 0.5,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  }
+}

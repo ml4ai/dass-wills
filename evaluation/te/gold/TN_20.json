@@ -1,43 +1,35 @@
 {
-    "testator_name": "Person-1",
-    "date_of_will": "",
+    "testator_name": "[Person-1]",
+    "date_of_will": "September 14, 2001",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Person-1"
+                    "name": "[Person-1]"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Person-5"
+                        "name": "[Person-2]"
                     }
                 ],
                 "beneficiary": [
                     {
                         "id": "e3",
-                        "name": "Person-2"
-                    },
-                    {
-                        "id": "e4",
-                        "name": "Person-3"
+                        "name": "[Person-2]"
                     }
                 ],
                 "asset": [
                     {
-                        "id": "e5",
-                        "description": "my house"
+                        "id": "e4",
+                        "description": "entire estate"
                     }
                 ],
                 "condition": [
                     {
-                        "id": "e6",
-                        "text": "60%"
-                    },
-                    {
-                        "id": "e7",
-                        "text": "40%"
+                        "id": "e5",
+                        "description": "after debts, costs, and expenses"
                     }
                 ]
             }
@@ -51,15 +43,13 @@
                     "e2"
                 ],
                 "Beneficiary": [
-                    "e3",
-                    "e4"
+                    "e3"
                 ],
                 "Asset": [
-                    "e5"
+                    "e4"
                 ],
                 "Condition": [
-                    "e6",
-                    "e7"
+                    "e5"
                 ]
             }
         ]

@@ -1,0 +1,136 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "8th of June, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-6]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Organization-1]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e8",
+                        "description": "all the rest, residue and remainder of my property, real, personal and mixed, of whatever kind and nature and wheresoever situated"
+                    },
+                    {
+                        "id": "e9",
+                        "description": "[Person-3] or [Person-4]'s share"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e10",
+                        "text": "50%"
+                    },
+                    {
+                        "id": "e11",
+                        "text": "25%"
+                    },
+                    {
+                        "id": "e12",
+                        "text": "In the event [Person-3] or [Person-4] predecease [Person-1]"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": [
+                    "e10"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": [
+                    "e11"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": [
+                    "e11"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e12"
+                ]
+            }
+        ]
+    }
+}

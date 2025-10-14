@@ -2,25 +2,21 @@
   "House": {
     "beneficiaries": {
       "Person-2": {
-        "share": 1.0,
+        "share": 0.5,
         "rules_applied_text": [
-          "Equal Allocation"
+          "Allocation Per stirpes"
         ],
         "rules_id": [
-          1
+          0
         ]
-      }
-    }
-  },
-  "Savings Account": {
-    "beneficiaries": {
-      "Person-2": {
-        "share": 1.0,
+      },
+      "Person-3": {
+        "share": 0.5,
         "rules_applied_text": [
-          "Equal Allocation"
+          "Allocation Per stirpes"
         ],
         "rules_id": [
-          1
+          0
         ]
       }
     }

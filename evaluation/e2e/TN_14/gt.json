@@ -3,16 +3,16 @@
     "beneficiaries": {
       "Person-2": {
         "share": 1.0,
-        "rules_applied_text": [
-          "Equal Allocation"
-        ],
         "rules_id": [
           1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
         ]
       }
     }
   },
-  "Savings Account": {
+  "farm on the Curve Central Road in Lauderdale County, Tennessee, by deeds recorded in Book 101, page 110, and Book 30, page 141": {
     "beneficiaries": {
       "Person-2": {
         "share": 1.0,

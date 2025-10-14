@@ -1,0 +1,713 @@
+{
+    "people": [
+        {
+            "id": 12,
+            "first_name": "LEO",
+            "last_name": "",
+            "full_name": "Leo Arwood",
+            "age": 49,
+            "date_of_birth": "1974-01-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "Family Home",
+                    "type": "Property",
+                    "Location": "Tupperware Corporation of Halls, Tennessee"
+                },
+                {
+                    "name": "Toyota Camry",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 49,
+            "first_name": "Athalene",
+            "last_name": "",
+            "full_name": "Athalene Arwood",
+            "age": 49,
+            "date_of_birth": "1974-02-26",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "Hona Accord",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 19,
+            "first_name": "CLAY",
+            "last_name": "",
+            "full_name": "Clayton F. Bentley",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 1,
+            "first_name": "Person-1",
+            "last_name": "",
+            "full_name": "Person-1",
+            "age": 65,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "false",
+            "assets": [
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of twenty-five thousand dollars  ($25,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "the sum of five thousand dollars ($5,000.00)",
+                    "type": "Financial",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "Rocking chair",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "Table",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "Television",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "Bed",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "Couch",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "DVD player",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "diamond ring that formerly belonged to [Person-12]",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "wedding ring",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "diamond ring",
+                    "type": "Personal Item",
+                    "Location": "Tennessee"
+                },
+                {
+                    "name": "House",
+                    "type": "Property",
+                    "Location": "Tennessee"
+                }
+            ],
+            "children_ids": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 2,
+            "first_name": "Person-2",
+            "last_name": "",
+            "full_name": "Person-2",
+            "age": 41,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "alive": "true",
+            "assets": [
+                {
+                    "name": "PlayStation 5",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": [
+                4,
+                6,
+                7
+            ]
+        },
+        {
+            "id": 3,
+            "first_name": "Person-3",
+            "last_name": "",
+            "full_name": "Person-3",
+            "age": 40,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": 10,
+            "assets": [
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                5,
+                8,
+                9
+            ]
+        },
+        {
+            "id": 4,
+            "first_name": "Person-4",
+            "last_name": "",
+            "full_name": "Person-4",
+            "age": 23,
+            "alive": "true",
+            "date_of_birth": "2000-07-15",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Rental Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Honda Civic",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "Stock Portfolio",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 5,
+            "first_name": "Person-5",
+            "last_name": "",
+            "full_name": "Person-5",
+            "age": 10,
+            "date_of_birth": "2017-07-30",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Smartphone",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Bicycle",
+                    "type": "Vehicle"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 6,
+            "first_name": "Person-6",
+            "last_name": "",
+            "full_name": "Person-6",
+            "age": 31,
+            "date_of_birth": "1993-03-13",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Apartment",
+                    "type": "Property"
+                },
+                {
+                    "name": "Motorcycle",
+                    "type": "Vehicle"
+                },
+                {
+                    "name": "401(k) Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 7,
+            "first_name": "Person-7",
+            "last_name": "",
+            "full_name": "Person-7",
+            "age": 25,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "Gaming PC",
+                    "type": "Electronics"
+                },
+                {
+                    "name": "Savings Account",
+                    "type": "Financial"
+                }
+            ],
+            "children_ids": [
+                11
+            ]
+        },
+        {
+            "id": 8,
+            "first_name": "Person-8",
+            "last_name": "",
+            "full_name": "Person-8",
+            "age": 16,
+            "date_of_birth": "2008-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 9,
+            "first_name": "Person-9",
+            "last_name": "",
+            "full_name": "Person-9",
+            "age": 15,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 10,
+            "first_name": "Person-10",
+            "last_name": "",
+            "full_name": "Person-10",
+            "age": 38,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": 3,
+            "assets": [
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 11,
+            "first_name": "Person-11",
+            "last_name": "",
+            "full_name": "Person-11",
+            "age": 6,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 12,
+            "first_name": "Person-12",
+            "last_name": "",
+            "full_name": "Person-12",
+            "age": 85,
+            "date_of_birth": "",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "false",
+            "spouse_id": null,
+            "assets": [],
+            "children_ids": []
+        },
+        {
+            "id": 13,
+            "first_name": "Person-13",
+            "last_name": "",
+            "full_name": "Person-13",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 14,
+            "first_name": "Person-14",
+            "last_name": "",
+            "full_name": "Person-14",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 15,
+            "first_name": "Person-15",
+            "last_name": "",
+            "full_name": "Person-15",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 16,
+            "first_name": "Person-16",
+            "last_name": "",
+            "full_name": "Person-16",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 17,
+            "first_name": "Person-17",
+            "last_name": "",
+            "full_name": "Person-17",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 18,
+            "first_name": "Person-18",
+            "last_name": "",
+            "full_name": "Person-18",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 19,
+            "first_name": "organization-1",
+            "last_name": "",
+            "full_name": "organization-1",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 20,
+            "first_name": "Organization1",
+            "last_name": "",
+            "full_name": "Organization1",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 21,
+            "first_name": "Organization2",
+            "last_name": "",
+            "full_name": "Organization2",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 22,
+            "first_name": "Organization3",
+            "last_name": "",
+            "full_name": "Organization3",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        },
+        {
+            "id": 23,
+            "first_name": "Organization4",
+            "last_name": "",
+            "full_name": "Organization4",
+            "age": 25,
+            "date_of_birth": "2000-01-19",
+            "email": "",
+            "phone": "",
+            "address": "",
+            "alive": "true",
+            "spouse_id": null,
+            "assets": [
+                {
+                    "name": "College Savings Fund",
+                    "type": "Financial"
+                },
+                {
+                    "name": "Laptop",
+                    "type": "Electronics"
+                }
+            ],
+            "children_ids": []
+        }
+    ]
+}

@@ -1,0 +1,136 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "15th day of June, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-9]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "any other grandchildren at the time of [Person-1]'s death"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e12",
+                        "description": "homeplace on [Address-2], about 63 acres, more or less, with dwelling house, including all furnishings and contents, and the automobile [Person-1] owns at her death"
+                    },
+                    {
+                        "id": "e13",
+                        "description": "all the rest and residue of [Person-1]'s property, including but not limited to, any certificates of deposit [Person-1] owns at her death"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e14",
+                        "text": "for [Person-2]'s lifetime, with remainder interest to [Person-1]'s grandchildren, [Person-3], [Person-4], [Person-5], [Person-6], [Person-7], and [Person-8], equally"
+                    },
+                    {
+                        "id": "e15",
+                        "text": "If [Person-1] has any other grandchildren at the time of her death, they are to share equally"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": [
+                    "e14"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4",
+                    "e5",
+                    "e6",
+                    "e7",
+                    "e8",
+                    "e9",
+                    "e11"
+                ],
+                "Asset": [
+                    "e12"
+                ],
+                "Condition": [
+                    "e14",
+                    "e15"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e13"
+                ],
+                "Condition": []
+            }
+        ]
+    }
+}

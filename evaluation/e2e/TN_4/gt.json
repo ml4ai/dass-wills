@@ -1,0 +1,54 @@
+{
+  "Homeplace on [Address-2], with dwelling house": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "Automobile": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "House furnishings and contents": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "Certificate of Deposit": {
+    "beneficiaries": {
+      "Person-9": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  }
+}

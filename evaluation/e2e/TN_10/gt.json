@@ -1,0 +1,54 @@
+{
+  "House": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_id": [
+          1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
+        ]
+      }
+    }
+  },
+  "Lot": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_id": [
+          1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
+        ]
+      }
+    }
+  },
+  "Household Contents": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_id": [
+          1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
+        ]
+      }
+    }
+  },
+  "Automobile": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_id": [
+          1
+        ],
+        "rules_applied_text": [
+          "Equal Allocation"
+        ]
+      }
+    }
+  }
+}

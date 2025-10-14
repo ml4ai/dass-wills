@@ -1,0 +1,255 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "30th day of November 1989",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-10]"
+                    },
+                    {
+                        "id": "e12",
+                        "name": "[Person-11]"
+                    },
+                    {
+                        "id": "e13",
+                        "name": "[Person-12]"
+                    },
+                    {
+                        "id": "e14",
+                        "name": "[Person-13]"
+                    },
+                    {
+                        "id": "e15",
+                        "name": "[Person-14]"
+                    },
+                    {
+                        "id": "e16",
+                        "name": "[Person-15]"
+                    },
+                    {
+                        "id": "e17",
+                        "name": "[Person-16]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e18",
+                        "description": "all of my property, real, personal and mixed, and wheresoever situated"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "one-fifth interest in [Location-1] (276 acres) located in [Address-1] of Lauderdale County, Tennessee"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "Lakeland stock and AT&T stock"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "funds I have in the bank"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "all of the rest and residue of my property, real, personal and mixed, and wheresoever situated, including vehicles, furniture and my real estate located at [Address-2] in Ripley, Tennessee"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e23",
+                        "text": "provided that [Person-2] survives [Person-1]"
+                    },
+                    {
+                        "id": "e24",
+                        "text": "In the event that [Person-2] does not survive [Person-1]"
+                    },
+                    {
+                        "id": "e25",
+                        "text": "to be divided equally"
+                    },
+                    {
+                        "id": "e26",
+                        "text": "I hereby direct my Executor to pay all of my lawful debts and funeral expenses with the funds I have in the bank prior to the sale of any property"
+                    },
+                    {
+                        "id": "e27",
+                        "text": "One-half of this remaining fund is to be divided in equal shares to [Person-4], [Person-5] and [Person-6]"
+                    },
+                    {
+                        "id": "e28",
+                        "text": "The other one-half of this fund is to be divided in equal shares to [Person-8], [Person-9], [Person-10], [Person-11], [Person-12], [Person-13] and [Person-14]"
+                    },
+                    {
+                        "id": "e29",
+                        "text": "net proceeds from the sale after the said debts are paid are to be equally to [Person-7], [Person-15] and [Person-16]"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e18"
+                ],
+                "Condition": [
+                    "e23"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5",
+                    "e6",
+                    "e7"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": [
+                    "e24",
+                    "e25"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": [
+                    "e24"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5",
+                    "e6",
+                    "e7"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": [
+                    "e24",
+                    "e26",
+                    "e27"
+                ]
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9",
+                    "e10",
+                    "e11",
+                    "e12",
+                    "e13",
+                    "e14",
+                    "e15"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": [
+                    "e24",
+                    "e26",
+                    "e28"
+                ]
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8",
+                    "e16",
+                    "e17"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": [
+                    "e29"
+                ]
+            }
+        ]
+    }
+}

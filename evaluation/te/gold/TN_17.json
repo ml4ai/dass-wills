@@ -1,0 +1,131 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "30th day of December, 1987",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-4]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e7",
+                        "description": "all of my property, real, personal or mixed"
+                    },
+                    {
+                        "id": "e8",
+                        "description": "farm on the Curve Central Road in Lauderdale County, Tennessee, by deeds recorded in Book 101, page 110, and Book 30, page 141"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e9",
+                        "text": "if [Person-2] is living at the time of [Person-1]'s death"
+                    },
+                    {
+                        "id": "e10",
+                        "text": "if [Person-2] predeceases [Person-1]"
+                    },
+                    {
+                        "id": "e11",
+                        "text": "if at the time of [Person-1]'s death [Person-3] and [Person-4] are minors"
+                    },
+                    {
+                        "id": "e12",
+                        "text": "property be held in trust by [Person-5] and managed and used solely for the benefit of [Person-3] and [Person-4]"
+                    },
+                    {
+                        "id": "e13",
+                        "text": "I have a farm on the Curve Central Road in Lauderdale County, Tennessee, by deeds recorded in Book 101, page 110, and Book 30, page 141. It is my direction that this property can not be mortgaged or sold."
+                    },
+                    {
+                        "id": "e14",
+                        "text": "If at [Person-1]'s death [Person-2] and [Person-5] are both deceased, then I request the Court appoint a Trustee to manage the property for these children, but specifically direct that the Trustee not be a step father or step mother."
+                    },
+                    {
+                        "id": "e15",
+                        "text": "I direct that any Trustee make periodic accountings to the Court, and that the Trust be Court supervised"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": [
+                    "e9"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [],
+                "Beneficiary": [
+                    "e4",
+                    "e5"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": [
+                    "e10",
+                    "e13"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [],
+                "Beneficiary": [
+                    "e4",
+                    "e5"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": [
+                    "e10",
+                    "e11",
+                    "e12",
+                    "e13",
+                    "e14",
+                    "e15"
+                ]
+            }
+        ]
+    }
+}

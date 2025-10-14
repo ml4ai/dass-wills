@@ -1,0 +1,356 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "30th day of October, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Organization-1]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Organization-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Organization-3]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Organization-4]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e12",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e13",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e14",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e15",
+                        "name": "[Person-10]"
+                    },
+                    {
+                        "id": "e16",
+                        "name": "[Person-11]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e17",
+                        "description": "furniture, appliances and personal effects"
+                    },
+                    {
+                        "id": "e18",
+                        "description": "condominium located at 214 Garden Place, Ripley, Tennessee"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "$10,000.00"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "$5,000.00"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "$2,500.00"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "$1,000.00"
+                    },
+                    {
+                        "id": "e23",
+                        "description": "remaining estate"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e24",
+                        "text": "25% of my remaining estate"
+                    },
+                    {
+                        "id": "e25",
+                        "text": "11% of my remaining estate"
+                    },
+                    {
+                        "id": "e26",
+                        "text": "2.5% of my remaining estate"
+                    },
+                    {
+                        "id": "e27",
+                        "text": "1.0% of my remaining estate"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e6"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e7"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e8"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e24"
+                ]
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e9"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e24"
+                ]
+            },
+            {
+                "id": "v8",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e10"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v9",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e11"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v10",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e12"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v11",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e13"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e25"
+                ]
+            },
+            {
+                "id": "v12",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e14"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e26"
+                ]
+            },
+            {
+                "id": "v13",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e15"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e27"
+                ]
+            },
+            {
+                "id": "v13",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e16"
+                ],
+                "Asset": [
+                    "e23"
+                ],
+                "Condition": [
+                    "e26"
+                ]
+            }
+        ]
+    }
+}

@@ -1,45 +1,36 @@
 {
-    "testator_name": "Person-1",
-    "date_of_will": "",
+    "testator_name": "[Person-1]",
+    "date_of_will": "13th day of September, 2001",
     "extractions": {
         "entities": [
             {
                 "testator": {
                     "id": "e1",
-                    "name": "Person-1"
+                    "name": "[Person-1]"
                 },
                 "executor": [
                     {
                         "id": "e2",
-                        "name": "Person-5"
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
                     }
                 ],
                 "beneficiary": [
                     {
-                        "id": "e3",
-                        "name": "Person-2"
-                    },
-                    {
                         "id": "e4",
-                        "name": "Person-3"
+                        "name": "Trustee of the Living Trust Agreement of [Person-1]"
                     }
                 ],
                 "asset": [
                     {
                         "id": "e5",
-                        "description": "my house"
+                        "description": "entire estate, after payment of debts, taxes and expenses"
                     }
                 ],
-                "condition": [
-                    {
-                        "id": "e6",
-                        "text": "60%"
-                    },
-                    {
-                        "id": "e7",
-                        "text": "40%"
-                    }
-                ]
+                "condition": []
             }
         ],
         "events": [
@@ -51,16 +42,12 @@
                     "e2"
                 ],
                 "Beneficiary": [
-                    "e3",
                     "e4"
                 ],
                 "Asset": [
                     "e5"
                 ],
-                "Condition": [
-                    "e6",
-                    "e7"
-                ]
+                "Condition": []
             }
         ]
     }

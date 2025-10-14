@@ -1,0 +1,85 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "7th day of November, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-6]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-6]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e6",
+                        "description": "the house and 10.27 acre [Person-2] tract of land in the [Address-2] of Lauderdale County, which was deeded to [Person-1] by [Person-2] in Deed Book 52, page 122, Register's Office of Lauderdale County, Tennessee"
+                    },
+                    {
+                        "id": "e7",
+                        "description": "All the rest of [Person-1]'s property, including any furnishings inside the house, any money [Person-1] has, and any other property of any kind"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e8",
+                        "text": "equally"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e3",
+                    "e4"
+                ],
+                "Asset": [
+                    "e6"
+                ],
+                "Condition": [
+                    "e8"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e7"
+                ],
+                "Condition": []
+            }
+        ]
+    }
+}

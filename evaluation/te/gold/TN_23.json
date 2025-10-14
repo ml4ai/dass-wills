@@ -1,0 +1,301 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "12th day of December, 2001",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-5]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e6",
+                        "name": "[Person-6]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-4]"
+                    },
+                    {
+                        "id": "e8",
+                        "name": "[Person-7]"
+                    },
+                    {
+                        "id": "e9",
+                        "name": "[Person-5]"
+                    },
+                    {
+                        "id": "e10",
+                        "name": "[Person-8]"
+                    },
+                    {
+                        "id": "e11",
+                        "name": "[Person-9]"
+                    },
+                    {
+                        "id": "e12",
+                        "name": "[Person-11]"
+                    },
+                    {
+                        "id": "e13",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e14",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e15",
+                        "name": "[Person-2] or [Person-3]'s children"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e16",
+                        "description": "twenty-five thousand dollars ($25,000.00) each to my grandchildren"
+                    },
+                    {
+                        "id": "e17",
+                        "description": "five thousand dollars ($5,000.00) to my great-grandson [Person-11]"
+                    },
+                    {
+                        "id": "e18",
+                        "description": "one item of furniture or other item of personal property from my residence"
+                    },
+                    {
+                        "id": "e19",
+                        "description": "diamond ring that formerly belonged to my uncle, [Person-12]"
+                    },
+                    {
+                        "id": "e20",
+                        "description": "wedding ring and my other diamond ring"
+                    },
+                    {
+                        "id": "e21",
+                        "description": "rest and residue of my estate, whether it be real, personal or mixed property"
+                    },
+                    {
+                        "id": "e22",
+                        "description": "[Person-2] or [Person-3]'s one-half share of my remaining estate"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e23",
+                        "text": "if they survive me"
+                    },
+                    {
+                        "id": "e24",
+                        "text": "I direct that the sums being paid to my grandchildren, [Person-8] and [Person-9], be held in trust for their future use and benefit until they reach the age of twenty-five (25)."
+                    },
+                    {
+                        "id": "e25",
+                        "text": "I direct that [Person-3] and wife, [Person-10], serve as Co-Trustees without bond"
+                    },
+                    {
+                        "id": "e26",
+                        "text": "to be held in trust for his future use and benefit until he reaches the age of twenty-five (25)"
+                    },
+                    {
+                        "id": "e27",
+                        "text": "I appoint his mother, [Person-7], to serve as Trustee without bond."
+                    },
+                    {
+                        "id": "e28",
+                        "text": "if they survive me"
+                    },
+                    {
+                        "id": "e29",
+                        "text": "if any of my grandchildren are minors, I direct that their parent or guardian shall have the right to choose on their behalf."
+                    },
+                    {
+                        "id": "e30",
+                        "text": "I specifically direct that the items of furniture or personal property selected by each grandchild or their representative shall be of approximately equal appraised value"
+                    },
+                    {
+                        "id": "e31",
+                        "text": "if any recipient should select an item that is greater in value than that selected by any of the other beneficiaries under this paragraph, then that beneficiary shall have the right to choose additional items so as to approximately equalize the value of furniture or personal items being received by each grandchild."
+                    },
+                    {
+                        "id": "e32",
+                        "text": "equally"
+                    },
+                    {
+                        "id": "e33",
+                        "text": "if they survive me"
+                    },
+                    {
+                        "id": "e34",
+                        "text": "If either one of my sons should predecease me"
+                    },
+                    {
+                        "id": "e35",
+                        "text": "in equal shares"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e7",
+                    "e8",
+                    "e9",
+                    "e10",
+                    "e11"
+                ],
+                "Asset": [
+                    "e16"
+                ],
+                "Condition": [
+                    "e23",
+                    "e24",
+                    "e25"
+                ]
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e12"
+                ],
+                "Asset": [
+                    "e17"
+                ],
+                "Condition": [
+                    "e26",
+                    "e27"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e6",
+                    "e7",
+                    "e8",
+                    "e9",
+                    "e10",
+                    "e11"
+                ],
+                "Asset": [
+                    "e18"
+                ],
+                "Condition": [
+                    "e28",
+                    "e29",
+                    "e30",
+                    "e31"
+                ]
+            },
+            {
+                "id": "v4",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e13"
+                ],
+                "Asset": [
+                    "e19"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v5",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e14"
+                ],
+                "Asset": [
+                    "e20"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v6",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e14",
+                    "e13"
+                ],
+                "Asset": [
+                    "e21"
+                ],
+                "Condition": [
+                    "e32",
+                    "e33"
+                ]
+            },
+            {
+                "id": "v7",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e15"
+                ],
+                "Asset": [
+                    "e22"
+                ],
+                "Condition": [
+                    "e34",
+                    "e35"
+                ]
+            }
+        ]
+    }
+}

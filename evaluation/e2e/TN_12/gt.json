@@ -1,0 +1,80 @@
+{
+  "House": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "all clothing": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "household goods": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "farm located in Ripley, Tennessee, consisting of approximately 58-60 acres": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "lapsed legacies and devises": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  },
+  "life insurance payments": {
+    "beneficiaries": {
+      "Person-2": {
+        "share": 1.0,
+        "rules_applied_text": [
+          "Equal Allocation"
+        ],
+        "rules_id": [
+          1
+        ]
+      }
+    }
+  }
+}

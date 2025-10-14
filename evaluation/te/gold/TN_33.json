@@ -1,0 +1,77 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "17th day of September, 1997",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e4",
+                        "name": "[Person-4]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e5",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e6",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e7",
+                        "name": "[Person-4]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e8",
+                        "description": "all of my property, real, personal and mixed, and wheresoever situated, that I may own at the time of my death"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e9",
+                        "text": "in equal shares"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2",
+                    "e3",
+                    "e4"
+                ],
+                "Beneficiary": [
+                    "e5",
+                    "e6",
+                    "e7"
+                ],
+                "Asset": [
+                    "e8"
+                ],
+                "Condition": [
+                    "e9"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,115 @@
+{
+    "testator_name": "[Person-1]",
+    "date_of_will": "11 day of July 1985",
+    "extractions": {
+        "entities": [
+            {
+                "testator": {
+                    "id": "e1",
+                    "name": "[Person-1]"
+                },
+                "executor": [
+                    {
+                        "id": "e2",
+                        "name": "[Person-3]"
+                    },
+                    {
+                        "id": "e3",
+                        "name": "[Person-2]"
+                    }
+                ],
+                "beneficiary": [
+                    {
+                        "id": "e4",
+                        "name": "[Person-2]"
+                    },
+                    {
+                        "id": "e5",
+                        "name": "[Person-3]"
+                    }
+                ],
+                "asset": [
+                    {
+                        "id": "e6",
+                        "description": "Any automobile I own at my death"
+                    },
+                    {
+                        "id": "e7",
+                        "description": "All the property I have in the nature of profit sharing in the Tupperware Corporation of Halls, Tennessee"
+                    },
+                    {
+                        "id": "e8",
+                        "description": "All the money I have in the Lauderdale County Bank of Halls, Tennessee"
+                    },
+                    {
+                        "id": "e9",
+                        "description": "All the rest, residue and remainder of the property which I may own at my death, real, personal or mixed, tangible or intangible, of whatsoever nature and wheresoever situated including all property which I may acquire or become entitled to after the execution of this Will"
+                    }
+                ],
+                "condition": [
+                    {
+                        "id": "e10",
+                        "text": "if [Person-3] be living at [Person-1]'s death"
+                    },
+                    {
+                        "id": "e11",
+                        "text": "if [Person-3] is not living at [Person-1]'s death"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "id": "v1",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e6",
+                    "e7",
+                    "e8"
+                ],
+                "Condition": []
+            },
+            {
+                "id": "v2",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e2"
+                ],
+                "Beneficiary": [
+                    "e5"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e10"
+                ]
+            },
+            {
+                "id": "v3",
+                "type": "Bequest",
+                "Testator": "e1",
+                "Executor": [
+                    "e3"
+                ],
+                "Beneficiary": [
+                    "e4"
+                ],
+                "Asset": [
+                    "e9"
+                ],
+                "Condition": [
+                    "e11"
+                ]
+            }
+        ]
+    }
+}
