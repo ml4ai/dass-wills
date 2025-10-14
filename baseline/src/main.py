@@ -123,22 +123,12 @@ target_input = """
 
 class BeneficiaryDetail(BaseModel):
     share: float
-<<<<<<< Updated upstream
     rules_applied_text: List[str]
     rules_id: List[int]
 
 
 class AssetDistribution(BaseModel):
     beneficiaries: Dict[str, BeneficiaryDetail]
-=======
-    rules_id: List[str]
-    rules_applied_text: List[str]
-
-
-class AssetDistribution(BaseModel):
-    beneficiaries: Dict[str, BeneficiaryDetail]  # e.g., {"Person-2": BeneficiaryDetail(...)}
->>>>>>> Stashed changes
-
 
 class WillSummary(BaseModel):
     __root__: Dict[str, AssetDistribution]
@@ -155,7 +145,6 @@ class WillSummary(BaseModel):
                             "type": "object",
                             "properties": {
                                 "share": {"type": "number"},
-<<<<<<< Updated upstream
                                 "rules_applied_text": {
                                     "type": "array",
                                     "items": {"type": "string"}
@@ -166,18 +155,6 @@ class WillSummary(BaseModel):
                                 }
                             },
                             "required": ["share", "rules_applied_text", "rules_id"]
-=======
-                                "rules_id": {
-                                    "type": "array",
-                                    "items": {"type": "string"}
-                                },
-                                "rules_applied_text": {
-                                    "type": "array",
-                                    "items": {"type": "string"}
-                                }
-                            },
-                            "required": ["share", "rules_id", "rules_applied_text"]
->>>>>>> Stashed changes
                         }
                     }
                 },
@@ -247,7 +224,6 @@ def sanitize_shares(will_json):
                 ben["share"] = None  # or 0.0
     return will_json
 
-
 def self_consistent_summary(prompt, target_text, client, iterations=10, tie_breaking='first'):
     outputs = [summary_generation(prompt, target_text, client) for _ in range(iterations)]
     count = Counter(outputs)
@@ -281,77 +257,21 @@ def count_tokens(text, model="gpt-4o"):
     encoding = tiktoken.encoding_for_model(model)
     return len(encoding.encode(text))
 
-
-# def main(prompt, target_text):
-#     # The below paths should be adjusted to reflect the actual paths to the inputs, oracles, and outputs
-#     input_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed"
-#     oracle_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed/people_db.json"
-#     sample_will_dir = "../dass-wills/baseline/resources/sample_will.txt"
-#     example_oracle_dir = "../dass-wills/baseline/resources/example_oracle.json"
-#     expected_output_dir = "../example_expected_output.json"
-#     output_dir = "../output"
-#
-#     os.makedirs(output_dir, exist_ok=True)
-#
-#     # Load supporting files
-#     sample_will = read_file(sample_will_dir)
-#     example_oracle = read_file(example_oracle_dir)
-#     expected_output = read_file(expected_output_dir)
-#     example_oracle_clean = json.dumps(example_oracle, indent=2).replace("{", "{{").replace("}", "}}")
-#     expected_output_clean = json.dumps(expected_output, indent=2).replace("{", "{{").replace("}", "}}")
-#     oracle = read_file(oracle_dir)
-#     oracle_clean = json.dumps(oracle, indent=2).replace("{", "{{").replace("}", "}}")
-#
-#     # Fetch the API key from the environment variable
-#     key = 'OPEN_AI_KEY'
-#     client = OpenAI(api_key=key)
-#
-#     # Process each .txt file in the input directory
-#     for filename in os.listdir(input_dir):
-#         if filename.endswith(".txt"):
-#             input_path = os.path.join(input_dir, filename)
-#             output_filename = os.path.splitext(filename)[0] + '.json'
-#             output_path = os.path.join(output_dir, output_filename)
-#
-#             # Read and tokenize input file
-#             with open(input_path, 'r', encoding='utf-8') as file:
-#                 will_text = file.read()
-#
-#             prompt = prompt.format(
-#                 sample_will=sample_will,
-#                 example_oracle=example_oracle_clean,
-#                 expected_output=expected_output_clean,
-#             )
-#
-#             target_text = target_text.format(
-#                 will_text=will_text,
-#                 oracle=oracle_clean,
-#             )
-#
-#             # without self-consistency
-#             # extraction = summary_generation(prompt, target_text, client)
-#
-#             # with self-consistency
-#             most_common = self_consistent_summary(prompt, target_text, client)
-#             export_to_json(most_common, output_path)
-#             print(f"Summary generation completed for {filename}")
-
-
 # === MAIN FUNCTION ===
 def main(prompt_template, target_input_template, oracle_type="concise", iterations_per_case=4):
     assert oracle_type in {"concise", "full"}, "oracle_type must be 'concise' or 'full'"
 
-    base_dir = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/reviewed"
+    base_dir = "Replace with the actual path"
 
     # Load sample/example files
-    sample_will = read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/sample_will.txt")
-    example_oracle = json.loads(read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/example_oracle.json"))
-    expected_output = json.loads(read_file("/Users/alicekwak/repos/dass-wills/baseline/resources/example_expected_output.json"))
+    sample_will = read_file("Replace with the actual path")
+    example_oracle = json.loads(read_file("Replace with the actual path"))
+    expected_output = json.loads(read_file("Replace with the actual path"))
     example_oracle_clean = json.dumps(example_oracle, indent=2).replace("{", "{{").replace("}", "}}")
     expected_output_clean = json.dumps(expected_output, indent=2).replace("{", "{{").replace("}", "}}")
 
-    # Fetch the API key from the environment variable
-    key = 'API key'
+    # OpenAI client
+    key = "Replace with actual Open AI key"
     client = OpenAI(api_key=key)
 
     for root, dirs, files in os.walk(base_dir):

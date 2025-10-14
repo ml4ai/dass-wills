@@ -573,8 +573,8 @@ def compare_files(pred_dir, gold_dir, output_csv, fuzzy_threshold=70):
         writer.writerows(results)
 
 if __name__ == "__main__":
-    pred_dir = "/Users/alicekwak/Desktop/UA/UA_2024_Fall/RA/Dataset/Tennessee/human annotations/simplified-review"  # Replace with the actual path
-    gold_dir = "/Users/alicekwak/Downloads/text_extraction_cross_annotation"  # Replace with the actual path
-    output_csv = "/Users/alicekwak/Desktop/UA_2025_Spring_Summer/RA/te_cross_annotation_scores2.csv"  # Replace with the desired output file name
+    pred_dir = "Replace with the actual path"  # Replace with the actual path
+    gold_dir = "Replace with the actual path"  # Replace with the actual path
+    output_csv = "Replace with the desired output file name"  # Replace with the desired output file name
 
     compare_files(pred_dir, gold_dir, output_csv)
