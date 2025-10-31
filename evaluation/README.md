@@ -26,6 +26,10 @@ python3 compute_accuracy.py <root_folder>
 python3 te_evaluator.py
 ```
 
+## License
+The dataset is licensed under the Creative Commons Attribution–NonCommercial 4.0 International License (CC BY-NC 4.0).  
+See the [LICENSE](/Users/alicekwak/repos/dass-wills/LICENSE.txt) file for details.
+
 ## Contact
 
 If you have any questions about the data or the codes, please contact Alice (alicekwak@arizona.edu) or file a GitHub issue.
